@@ -58,6 +58,7 @@ npm install nodemon -g
 3. The file `.env`is already ignored, so you never commit your credentials and do something dumb
 4. Change the values of the file to your environment (development or production)
 5. Upload the `.env` to your environment server(development or production)
+6. If you use the postman collection to try the endpoints, change value of the variable `server` on your environment to the url of your server, for development mode use `http://localhost:3000`
 
 ### Mailer
 
@@ -119,7 +120,12 @@ You can import the example collection to Postman
 
 https://www.getpostman.com/collections/d1e27b60e0ccff22a516
 
-If you use Postman please go to `manage environments` and then create one for each of your servers. Create a new key `authToken` with `token` value (the token you got from the login process), each time you make a request to the API it will send `Authorization` header with the token value in the request, you can check this on the headers of users or cities endpoints in the Postman example.
+If you use Postman please go to `manage environments` and then create one for each of your servers (Ex. myApi-LOCAL, myApi-PRODUCTION). 
+
+On each of the environments you create you will need to:
+
+1. Create a new key `authToken` with `token` value (the token you got from the login process), each time you make a request to the API it will send `Authorization` header with the token value in the request, you can check this on the headers of users or cities endpoints in the Postman example.
+2. Create a second key `server` with the url of your server, for development mode use `http://localhost:3000'
 
 This is a REST API, so it works using the following HTTP methods:
 
