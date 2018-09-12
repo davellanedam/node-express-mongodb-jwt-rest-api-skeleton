@@ -4,7 +4,9 @@ const UserAccess = require('../models/userAccess')
 const ForgotPassword = require('../models/forgotPassword')
 const base = require('./base')
 const uuid = require('uuid')
-const moment = require('moment')
+const {
+  addHours
+} = require('date-fns')
 const {
   matchedData
 } = require('express-validator/filter')
@@ -62,7 +64,7 @@ const saveUserAccessAndReturnToken = async (req, user) => {
 
 const blockUser = async user => {
   return new Promise((resolve, reject) => {
-    user.blockExpires = moment().add(HOURS_TO_BLOCK, 'hours')
+    user.blockExpires = addHours(new Date(), HOURS_TO_BLOCK)
     user.save((err, result) => {
       if (err) {
         reject(base.buildErrObject(422, err.message))
@@ -104,7 +106,7 @@ const checkPassword = async (password, user) => {
 const blockIsExpired = ({
   loginAttempts,
   blockExpires,
-}) => loginAttempts > LOGIN_ATTEMPTS && blockExpires <= moment()
+}) => loginAttempts > LOGIN_ATTEMPTS && blockExpires <= new Date()
 
 const checkLoginAttemptsAndBlockExpires = async user => {
   return new Promise((resolve, reject) => {
@@ -128,7 +130,7 @@ const checkLoginAttemptsAndBlockExpires = async user => {
 
 const userIsBlocked = async user => {
   return new Promise((resolve, reject) => {
-    if (user.blockExpires > moment()) {
+    if (user.blockExpires > new Date()) {
       reject(base.buildErrObject(409, 'BLOCKED_USER'))
     }
     resolve(true)
