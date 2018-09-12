@@ -58,7 +58,7 @@ npm install nodemon -g
 3. The file `.env`is already ignored, so you never commit your credentials and do something dumb
 4. Change the values of the file to your environment (development or production)
 5. Upload the `.env` to your environment server(development or production)
-6. If you use the postman collection to try the endpoints, change value of the variable `server` on your environment to the url of your server, for development mode use `http://localhost:3000`
+6. If you use the postman collection to try the endpoints, change value of the variable `server` on your environment to the url of your server, for development mode use http://localhost:3000
 
 ### Mailer
 
