@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const fs = require('fs')
-const routesPath = './app/routes/'
+const routesPath = `${__dirname}/`
 
 /*
  * Load routes statically and/or dynamically

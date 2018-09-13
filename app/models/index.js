@@ -1,7 +1,7 @@
 const fs = require('fs')
-const modelsPath = './app/models/'
+const modelsPath = `${__dirname}/`
 
-module.exports = function loadModels() {
+module.exports = () => {
   /*
    * Load models dynamically
    */
