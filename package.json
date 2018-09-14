@@ -1,6 +1,6 @@
 {
   "name": "node-express-mongodb-jwt-rest-api-skeleton",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Node.js express.js MongoDB JWT REST API - Basic Project Skeleton",
   "license": "MIT",
   "repository": {
