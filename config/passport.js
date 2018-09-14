@@ -1,6 +1,8 @@
 const passport = require('passport')
 const User = require('../app/models/user')
-const base = require('../app/controllers/base')
+const {
+  decrypt
+} = require('../app/controllers/base')
 const JwtStrategy = require('passport-jwt').Strategy
 
 const jwtExtractor = (req) => {
@@ -13,7 +15,7 @@ const jwtExtractor = (req) => {
     token = req.query.token.replace(' ', '')
   }
   if (token) {
-    token = base.decrypt(token)
+    token = decrypt(token)
   }
   return token
 }
