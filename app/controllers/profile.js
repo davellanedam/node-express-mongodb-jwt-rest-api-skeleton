@@ -35,7 +35,7 @@ const updateProfileInDB = async (req, id) => {
   })
 }
 
-const getProfileFromDB = async (id) => {
+const getProfileFromDB = async id => {
   return new Promise((resolve, reject) => {
     model.findById(id, '-role -_id -updatedAt -createdAt', (err, user) => {
       if (err) {

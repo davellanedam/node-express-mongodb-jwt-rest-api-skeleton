@@ -5,7 +5,7 @@ const {
 } = require('../app/controllers/base')
 const JwtStrategy = require('passport-jwt').Strategy
 
-const jwtExtractor = (req) => {
+const jwtExtractor = req => {
   let token = null
   if (req.headers.authorization) {
     token = req.headers.authorization.replace('Bearer ', '').replace(' ', '')
