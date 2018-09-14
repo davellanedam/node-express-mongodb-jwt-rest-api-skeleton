@@ -24,7 +24,7 @@ before((done) => {
     done()
   }, 10)
 })
-describe('*********** AUTH ***********', (end) => {
+describe('*********** AUTH ***********', () => {
 
   describe('/POST login', () => {
     it('it should GET token', (done) => {

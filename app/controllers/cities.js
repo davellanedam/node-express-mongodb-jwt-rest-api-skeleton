@@ -1,5 +1,4 @@
 const model = require('../models/city')
-const base = require('./base')
 const {
   matchedData
 } = require('express-validator/filter')

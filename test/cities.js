@@ -158,7 +158,6 @@ describe('*********** CITIES ***********', () => {
               res.body.should.have.property('_id').eql(result.id)
               res.body.should.have.property('name').eql('JS123456')
               createdID.push(res.body._id)
-
             })
         }
         done()
