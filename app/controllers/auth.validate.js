@@ -1,4 +1,7 @@
-const base = require('./base')
+const {
+  handleError,
+  buildErrObject
+} = require('./base')
 const {
   check,
   validationResult
@@ -33,7 +36,7 @@ exports.register = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]
@@ -59,7 +62,7 @@ exports.login = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]
@@ -76,7 +79,7 @@ exports.verify = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]
@@ -96,7 +99,7 @@ exports.forgotPassword = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]
@@ -123,7 +126,7 @@ exports.resetPassword = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]

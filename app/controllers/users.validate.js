@@ -1,4 +1,7 @@
-const base = require('./base')
+const {
+  handleError,
+  buildErrObject
+} = require('./base')
 const {
   check,
   validationResult
@@ -41,7 +44,7 @@ exports.createItem = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]
@@ -77,7 +80,7 @@ exports.updateItem = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]
@@ -94,7 +97,7 @@ exports.getItem = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]
@@ -111,7 +114,7 @@ exports.deleteItem = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]

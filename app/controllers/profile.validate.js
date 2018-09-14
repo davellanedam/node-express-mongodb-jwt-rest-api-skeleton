@@ -1,4 +1,7 @@
-const base = require('./base')
+const {
+  handleError,
+  buildErrObject
+} = require('./base')
 const validator = require('validator')
 const {
   check,
@@ -31,7 +34,7 @@ exports.updateProfile = [
       validationResult(req).throw()
       return next()
     } catch (err) {
-      return base.handleError(res, base.buildErrObject(422, err.array()))
+      return handleError(res, buildErrObject(422, err.array()))
     }
   }
 ]

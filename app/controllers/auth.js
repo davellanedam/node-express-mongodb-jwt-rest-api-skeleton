@@ -2,7 +2,17 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const UserAccess = require('../models/userAccess')
 const ForgotPassword = require('../models/forgotPassword')
-const base = require('./base')
+const {
+  encrypt,
+  getIP,
+  getBrowserInfo,
+  getCountry,
+  buildErrObject,
+  handleError,
+  emailExists,
+  sendRegistrationEmailMessage,
+  sendResetPasswordEmailMessage
+} = require('./base')
 const uuid = require('uuid')
 const {
   addHours
@@ -22,7 +32,7 @@ const generateToken = user => {
   const obj = {
     _id: user
   }
-  return base.encrypt(
+  return encrypt(
     jwt.sign(obj, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRATION
     })
@@ -43,14 +53,14 @@ const setUserInfo = req => {
 const saveUserAccessAndReturnToken = async (req, user) => {
   const userAccess = new UserAccess({
     email: user.email,
-    ip: base.getIP(req),
-    browser: base.getBrowserInfo(req),
-    country: base.getCountry(req)
+    ip: getIP(req),
+    browser: getBrowserInfo(req),
+    country: getCountry(req)
   })
   return new Promise((resolve, reject) => {
     userAccess.save((err) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       const userInfo = setUserInfo(user)
       // Returns data with access token
@@ -67,10 +77,10 @@ const blockUser = async user => {
     user.blockExpires = addHours(new Date(), HOURS_TO_BLOCK)
     user.save((err, result) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (result) {
-        resolve(base.buildErrObject(409, 'BLOCKED_USER'))
+        resolve(buildErrObject(409, 'BLOCKED_USER'))
       }
     })
   })
@@ -80,7 +90,7 @@ const saveLoginAttemptsToDB = async user => {
   return new Promise((resolve, reject) => {
     user.save((err, result) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (result) {
         resolve(true)
@@ -93,7 +103,7 @@ const checkPassword = async (password, user) => {
   return new Promise((resolve, reject) => {
     user.comparePassword(password, (err, isMatch) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (!isMatch) {
         resolve(false)
@@ -115,7 +125,7 @@ const checkLoginAttemptsAndBlockExpires = async user => {
       user.loginAttempts = 0
       user.save((err, result) => {
         if (err) {
-          reject(base.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
         if (result) {
           resolve(true)
@@ -131,7 +141,7 @@ const checkLoginAttemptsAndBlockExpires = async user => {
 const userIsBlocked = async user => {
   return new Promise((resolve, reject) => {
     if (user.blockExpires > new Date()) {
-      reject(base.buildErrObject(409, 'BLOCKED_USER'))
+      reject(buildErrObject(409, 'BLOCKED_USER'))
     }
     resolve(true)
   })
@@ -145,10 +155,10 @@ const findUser = async email => {
       'password loginAttempts blockExpires name email role verified',
       (err, item) => {
         if (err) {
-          reject(base.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
         if (!item) {
-          reject(base.buildErrObject(404, 'USER_DOES_NOT_EXISTS'))
+          reject(buildErrObject(404, 'USER_DOES_NOT_EXISTS'))
         }
         resolve(item)
       }
@@ -161,11 +171,11 @@ const passwordsDoNotMatch = async user => {
   await saveLoginAttemptsToDB(user)
   return new Promise((resolve, reject) => {
     if (user.loginAttempts <= LOGIN_ATTEMPTS) {
-      resolve(base.buildErrObject(409, 'WRONG_PASSWORD'))
+      resolve(buildErrObject(409, 'WRONG_PASSWORD'))
     } else {
       resolve(blockUser(user))
     }
-    reject(base.buildErrObject(422, 'ERROR'))
+    reject(buildErrObject(422, 'ERROR'))
   })
 }
 
@@ -179,7 +189,7 @@ const registerUser = async req => {
   return new Promise((resolve, reject) => {
     user.save((err, item) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       resolve(item)
     })
@@ -202,10 +212,10 @@ const verificationExists = async id => {
       },
       (err, user) => {
         if (err) {
-          reject(base.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
         if (!user) {
-          reject(base.buildErrObject(404, 'NOT_FOUND_OR_ALREADY_VERIFIED'))
+          reject(buildErrObject(404, 'NOT_FOUND_OR_ALREADY_VERIFIED'))
         }
         resolve(user)
       }
@@ -218,7 +228,7 @@ const verifyUser = async user => {
   return new Promise((resolve, reject) => {
     user.save((err, item) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       resolve({
         email: item.email,
@@ -230,16 +240,16 @@ const verifyUser = async user => {
 
 const markResetPasswordAsUsed = async (req, forgot) => {
   forgot.used = true
-  forgot.ipChanged = base.getIP(req)
-  forgot.browserChanged = base.getBrowserInfo(req)
-  forgot.countryChanged = base.getCountry(req)
+  forgot.ipChanged = getIP(req)
+  forgot.browserChanged = getBrowserInfo(req)
+  forgot.countryChanged = getCountry(req)
   return new Promise((resolve, reject) => {
     forgot.save((err, item) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (!item) {
-        reject(base.buildErrObject(404, 'NOT_FOUND'))
+        reject(buildErrObject(404, 'NOT_FOUND'))
       }
       resolve({
         msg: 'PASSWORD_CHANGED'
@@ -253,10 +263,10 @@ const updatePassword = async (password, user) => {
   return new Promise((resolve, reject) => {
     user.save((err, item) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (!item) {
-        reject(base.buildErrObject(404, 'NOT_FOUND'))
+        reject(buildErrObject(404, 'NOT_FOUND'))
       }
       resolve(item)
     })
@@ -269,10 +279,10 @@ const findUserToResetPassword = async email => {
       email
     }, (err, user) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (!user) {
-        reject(base.buildErrObject(404, 'NOT_FOUND'))
+        reject(buildErrObject(404, 'NOT_FOUND'))
       }
       resolve(user)
     })
@@ -287,10 +297,10 @@ const findForgotPassword = async id => {
       },
       (err, item) => {
         if (err) {
-          reject(base.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
         if (!item) {
-          reject(base.buildErrObject(404, 'NOT_FOUND_OR_ALREADY_USED'))
+          reject(buildErrObject(404, 'NOT_FOUND_OR_ALREADY_USED'))
         }
         resolve(item)
       }
@@ -302,14 +312,14 @@ const saveForgotPassword = async req => {
   const forgot = new ForgotPassword({
     email: req.body.email,
     verification: uuid.v4(),
-    ipRequest: base.getIP(req),
-    browserRequest: base.getBrowserInfo(req),
-    countryRequest: base.getCountry(req)
+    ipRequest: getIP(req),
+    browserRequest: getBrowserInfo(req),
+    countryRequest: getCountry(req)
   })
   return new Promise((resolve, reject) => {
     forgot.save((err, item) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       resolve(item)
     })
@@ -327,15 +337,15 @@ const checkPermissions = async (data, next) => {
   return new Promise((resolve, reject) => {
     User.findById(data.id, (err, result) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (!result) {
-        reject(base.buildErrObject(404, 'NOT_FOUND'))
+        reject(buildErrObject(404, 'NOT_FOUND'))
       }
       if (data.roles.indexOf(result.role) > -1) {
         return resolve(next())
       }
-      return reject(base.buildErrObject(401, 'UNAUTHORIZED'))
+      return reject(buildErrObject(401, 'UNAUTHORIZED'))
     })
   })
 }
@@ -353,7 +363,7 @@ exports.login = async (req, res) => {
     await checkLoginAttemptsAndBlockExpires(user)
     const isPasswordMatch = await checkPassword(data.password, user)
     if (!isPasswordMatch) {
-      base.handleError(res, await passwordsDoNotMatch(user))
+      handleError(res, await passwordsDoNotMatch(user))
     } else {
       // all ok, register access and return token
       user.loginAttempts = 0
@@ -361,23 +371,23 @@ exports.login = async (req, res) => {
       res.status(200).json(await saveUserAccessAndReturnToken(req, user))
     }
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
 exports.register = async (req, res) => {
   try {
     req = matchedData(req)
-    const doesEmailExists = await base.emailExists(req.email)
+    const doesEmailExists = await emailExists(req.email)
     if (!doesEmailExists) {
       const item = await registerUser(req)
       const userInfo = setUserInfo(item)
       const response = returnRegisterToken(item, userInfo)
-      base.sendRegistrationEmailMessage(item)
+      sendRegistrationEmailMessage(item)
       res.status(201).json(response)
     }
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
@@ -387,7 +397,7 @@ exports.verify = async (req, res) => {
     const user = await verificationExists(req.id)
     res.status(200).json(await verifyUser(user))
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
@@ -396,10 +406,10 @@ exports.forgotPassword = async (req, res) => {
     const data = matchedData(req)
     await findUser(data.email)
     const item = await saveForgotPassword(req)
-    base.sendResetPasswordEmailMessage(item)
+    sendResetPasswordEmailMessage(item)
     res.status(200).json(forgotPasswordResponse(item))
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
@@ -412,7 +422,7 @@ exports.resetPassword = async (req, res) => {
     const result = await markResetPasswordAsUsed(req, forgotPassword)
     res.status(200).json(result)
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
@@ -424,6 +434,6 @@ exports.roleAuthorization = roles => async (req, res, next) => {
     }
     await checkPermissions(data, next)
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }

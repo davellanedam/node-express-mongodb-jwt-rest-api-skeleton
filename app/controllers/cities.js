@@ -3,7 +3,15 @@ const base = require('./base')
 const {
   matchedData
 } = require('express-validator/filter')
-
+const {
+  isIDGood,
+  buildSuccObject,
+  buildErrObject,
+  handleError,
+  listInitOptions,
+  cleanPaginationID,
+  checkQueryString
+} = require('./base')
 
 /*********************
  * Private functions *
@@ -19,10 +27,10 @@ const cityExistsExcludingItself = async (id, name) => {
       },
       (err, item) => {
         if (err) {
-          reject(base.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
         if (item) {
-          reject(base.buildErrObject(422, 'CITY_ALREADY_EXISTS'))
+          reject(buildErrObject(422, 'CITY_ALREADY_EXISTS'))
         }
         resolve(false)
       }
@@ -37,10 +45,10 @@ const cityExists = async name => {
       },
       (err, item) => {
         if (err) {
-          reject(base.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
         if (item) {
-          reject(base.buildErrObject(422, 'CITY_ALREADY_EXISTS'))
+          reject(buildErrObject(422, 'CITY_ALREADY_EXISTS'))
         }
         resolve(false)
       }
@@ -58,7 +66,7 @@ const getAllItemsFromDB = async () => {
       },
       (err, items) => {
         if (err) {
-          reject(base.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
         resolve(items)
       }
@@ -67,16 +75,16 @@ const getAllItemsFromDB = async () => {
 }
 
 const getItemsFromDB = async (req, query) => {
-  const options = await base.listInitOptions(req)
+  const options = await listInitOptions(req)
   return new Promise((resolve, reject) => {
     model.paginate(
       query,
       options,
       (err, items) => {
         if (err) {
-          reject(base.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
-        resolve(base.cleanPaginationID(items))
+        resolve(cleanPaginationID(items))
       }
     )
   })
@@ -86,10 +94,10 @@ const getItemFromDB = async id => {
   return new Promise((resolve, reject) => {
     model.findById(id, (err, item) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (!item) {
-        reject(base.buildErrObject(404, 'NOT_FOUND'))
+        reject(buildErrObject(404, 'NOT_FOUND'))
       }
       resolve(item)
     })
@@ -102,10 +110,10 @@ const updateItemInDB = async (id, req) => {
       'new': true
     }, (err, item) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (!item) {
-        reject(base.buildErrObject(404, 'NOT_FOUND'))
+        reject(buildErrObject(404, 'NOT_FOUND'))
       }
       resolve(item)
     })
@@ -116,7 +124,7 @@ const createItemInDB = async req => {
   return new Promise((resolve, reject) => {
     model.create(req, (err, item) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       resolve(item)
     })
@@ -127,12 +135,12 @@ const deleteItemFromDB = async id => {
   return new Promise((resolve, reject) => {
     model.findByIdAndRemove(id, (err, item) => {
       if (err) {
-        reject(base.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (!item) {
-        reject(base.buildErrObject(404, 'NOT_FOUND'))
+        reject(buildErrObject(404, 'NOT_FOUND'))
       }
-      resolve(base.buildSuccObject('DELETED'))
+      resolve(buildSuccObject('DELETED'))
     })
   })
 }
@@ -146,39 +154,39 @@ exports.getAllItems = async (req, res) => {
   try {
     res.status(200).json(await getAllItemsFromDB())
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
 exports.getItems = async (req, res) => {
   try {
-    const query = await base.checkQueryString(req.query.filter)
+    const query = await checkQueryString(req.query.filter)
     res.status(200).json(await getItemsFromDB(req, query))
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
 exports.getItem = async (req, res) => {
   try {
     req = matchedData(req)
-    const id = await base.isIDGood(req.id)
+    const id = await isIDGood(req.id)
     res.status(200).json(await getItemFromDB(id))
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
 exports.updateItem = async (req, res) => {
   try {
     req = matchedData(req)
-    const id = await base.isIDGood(req.id)
+    const id = await isIDGood(req.id)
     const doesCityExists = await cityExistsExcludingItself(id, req.name)
     if (!doesCityExists) {
       res.status(200).json(await updateItemInDB(id, req))
     }
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
@@ -190,16 +198,16 @@ exports.createItem = async (req, res) => {
       res.status(201).json(await createItemInDB(req))
     }
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
 
 exports.deleteItem = async (req, res) => {
   try {
     req = matchedData(req)
-    const id = await base.isIDGood(req.id)
+    const id = await isIDGood(req.id)
     res.status(200).json(await deleteItemFromDB(id))
   } catch (error) {
-    base.handleError(res, error)
+    handleError(res, error)
   }
 }
