@@ -6,7 +6,7 @@
 
 ## Getting started
 
-This is a basic API REST skeleton written on JavaScript using ES7 async/await.
+This is a basic API REST skeleton written on JavaScript using async/await.
 
 This project is created to help other developers create a **basic REST API in an easy way with Node.js**. This basic example shows how powerful and simple JavaScript can be. Do you want to contribute? Pull requests are always welcome to show more features.
 
