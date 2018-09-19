@@ -19,15 +19,14 @@ const email = faker.internet.email()
 
 chai.use(chaiHttp)
 
-before((done) => {
+before(done => {
   setTimeout(() => {
     done()
   }, 10)
 })
 describe('*********** AUTH ***********', () => {
-
   describe('/POST login', () => {
-    it('it should GET token', (done) => {
+    it('it should GET token', done => {
       chai
         .request(server)
         .post('/login')
@@ -41,7 +40,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/POST register', () => {
-    it('it should POST register', (done) => {
+    it('it should POST register', done => {
       const user = {
         name: faker.random.words(),
         email,
@@ -59,7 +58,7 @@ describe('*********** AUTH ***********', () => {
           done()
         })
     })
-    it('it should NOT POST a register if email already exists', (done) => {
+    it('it should NOT POST a register if email already exists', done => {
       const user = {
         name: faker.random.words(),
         email,
@@ -76,11 +75,10 @@ describe('*********** AUTH ***********', () => {
           done()
         })
     })
-
   })
 
   describe('/POST verify', () => {
-    it('it should POST verify', (done) => {
+    it('it should POST verify', done => {
       chai
         .request(server)
         .post('/verify')
@@ -97,7 +95,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/POST forgotPassword', () => {
-    it('it should POST forgotPassword', (done) => {
+    it('it should POST forgotPassword', done => {
       chai
         .request(server)
         .post('/forgot')
@@ -114,7 +112,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/POST resetPassword', () => {
-    it('it should POST resetPassword', (done) => {
+    it('it should POST resetPassword', done => {
       chai
         .request(server)
         .post('/reset')
@@ -132,11 +130,14 @@ describe('*********** AUTH ***********', () => {
   })
 })
 after(() => {
-  User.remove({
-    _id: createdID
-  }, (error) => {
-    if (error !== null) {
-      console.log(error)
+  User.remove(
+    {
+      _id: createdID
+    },
+    error => {
+      if (error !== null) {
+        console.log(error)
+      }
     }
-  })
+  )
 })

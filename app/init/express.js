@@ -5,15 +5,17 @@ const helmet = require('helmet')
 const cors = require('cors')
 const passport = require('passport')
 
-module.exports = (app) => {
+module.exports = app => {
   app.set('port', process.env.PORT || 3000)
 
   if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
   }
-  app.use(bodyParser.json({
-    limit: '20mb'
-  }))
+  app.use(
+    bodyParser.json({
+      limit: '20mb'
+    })
+  )
   app.use(
     bodyParser.urlencoded({
       limit: '20mb',

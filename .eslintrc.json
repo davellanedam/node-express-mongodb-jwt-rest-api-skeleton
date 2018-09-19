@@ -76,7 +76,8 @@
       "after": true
     }],
     "semi-style": ["warn", "last"],
-    "space-before-function-paren": ["off", 2]
+    "space-before-function-paren": ["off", 2],
+    "prettier/prettier": "error"
   },
   "extends": [
     "formidable/rules/eslint/best-practices/on",

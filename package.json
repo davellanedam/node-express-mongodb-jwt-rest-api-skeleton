@@ -1,6 +1,6 @@
 {
   "name": "node-express-mongodb-jwt-rest-api-skeleton",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Node.js express.js MongoDB JWT REST API - Basic Project Skeleton",
   "license": "MIT",
   "repository": {
@@ -13,7 +13,8 @@
     "dev": "NODE_ENV=development nodemon --no-deprecation server.js",
     "fresh": "npm run clean && npm run seed",
     "clean": "node --no-deprecation clean.js",
-    "seed": "node --no-deprecation seed.js"
+    "seed": "node --no-deprecation seed.js",
+    "format": "prettier --write --config .prettierrc.json \"**/*.js\""
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",

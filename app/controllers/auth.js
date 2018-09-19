@@ -14,15 +14,10 @@ const {
   sendResetPasswordEmailMessage
 } = require('./base')
 const uuid = require('uuid')
-const {
-  addHours
-} = require('date-fns')
-const {
-  matchedData
-} = require('express-validator/filter')
+const { addHours } = require('date-fns')
+const { matchedData } = require('express-validator/filter')
 const HOURS_TO_BLOCK = 2
 const LOGIN_ATTEMPTS = 5
-
 
 /*********************
  * Private functions *
@@ -58,7 +53,7 @@ const saveUserAccessAndReturnToken = async (req, user) => {
     country: getCountry(req)
   })
   return new Promise((resolve, reject) => {
-    userAccess.save((err) => {
+    userAccess.save(err => {
       if (err) {
         reject(buildErrObject(422, err.message))
       }
@@ -113,10 +108,8 @@ const checkPassword = async (password, user) => {
   })
 }
 
-const blockIsExpired = ({
-  loginAttempts,
-  blockExpires,
-}) => loginAttempts > LOGIN_ATTEMPTS && blockExpires <= new Date()
+const blockIsExpired = ({ loginAttempts, blockExpires }) =>
+  loginAttempts > LOGIN_ATTEMPTS && blockExpires <= new Date()
 
 const checkLoginAttemptsAndBlockExpires = async user => {
   return new Promise((resolve, reject) => {
@@ -149,7 +142,8 @@ const userIsBlocked = async user => {
 
 const findUser = async email => {
   return new Promise((resolve, reject) => {
-    User.findOne({
+    User.findOne(
+      {
         email
       },
       'password loginAttempts blockExpires name email role verified',
@@ -206,7 +200,8 @@ const returnRegisterToken = (item, userInfo) => {
 
 const verificationExists = async id => {
   return new Promise((resolve, reject) => {
-    User.findOne({
+    User.findOne(
+      {
         verification: id,
         verified: false
       },
@@ -275,23 +270,27 @@ const updatePassword = async (password, user) => {
 
 const findUserToResetPassword = async email => {
   return new Promise((resolve, reject) => {
-    User.findOne({
-      email
-    }, (err, user) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
+    User.findOne(
+      {
+        email
+      },
+      (err, user) => {
+        if (err) {
+          reject(buildErrObject(422, err.message))
+        }
+        if (!user) {
+          reject(buildErrObject(404, 'NOT_FOUND'))
+        }
+        resolve(user)
       }
-      if (!user) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
-      resolve(user)
-    })
+    )
   })
 }
 
 const findForgotPassword = async id => {
   return new Promise((resolve, reject) => {
-    ForgotPassword.findOne({
+    ForgotPassword.findOne(
+      {
         verification: id,
         used: false
       },
@@ -349,7 +348,6 @@ const checkPermissions = async (data, next) => {
     })
   })
 }
-
 
 /********************
  * Public functions *

@@ -18,14 +18,14 @@ const createdID = []
 
 chai.use(chaiHttp)
 
-before((done) => {
+before(done => {
   setTimeout(() => {
     done()
   }, 10)
 })
 describe('*********** USERS ***********', () => {
   describe('/POST login', () => {
-    it('it should GET token', (done) => {
+    it('it should GET token', done => {
       chai
         .request(server)
         .post('/login')
@@ -39,7 +39,7 @@ describe('*********** USERS ***********', () => {
     })
   })
   describe('/GET users', () => {
-    it('it should NOT be able to consume the route since no token was sent', (done) => {
+    it('it should NOT be able to consume the route since no token was sent', done => {
       chai
         .request(server)
         .get('/users')
@@ -48,7 +48,7 @@ describe('*********** USERS ***********', () => {
           done()
         })
     })
-    it('it should GET all the users', (done) => {
+    it('it should GET all the users', done => {
       chai
         .request(server)
         .get('/users')
@@ -62,7 +62,7 @@ describe('*********** USERS ***********', () => {
     })
   })
   describe('/POST user', () => {
-    it('it should NOT POST a user without name', (done) => {
+    it('it should NOT POST a user without name', done => {
       const user = {}
       chai
         .request(server)
@@ -76,7 +76,7 @@ describe('*********** USERS ***********', () => {
           done()
         })
     })
-    it('it should POST a user ', (done) => {
+    it('it should POST a user ', done => {
       const user = {
         name: faker.random.words(),
         email,
@@ -96,7 +96,7 @@ describe('*********** USERS ***********', () => {
           done()
         })
     })
-    it('it should NOT POST a user with email that already exists', (done) => {
+    it('it should NOT POST a user with email that already exists', done => {
       const user = {
         name: faker.random.words(),
         email,
@@ -117,7 +117,7 @@ describe('*********** USERS ***********', () => {
     })
   })
   describe('/GET/:id user', () => {
-    it('it should GET a user by the given id', (done) => {
+    it('it should GET a user by the given id', done => {
       const user = new User({
         name: faker.random.words(),
         email: faker.internet.email(),
@@ -143,7 +143,7 @@ describe('*********** USERS ***********', () => {
     })
   })
   describe('/PATCH/:id user', () => {
-    it('it should UPDATE a user given the id', (done) => {
+    it('it should UPDATE a user given the id', done => {
       const user = new User({
         name: faker.random.words(),
         email,
@@ -172,7 +172,7 @@ describe('*********** USERS ***********', () => {
         done()
       })
     })
-    it('it should NOT UPDATE a user with email that already exists', (done) => {
+    it('it should NOT UPDATE a user with email that already exists', done => {
       const user = new User({
         name: faker.random.words(),
         email: 'admin@admin.com',
@@ -194,7 +194,7 @@ describe('*********** USERS ***********', () => {
     })
   })
   describe('/DELETE/:id user', () => {
-    it('it should DELETE a user given the id', (done) => {
+    it('it should DELETE a user given the id', done => {
       const user = new User({
         name: faker.random.words(),
         email: faker.internet.email(),
@@ -219,13 +219,16 @@ describe('*********** USERS ***********', () => {
   })
 })
 after(() => {
-  createdID.map((item) => {
-    return User.remove({
-      _id: item
-    }, (error) => {
-      if (error !== null) {
-        console.log(error)
+  createdID.map(item => {
+    return User.remove(
+      {
+        _id: item
+      },
+      error => {
+        if (error !== null) {
+          console.log(error)
+        }
       }
-    })
+    )
   })
 })

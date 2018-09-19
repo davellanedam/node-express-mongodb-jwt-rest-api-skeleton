@@ -16,14 +16,14 @@ const createdID = []
 
 chai.use(chaiHttp)
 
-before((done) => {
+before(done => {
   setTimeout(() => {
     done()
   }, 10)
 })
 describe('*********** PROFILE ***********', () => {
   describe('/POST login', () => {
-    it('it should GET token', (done) => {
+    it('it should GET token', done => {
       chai
         .request(server)
         .post('/login')
@@ -37,7 +37,7 @@ describe('*********** PROFILE ***********', () => {
     })
   })
   describe('/GET profile', () => {
-    it('it should NOT be able to consume the route since no token was sent', (done) => {
+    it('it should NOT be able to consume the route since no token was sent', done => {
       chai
         .request(server)
         .get('/profile')
@@ -46,7 +46,7 @@ describe('*********** PROFILE ***********', () => {
           done()
         })
     })
-    it('it should GET profile', (done) => {
+    it('it should GET profile', done => {
       chai
         .request(server)
         .get('/profile')
@@ -60,7 +60,7 @@ describe('*********** PROFILE ***********', () => {
     })
   })
   describe('/PATCH profile', () => {
-    it('it should NOT UPDATE profile empty name/email', (done) => {
+    it('it should NOT UPDATE profile empty name/email', done => {
       const user = {}
       chai
         .request(server)
@@ -74,7 +74,7 @@ describe('*********** PROFILE ***********', () => {
           done()
         })
     })
-    it('it should UPDATE profile', (done) => {
+    it('it should UPDATE profile', done => {
       const user = {
         name: 'Test123456',
         email: 'admin@admin.com'
@@ -92,7 +92,7 @@ describe('*********** PROFILE ***********', () => {
           done()
         })
     })
-    it('it should NOT UPDATE profile with email that already exists', (done) => {
+    it('it should NOT UPDATE profile with email that already exists', done => {
       const user = {
         email: 'programmer@programmer.com'
       }
@@ -111,13 +111,16 @@ describe('*********** PROFILE ***********', () => {
   })
 })
 after(() => {
-  createdID.map((item) => {
-    return User.remove({
-      _id: item
-    }, (error) => {
-      if (error !== null) {
-        console.log(error)
+  createdID.map(item => {
+    return User.remove(
+      {
+        _id: item
+      },
+      error => {
+        if (error !== null) {
+          console.log(error)
+        }
       }
-    })
+    )
   })
 })

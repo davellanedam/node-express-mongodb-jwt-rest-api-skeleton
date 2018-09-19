@@ -18,15 +18,14 @@ const name = faker.random.words()
 
 chai.use(chaiHttp)
 
-before((done) => {
+before(done => {
   setTimeout(() => {
     done()
   }, 10)
 })
 describe('*********** CITIES ***********', () => {
-
   describe('/POST login', () => {
-    it('it should GET token', (done) => {
+    it('it should GET token', done => {
       chai
         .request(server)
         .post('/login')
@@ -41,7 +40,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/GET cities', () => {
-    it('it should NOT be able to consume the route since no token was sent', (done) => {
+    it('it should NOT be able to consume the route since no token was sent', done => {
       chai
         .request(server)
         .get('/cities')
@@ -50,7 +49,7 @@ describe('*********** CITIES ***********', () => {
           done()
         })
     })
-    it('it should GET all the cities', (done) => {
+    it('it should GET all the cities', done => {
       chai
         .request(server)
         .get('/cities')
@@ -65,7 +64,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/POST city', () => {
-    it('it should NOT POST a city without name', (done) => {
+    it('it should NOT POST a city without name', done => {
       const city = {}
       chai
         .request(server)
@@ -79,7 +78,7 @@ describe('*********** CITIES ***********', () => {
           done()
         })
     })
-    it('it should POST a city ', (done) => {
+    it('it should POST a city ', done => {
       const city = {
         name
       }
@@ -96,7 +95,7 @@ describe('*********** CITIES ***********', () => {
           done()
         })
     })
-    it('it should NOT POST a city that already exists', (done) => {
+    it('it should NOT POST a city that already exists', done => {
       const city = {
         name
       }
@@ -115,7 +114,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/GET/:id city', () => {
-    it('it should GET a city by the given id', (done) => {
+    it('it should GET a city by the given id', done => {
       const city = new City({
         name
       })
@@ -139,7 +138,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/PATCH/:id city', () => {
-    it('it should UPDATE a city given the id', (done) => {
+    it('it should UPDATE a city given the id', done => {
       const city = new City({
         name
       })
@@ -163,7 +162,7 @@ describe('*********** CITIES ***********', () => {
         done()
       })
     })
-    it('it should NOT UPDATE a city that already exists', (done) => {
+    it('it should NOT UPDATE a city that already exists', done => {
       const city = new City({
         name
       })
@@ -190,7 +189,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/DELETE/:id city', () => {
-    it('it should DELETE a city given the id', (done) => {
+    it('it should DELETE a city given the id', done => {
       const city = new City({
         name: faker.random.words()
       })
@@ -212,13 +211,16 @@ describe('*********** CITIES ***********', () => {
   })
 })
 after(() => {
-  createdID.map((item) => {
-    return City.remove({
-      _id: item
-    }, (error) => {
-      if (error !== null) {
-        console.log(error)
+  createdID.map(item => {
+    return City.remove(
+      {
+        _id: item
+      },
+      error => {
+        if (error !== null) {
+          console.log(error)
+        }
       }
-    })
+    )
   })
 })

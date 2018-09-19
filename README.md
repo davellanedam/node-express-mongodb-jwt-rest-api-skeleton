@@ -106,6 +106,14 @@ It´s a good practice to do tests at your code, so a sample of how to do that in
 npm run test
 ```
 
+### Formatting code
+
+Format your code with prettier by typing:
+
+```bash
+npm run format
+```
+
 ## Usage
 
 Once everything is set up to test API routes either use Postman or any other api testing application. Default username/password combination for login is `admin@admin.com/12345`.

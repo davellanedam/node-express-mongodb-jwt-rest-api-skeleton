@@ -9,7 +9,7 @@ const completed = () => {
   process.exit(0)
 }
 
-const processModels = (model) =>
+const processModels = model =>
   new Promise((resolve, reject) => {
     model = require(`./app/models/${model}`)
     model.remove({}, (err, row) => {

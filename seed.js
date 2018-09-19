@@ -1,7 +1,5 @@
 require('dotenv-safe').config()
-const {
-  seedDatabase
-} = require('mongo-seeding')
+const { seedDatabase } = require('mongo-seeding')
 const path = require('path')
 
 const config = {
@@ -15,7 +13,7 @@ seedDatabase(config)
     console.log('Seed complete!')
     process.exit(0)
   })
-  .catch((err) => {
+  .catch(err => {
     console.log(err)
     process.exit(0)
   })

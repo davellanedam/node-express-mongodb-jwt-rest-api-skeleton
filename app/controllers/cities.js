@@ -1,7 +1,5 @@
 const model = require('../models/city')
-const {
-  matchedData
-} = require('express-validator/filter')
+const { matchedData } = require('express-validator/filter')
 const {
   isIDGood,
   buildSuccObject,
@@ -18,7 +16,8 @@ const {
 
 const cityExistsExcludingItself = async (id, name) => {
   return new Promise((resolve, reject) => {
-    model.findOne({
+    model.findOne(
+      {
         name,
         _id: {
           $ne: id
@@ -39,7 +38,8 @@ const cityExistsExcludingItself = async (id, name) => {
 
 const cityExists = async name => {
   return new Promise((resolve, reject) => {
-    model.findOne({
+    model.findOne(
+      {
         name
       },
       (err, item) => {
@@ -57,8 +57,10 @@ const cityExists = async name => {
 
 const getAllItemsFromDB = async () => {
   return new Promise((resolve, reject) => {
-    model.find({},
-      '-updatedAt -createdAt', {
+    model.find(
+      {},
+      '-updatedAt -createdAt',
+      {
         sort: {
           name: 1
         }
@@ -76,16 +78,12 @@ const getAllItemsFromDB = async () => {
 const getItemsFromDB = async (req, query) => {
   const options = await listInitOptions(req)
   return new Promise((resolve, reject) => {
-    model.paginate(
-      query,
-      options,
-      (err, items) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        resolve(cleanPaginationID(items))
+    model.paginate(query, options, (err, items) => {
+      if (err) {
+        reject(buildErrObject(422, err.message))
       }
-    )
+      resolve(cleanPaginationID(items))
+    })
   })
 }
 
@@ -105,17 +103,22 @@ const getItemFromDB = async id => {
 
 const updateItemInDB = async (id, req) => {
   return new Promise((resolve, reject) => {
-    model.findByIdAndUpdate(id, req, {
-      'new': true
-    }, (err, item) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
+    model.findByIdAndUpdate(
+      id,
+      req,
+      {
+        new: true
+      },
+      (err, item) => {
+        if (err) {
+          reject(buildErrObject(422, err.message))
+        }
+        if (!item) {
+          reject(buildErrObject(404, 'NOT_FOUND'))
+        }
+        resolve(item)
       }
-      if (!item) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
-      resolve(item)
-    })
+    )
   })
 }
 
@@ -143,7 +146,6 @@ const deleteItemFromDB = async id => {
     })
   })
 }
-
 
 /********************
  * Public functions *

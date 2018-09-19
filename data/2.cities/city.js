@@ -1,6 +1,7 @@
 const faker = require('faker')
 
-const json = [{
+const json = [
+  {
     name: 'San Francisco',
     createdAt: faker.date.past(),
     updatedAt: faker.date.recent()

@@ -8,11 +8,12 @@ module.exports = () => {
     mongoose.Promise = global.Promise
 
     mongoose.connect(
-      DB_URL, {
+      DB_URL,
+      {
         keepAlive: true,
         reconnectTries: Number.MAX_VALUE
       },
-      (err) => {
+      err => {
         if (err) {
           dbStatus = `*    Error connecting to DB: ${err}\n****************************\n`
         }

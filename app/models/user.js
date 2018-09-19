@@ -3,81 +3,84 @@ const bcrypt = require('bcrypt-nodejs')
 const validator = require('validator')
 const mongoosePaginate = require('mongoose-paginate')
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    validate: {
-      validator: validator.isEmail,
-      message: 'Not a valid email address'
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true
     },
-    lowercase: true,
-    unique: true,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true,
-    select: false
-  },
-  role: {
-    type: String,
-    'enum': ['programmer', 'company', 'admin'],
-    'default': 'programmer'
-  },
-  verification: {
-    type: String
-  },
-  verified: {
-    type: Boolean,
-    'default': false
-  },
-  phone: {
-    type: String
-  },
-  city: {
-    type: String
-  },
-  country: {
-    type: String
-  },
-  urlTwitter: {
-    type: String,
-    validate: {
-      validator(v) {
-        return v === '' ? true : validator.isURL(v)
+    email: {
+      type: String,
+      validate: {
+        validator: validator.isEmail,
+        message: 'Not a valid email address'
       },
-      message: 'NOT_A_VALID_URL'
+      lowercase: true,
+      unique: true,
+      required: true
     },
-    lowercase: true
-  },
-  urlGitHub: {
-    type: String,
-    validate: {
-      validator(v) {
-        return v === '' ? true : validator.isURL(v)
+    password: {
+      type: String,
+      required: true,
+      select: false
+    },
+    role: {
+      type: String,
+      enum: ['programmer', 'company', 'admin'],
+      default: 'programmer'
+    },
+    verification: {
+      type: String
+    },
+    verified: {
+      type: Boolean,
+      default: false
+    },
+    phone: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    country: {
+      type: String
+    },
+    urlTwitter: {
+      type: String,
+      validate: {
+        validator(v) {
+          return v === '' ? true : validator.isURL(v)
+        },
+        message: 'NOT_A_VALID_URL'
       },
-      message: 'NOT_A_VALID_URL'
+      lowercase: true
     },
-    lowercase: true
+    urlGitHub: {
+      type: String,
+      validate: {
+        validator(v) {
+          return v === '' ? true : validator.isURL(v)
+        },
+        message: 'NOT_A_VALID_URL'
+      },
+      lowercase: true
+    },
+    loginAttempts: {
+      type: Number,
+      default: 0,
+      select: false
+    },
+    blockExpires: {
+      type: Date,
+      default: Date.now,
+      select: false
+    }
   },
-  loginAttempts: {
-    type: Number,
-    'default': 0,
-    select: false
-  },
-  blockExpires: {
-    type: Date,
-    'default': Date.now,
-    select: false
+  {
+    versionKey: false,
+    timestamps: true
   }
-}, {
-  versionKey: false,
-  timestamps: true
-})
+)
 
 const hash = (user, salt, next) => {
   bcrypt.hash(user.password, salt, null, (error, newHash) => {
@@ -98,7 +101,7 @@ const genSalt = (user, SALT_FACTOR, next) => {
   })
 }
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', function(next) {
   const that = this
   const SALT_FACTOR = 5
   if (!that.isModified('password')) {
@@ -107,7 +110,7 @@ UserSchema.pre('save', function (next) {
   return genSalt(that, SALT_FACTOR, next)
 })
 
-UserSchema.methods.comparePassword = function (passwordAttempt, cb) {
+UserSchema.methods.comparePassword = function(passwordAttempt, cb) {
   bcrypt.compare(
     passwordAttempt,
     this.password,

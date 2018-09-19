@@ -21,7 +21,8 @@ exports.getCountry = req =>
 
 exports.emailExists = async email => {
   return new Promise((resolve, reject) => {
-    User.findOne({
+    User.findOne(
+      {
         email
       },
       (err, item) => {
@@ -39,7 +40,8 @@ exports.emailExists = async email => {
 
 exports.emailExistsExcludingMyself = async (id, email) => {
   return new Promise((resolve, reject) => {
-    User.findOne({
+    User.findOne(
+      {
         email,
         _id: {
           $ne: id
@@ -102,9 +104,9 @@ exports.sendRegistrationEmailMessage = async user => {
     this.sendEmail(
       data,
       messageSent =>
-      messageSent ?
-      console.log(`Email SENT to: ${user.email}`) :
-      console.log(`Email FAILED to: ${user.email}`)
+        messageSent
+          ? console.log(`Email SENT to: ${user.email}`)
+          : console.log(`Email FAILED to: ${user.email}`)
     )
   } else if (process.env.NODE_ENV === 'development') {
     console.log(email)
@@ -132,9 +134,9 @@ exports.sendResetPasswordEmailMessage = async user => {
     this.sendEmail(
       data,
       messageSent =>
-      messageSent ?
-      console.log(`Email SENT to: ${user.email}`) :
-      console.log(`Email FAILED to: ${user.email}`)
+        messageSent
+          ? console.log(`Email SENT to: ${user.email}`)
+          : console.log(`Email FAILED to: ${user.email}`)
     )
   } else if (process.env.NODE_ENV === 'development') {
     console.log(email)
@@ -188,18 +190,18 @@ exports.buildSuccObject = msg => {
 exports.isIDGood = async id => {
   return new Promise((resolve, reject) => {
     const goodID = String(id).match(/^[0-9a-fA-F]{24}$/)
-    return goodID ?
-      resolve(id) :
-      reject(this.buildErrObject(422, 'ID_MALFORMED'))
+    return goodID
+      ? resolve(id)
+      : reject(this.buildErrObject(422, 'ID_MALFORMED'))
   })
 }
 
 exports.checkQueryString = async query => {
   return new Promise((resolve, reject) => {
     try {
-      return typeof query !== 'undefined' ?
-        resolve(JSON.parse(query)) :
-        resolve({})
+      return typeof query !== 'undefined'
+        ? resolve(JSON.parse(query))
+        : resolve({})
     } catch (err) {
       console.log(err.message)
       return reject(

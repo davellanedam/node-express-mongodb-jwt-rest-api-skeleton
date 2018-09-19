@@ -13,9 +13,15 @@ router.use('/', require('./auth'))
 // Loop routes path and loads every file as a route except this file and Auth route
 fs.readdirSync(routesPath).filter(file => {
   // Take filename and remove last part (extension)
-  const routeFile = file.split('.').slice(0, -1).join('.').toString()
+  const routeFile = file
+    .split('.')
+    .slice(0, -1)
+    .join('.')
+    .toString()
   // Prevents loading of this file and auth file
-  return (routeFile !== 'index' && routeFile !== 'auth') ? router.use(`/${routeFile}`, require(`./${routeFile}`)) : ''
+  return routeFile !== 'index' && routeFile !== 'auth'
+    ? router.use(`/${routeFile}`, require(`./${routeFile}`))
+    : ''
 })
 
 /*

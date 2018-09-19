@@ -1,20 +1,14 @@
-const {
-  handleError,
-  buildErrObject
-} = require('./base')
-const {
-  check,
-  validationResult
-} = require('express-validator/check')
+const { handleError, buildErrObject } = require('./base')
+const { check, validationResult } = require('express-validator/check')
 
 exports.createItem = [
   check('name')
-  .exists()
-  .withMessage('MISSING')
-  .not()
-  .isEmpty()
-  .withMessage('IS_EMPTY')
-  .trim(),
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
   (req, res, next) => {
     try {
       validationResult(req).throw()
@@ -27,17 +21,17 @@ exports.createItem = [
 
 exports.updateItem = [
   check('name')
-  .exists()
-  .withMessage('MISSING')
-  .not()
-  .isEmpty()
-  .withMessage('IS_EMPTY'),
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
   check('id')
-  .exists()
-  .withMessage('MISSING')
-  .not()
-  .isEmpty()
-  .withMessage('IS_EMPTY'),
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
   (req, res, next) => {
     try {
       validationResult(req).throw()
@@ -50,11 +44,11 @@ exports.updateItem = [
 
 exports.getItem = [
   check('id')
-  .exists()
-  .withMessage('MISSING')
-  .not()
-  .isEmpty()
-  .withMessage('IS_EMPTY'),
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
   (req, res, next) => {
     try {
       validationResult(req).throw()
@@ -67,11 +61,11 @@ exports.getItem = [
 
 exports.deleteItem = [
   check('id')
-  .exists()
-  .withMessage('MISSING')
-  .not()
-  .isEmpty()
-  .withMessage('IS_EMPTY'),
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
   (req, res, next) => {
     try {
       validationResult(req).throw()

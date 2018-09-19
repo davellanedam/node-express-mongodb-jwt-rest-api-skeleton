@@ -1,10 +1,5 @@
 const model = require('../models/user')
-const {
-  isIDGood,
-  buildErrObject,
-  handleError
-} = require('./base')
-
+const { isIDGood, buildErrObject, handleError } = require('./base')
 
 /*********************
  * Private functions *
@@ -17,8 +12,9 @@ const updateProfileInDB = async (req, id) => {
   return new Promise((resolve, reject) => {
     model.findByIdAndUpdate(
       id,
-      req.body, {
-        'new': true,
+      req.body,
+      {
+        new: true,
         runValidators: true,
         select: '-role -_id -updatedAt -createdAt'
       },
@@ -48,7 +44,6 @@ const getProfileFromDB = async id => {
     })
   })
 }
-
 
 /********************
  * Public functions *

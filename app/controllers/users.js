@@ -1,8 +1,6 @@
 const model = require('../models/user')
 const uuid = require('uuid')
-const {
-  matchedData
-} = require('express-validator/filter')
+const { matchedData } = require('express-validator/filter')
 const {
   isIDGood,
   buildSuccObject,
@@ -15,7 +13,6 @@ const {
   emailExists,
   sendRegistrationEmailMessage
 } = require('./base')
-
 
 /*********************
  * Private functions *
@@ -37,7 +34,8 @@ const updateItemInDB = async (id, req) => {
   return new Promise((resolve, reject) => {
     model.findByIdAndUpdate(
       id,
-      req, {
+      req,
+      {
         new: true,
         runValidators: true
       },
