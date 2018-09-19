@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const DB_URL = process.env.MONGO_URI
-const loadModels = require('../models')
-let dbStatus = ''
+const loadModels = require('../app/models')
 
 module.exports = () => {
   const connect = () => {
@@ -14,6 +13,7 @@ module.exports = () => {
         reconnectTries: Number.MAX_VALUE
       },
       err => {
+        let dbStatus = ''
         if (err) {
           dbStatus = `*    Error connecting to DB: ${err}\n****************************\n`
         }
