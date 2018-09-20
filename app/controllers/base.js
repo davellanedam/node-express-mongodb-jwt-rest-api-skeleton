@@ -12,6 +12,14 @@ const buildSort = (sort, order) => {
   return sortBy
 }
 
+exports.removeExtensionFromFile = file => {
+  return file
+    .split('.')
+    .slice(0, -1)
+    .join('.')
+    .toString()
+}
+
 exports.getIP = req => requestIp.getClientIp(req)
 
 exports.getBrowserInfo = req => req.headers['user-agent']

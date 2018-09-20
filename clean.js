@@ -2,28 +2,14 @@ require('dotenv-safe').config()
 const initMongo = require('./config/mongo')
 const fs = require('fs')
 const modelsPath = `./app/models`
+const { removeExtensionFromFile } = require('./app/controllers/base')
 
 initMongo()
 
-// Removes extension from file
-const removeExtension = file => {
-  file = file
-    .split('.')
-    .slice(0, -1)
-    .join('.')
-    .toString()
-  return file
-}
-
 // Loop models path and loads every file as a model except index file
-const models = fs
-  .readdirSync(modelsPath)
-  .filter(file => {
-    return file !== 'index.js'
-  })
-  .map(file => {
-    return removeExtension(file)
-  })
+const models = fs.readdirSync(modelsPath).filter(file => {
+  return removeExtensionFromFile(file) !== 'index'
+})
 
 const completed = () => {
   console.log('Cleanup complete!')
