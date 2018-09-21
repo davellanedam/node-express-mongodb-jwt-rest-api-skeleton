@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt-nodejs')
 const validator = require('validator')
-const mongoosePaginate = require('mongoose-paginate')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const UserSchema = new mongoose.Schema(
   {
