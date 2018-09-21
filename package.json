@@ -1,6 +1,6 @@
 {
   "name": "node-express-mongodb-jwt-rest-api-skeleton",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Node.js express.js MongoDB JWT REST API - Basic Project Skeleton",
   "license": "MIT",
   "repository": {
@@ -9,11 +9,11 @@
   },
   "scripts": {
     "start": "NODE_ENV=production pm2 start server.js --watch",
-    "test": "mocha --no-deprecation --timeout=5000",
-    "dev": "NODE_ENV=development nodemon --no-deprecation server.js",
+    "test": "mocha --timeout=5000",
+    "dev": "NODE_ENV=development nodemon server.js",
     "fresh": "npm run clean && npm run seed",
-    "clean": "node --no-deprecation clean.js",
-    "seed": "node --no-deprecation seed.js",
+    "clean": "node clean.js",
+    "seed": "node seed.js",
     "format": "prettier --write --config .prettierrc.json \"**/*.js\""
   },
   "dependencies": {
@@ -27,8 +27,8 @@
     "express-validator": "^5.3.0",
     "helmet": "^3.13.0",
     "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.2.15",
-    "mongoose-paginate": "^5.0.3",
+    "mongoose": "^5.2.16",
+    "mongoose-paginate-v2": "^1.0.12",
     "morgan": "^1.9.1",
     "nodemailer": "^4.6.8",
     "nodemailer-mailgun-transport": "^1.4.0",
