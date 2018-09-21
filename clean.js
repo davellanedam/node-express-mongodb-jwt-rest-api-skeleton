@@ -19,7 +19,7 @@ const completed = () => {
 const processModels = model =>
   new Promise((resolve, reject) => {
     model = require(`./app/models/${model}`)
-    model.remove({}, (err, row) => {
+    model.deleteMany({}, (err, row) => {
       if (err) {
         reject(err)
       } else {

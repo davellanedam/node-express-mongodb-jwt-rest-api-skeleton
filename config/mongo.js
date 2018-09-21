@@ -10,7 +10,8 @@ module.exports = () => {
       DB_URL,
       {
         keepAlive: true,
-        reconnectTries: Number.MAX_VALUE
+        reconnectTries: Number.MAX_VALUE,
+        useNewUrlParser: true
       },
       err => {
         let dbStatus = ''
@@ -27,6 +28,8 @@ module.exports = () => {
         console.log(dbStatus)
       }
     )
+    mongoose.set('useCreateIndex', true)
+    mongoose.set('useFindAndModify', false)
   }
   connect()
 

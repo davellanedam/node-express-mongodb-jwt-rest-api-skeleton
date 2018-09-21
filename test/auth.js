@@ -130,7 +130,7 @@ describe('*********** AUTH ***********', () => {
   })
 })
 after(() => {
-  User.remove(
+  User.deleteOne(
     {
       _id: createdID
     },

@@ -112,7 +112,7 @@ describe('*********** PROFILE ***********', () => {
 })
 after(() => {
   createdID.map(item => {
-    return User.remove(
+    return User.deleteOne(
       {
         _id: item
       },

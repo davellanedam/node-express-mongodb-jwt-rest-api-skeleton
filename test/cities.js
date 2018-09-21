@@ -212,7 +212,7 @@ describe('*********** CITIES ***********', () => {
 })
 after(() => {
   createdID.map(item => {
-    return City.remove(
+    return City.deleteOne(
       {
         _id: item
       },
