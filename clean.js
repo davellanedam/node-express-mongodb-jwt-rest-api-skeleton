@@ -11,13 +11,8 @@ const models = fs.readdirSync(modelsPath).filter(file => {
   return removeExtensionFromFile(file) !== 'index'
 })
 
-const completed = () => {
-  console.log('Cleanup complete!')
-  process.exit(0)
-}
-
-const processModels = model =>
-  new Promise((resolve, reject) => {
+const deleteModelFromDB = model => {
+  return new Promise((resolve, reject) => {
     model = require(`./app/models/${model}`)
     model.deleteMany({}, (err, row) => {
       if (err) {
@@ -27,5 +22,20 @@ const processModels = model =>
       }
     })
   })
+}
 
-Promise.all(models.map(processModels)).then(completed)
+const clean = async () => {
+  try {
+    const promiseArray = models.map(
+      async model => await deleteModelFromDB(model)
+    )
+    await Promise.all(promiseArray)
+    console.log('Cleanup complete!')
+    process.exit(0)
+  } catch (err) {
+    console.log(err)
+    process.exit(0)
+  }
+}
+
+clean()
