@@ -67,14 +67,14 @@ const getItemFromDB = async id => {
 }
 
 const createItemInDB = async req => {
-  const user = new model({
-    name: req.name,
-    email: req.email,
-    password: req.password,
-    role: req.role,
-    verification: uuid.v4()
-  })
   return new Promise((resolve, reject) => {
+    const user = new model({
+      name: req.name,
+      email: req.email,
+      password: req.password,
+      role: req.role,
+      verification: uuid.v4()
+    })
     user.save((err, item) => {
       if (err) {
         reject(buildErrObject(422, err.message))

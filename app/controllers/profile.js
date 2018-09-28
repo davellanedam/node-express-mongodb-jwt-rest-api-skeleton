@@ -6,10 +6,10 @@ const { isIDGood, buildErrObject, handleError } = require('./base')
  *********************/
 
 const updateProfileInDB = async (req, id) => {
-  delete req.body._id
-  delete req.body.role
-  delete req.body.email
   return new Promise((resolve, reject) => {
+    delete req.body._id
+    delete req.body.role
+    delete req.body.email
     model.findByIdAndUpdate(
       id,
       req.body,

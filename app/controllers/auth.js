@@ -46,13 +46,13 @@ const setUserInfo = req => {
 }
 
 const saveUserAccessAndReturnToken = async (req, user) => {
-  const userAccess = new UserAccess({
-    email: user.email,
-    ip: getIP(req),
-    browser: getBrowserInfo(req),
-    country: getCountry(req)
-  })
   return new Promise((resolve, reject) => {
+    const userAccess = new UserAccess({
+      email: user.email,
+      ip: getIP(req),
+      browser: getBrowserInfo(req),
+      country: getCountry(req)
+    })
     userAccess.save(err => {
       if (err) {
         reject(buildErrObject(422, err.message))
@@ -174,13 +174,13 @@ const passwordsDoNotMatch = async user => {
 }
 
 const registerUser = async req => {
-  const user = new User({
-    name: req.name,
-    email: req.email,
-    password: req.password,
-    verification: uuid.v4()
-  })
   return new Promise((resolve, reject) => {
+    const user = new User({
+      name: req.name,
+      email: req.email,
+      password: req.password,
+      verification: uuid.v4()
+    })
     user.save((err, item) => {
       if (err) {
         reject(buildErrObject(422, err.message))
@@ -219,8 +219,8 @@ const verificationExists = async id => {
 }
 
 const verifyUser = async user => {
-  user.verified = true
   return new Promise((resolve, reject) => {
+    user.verified = true
     user.save((err, item) => {
       if (err) {
         reject(buildErrObject(422, err.message))
@@ -234,11 +234,11 @@ const verifyUser = async user => {
 }
 
 const markResetPasswordAsUsed = async (req, forgot) => {
-  forgot.used = true
-  forgot.ipChanged = getIP(req)
-  forgot.browserChanged = getBrowserInfo(req)
-  forgot.countryChanged = getCountry(req)
   return new Promise((resolve, reject) => {
+    forgot.used = true
+    forgot.ipChanged = getIP(req)
+    forgot.browserChanged = getBrowserInfo(req)
+    forgot.countryChanged = getCountry(req)
     forgot.save((err, item) => {
       if (err) {
         reject(buildErrObject(422, err.message))
@@ -254,8 +254,8 @@ const markResetPasswordAsUsed = async (req, forgot) => {
 }
 
 const updatePassword = async (password, user) => {
-  user.password = password
   return new Promise((resolve, reject) => {
+    user.password = password
     user.save((err, item) => {
       if (err) {
         reject(buildErrObject(422, err.message))
@@ -308,14 +308,14 @@ const findForgotPassword = async id => {
 }
 
 const saveForgotPassword = async req => {
-  const forgot = new ForgotPassword({
-    email: req.body.email,
-    verification: uuid.v4(),
-    ipRequest: getIP(req),
-    browserRequest: getBrowserInfo(req),
-    countryRequest: getCountry(req)
-  })
   return new Promise((resolve, reject) => {
+    const forgot = new ForgotPassword({
+      email: req.body.email,
+      verification: uuid.v4(),
+      ipRequest: getIP(req),
+      browserRequest: getBrowserInfo(req),
+      countryRequest: getCountry(req)
+    })
     forgot.save((err, item) => {
       if (err) {
         reject(buildErrObject(422, err.message))
