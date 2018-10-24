@@ -1,3 +1,6 @@
+## v.1.1.3 (Oct 24, 2018)
+* Seeding Fix due to changes on new mongo-seeding package
+
 ## v.1.1.2 (Oct 23, 2018)
 * NPM updated
 
