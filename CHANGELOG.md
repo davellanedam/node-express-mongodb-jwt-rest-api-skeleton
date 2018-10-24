@@ -1,3 +1,6 @@
+## v.1.1.2 (Oct 23, 2018)
+* NPM updated
+
 ## v.1.1.1 (Sep 28, 2018)
 * Clean and Seed with async/await
 * Fixes
