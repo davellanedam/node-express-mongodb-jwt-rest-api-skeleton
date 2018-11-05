@@ -17,6 +17,7 @@ This project is created to help other developers create a **basic REST API in an
 - Compressed responses.
 - Secured HTTP headers.
 - CORS ready.
+- Cache ready (Redis)
 - HTTP request logger in development mode.
 - User roles.
 - Pagination ready.
@@ -38,6 +39,7 @@ This project is created to help other developers create a **basic REST API in an
 
 - Node.js **8+**
 - MongoDB **3.6+**
+- Redis **5.0+**
 
 ## How to install
 

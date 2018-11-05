@@ -8,6 +8,15 @@ const cors = require('cors')
 const passport = require('passport')
 const app = express()
 const initMongo = require('./config/mongo')
+const getExpeditiousCache = require('express-expeditious')
+const cache = getExpeditiousCache({
+  namespace: 'expresscache',
+  defaultTtl: '1 minute',
+  engine: require('expeditious-engine-redis')({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT
+  })
+})
 
 // Setup express server
 app.set('port', process.env.PORT || 3000)
@@ -30,6 +39,7 @@ app.use(cors())
 app.use(passport.initialize())
 app.use(compression())
 app.use(helmet())
+app.use(cache)
 app.use(express.static('public'))
 app.use(require('./app/routes'))
 app.listen(app.get('port'))
