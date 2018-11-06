@@ -1,3 +1,6 @@
+## v.1.2.1 (Nov 5, 2018)
+* Cache API responses only in production mode
+
 ## v.1.2.0 (Nov 5, 2018)
 * Use of REDIS to cache API responses
 * NPM updated

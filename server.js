@@ -39,7 +39,10 @@ app.use(cors())
 app.use(passport.initialize())
 app.use(compression())
 app.use(helmet())
-app.use(cache)
+// Redis cache enabled only for production
+if (process.env.NODE_ENV === 'production') {
+  app.use(cache)
+}
 app.use(express.static('public'))
 app.use(require('./app/routes'))
 app.listen(app.get('port'))
