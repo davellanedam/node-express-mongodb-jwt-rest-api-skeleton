@@ -1,3 +1,6 @@
+## v.1.2.2 (Nov 8, 2018)
+* NPM updated
+
 ## v.1.2.1 (Nov 5, 2018)
 * Cache API responses only in production mode
 

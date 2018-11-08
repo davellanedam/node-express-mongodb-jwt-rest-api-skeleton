@@ -109,12 +109,10 @@ exports.sendRegistrationEmailMessage = async user => {
   }
 
   if (process.env.NODE_ENV === 'production') {
-    this.sendEmail(
-      data,
-      messageSent =>
-        messageSent
-          ? console.log(`Email SENT to: ${user.email}`)
-          : console.log(`Email FAILED to: ${user.email}`)
+    this.sendEmail(data, messageSent =>
+      messageSent
+        ? console.log(`Email SENT to: ${user.email}`)
+        : console.log(`Email FAILED to: ${user.email}`)
     )
   } else if (process.env.NODE_ENV === 'development') {
     console.log(email)
@@ -139,12 +137,10 @@ exports.sendResetPasswordEmailMessage = async user => {
     verification: user.verification
   }
   if (process.env.NODE_ENV === 'production') {
-    this.sendEmail(
-      data,
-      messageSent =>
-        messageSent
-          ? console.log(`Email SENT to: ${user.email}`)
-          : console.log(`Email FAILED to: ${user.email}`)
+    this.sendEmail(data, messageSent =>
+      messageSent
+        ? console.log(`Email SENT to: ${user.email}`)
+        : console.log(`Email FAILED to: ${user.email}`)
     )
   } else if (process.env.NODE_ENV === 'development') {
     console.log(email)
