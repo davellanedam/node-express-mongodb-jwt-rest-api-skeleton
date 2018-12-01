@@ -1,5 +1,8 @@
+## v.1.2.5 (Dec 1, 2018)
+* Comments
+
 ## v.1.2.4 (Dec 1, 2018)
-* FIXED: Password not encrypted when updating in profile [\#4](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/4)
+* FIXED: Not standardized response on error [\#4](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/4)
 * NPM updated
 
 ## v.1.2.3 (Nov 28, 2018)

@@ -18,9 +18,9 @@ const updateProfileInDB = async (req, id) => {
         reject(buildErrObject(404, 'NOT_FOUND'))
       }
 
-      // Asigns new values
-      for (const field in req.body) {
-        user[field] = req.body[field]
+      // Asigns new values to user
+      for (const property in req.body) {
+        user[property] = req.body[property]
       }
 
       // Saves in DB
