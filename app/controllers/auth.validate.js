@@ -14,6 +14,8 @@ exports.register = [
     .not()
     .isEmpty()
     .withMessage('IS_EMPTY')
+    .isEmail()
+    .withMessage('EMAIL_IS_NOT_VALID')
     .normalizeEmail(),
   check('password')
     .exists()
@@ -50,7 +52,11 @@ exports.login = [
     .withMessage('MISSING')
     .not()
     .isEmpty()
-    .withMessage('IS_EMPTY'),
+    .withMessage('IS_EMPTY')
+    .isLength({
+      min: 5
+    })
+    .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
     try {
       validationResult(req).throw()
