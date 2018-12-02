@@ -15,6 +15,15 @@ exports.updateProfile = [
       max: 140
     })
     .withMessage('STRING_TOO_LONG_MAX_140'),
+  check('password')
+    .optional()
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .isLength({
+      min: 5
+    })
+    .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   check('urlTwitter')
     .optional()
     .custom(v => (v === '' ? true : validator.isURL(v)))
