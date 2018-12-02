@@ -1,3 +1,7 @@
+## v.1.2.6 (Dec 1, 2018)
+* FIXED: Password length validation in profile [\#5](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/5)
+* Role property is returned in profile
+
 ## v.1.2.5 (Dec 1, 2018)
 * Comments
 
