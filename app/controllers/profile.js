@@ -31,7 +31,6 @@ const updateProfileInDB = async (req, id) => {
         // Convert user to object and remove unneeded properties
         const userObject = item.toObject()
         delete userObject._id
-        delete userObject.role
         delete userObject.updatedAt
         delete userObject.createdAt
         delete userObject.password
@@ -43,7 +42,7 @@ const updateProfileInDB = async (req, id) => {
 
 const getProfileFromDB = async id => {
   return new Promise((resolve, reject) => {
-    model.findById(id, '-role -_id -updatedAt -createdAt', (err, user) => {
+    model.findById(id, '-_id -updatedAt -createdAt', (err, user) => {
       if (err) {
         reject(buildErrObject(422, err.message))
       }
