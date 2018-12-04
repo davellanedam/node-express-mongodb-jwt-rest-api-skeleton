@@ -7,7 +7,7 @@ const ForgotPasswordSchema = new mongoose.Schema(
       type: String,
       validate: {
         validator: validator.isEmail,
-        message: 'Not a valid email address'
+        message: 'EMAIL_IS_NOT_VALID'
       },
       lowercase: true,
       required: true
