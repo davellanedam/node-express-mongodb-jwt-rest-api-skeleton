@@ -1,3 +1,9 @@
+## v.1.2.9 (Feb 9, 2018)
+* CHANGELOG updated
+
+## v.1.2.8 (Feb 9, 2018)
+* NPM updated
+
 ## v.1.2.7 (Dec 4, 2018)
 * FIXED: Error message standarization [\#6](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/6)
 * Role property is returned in profile
