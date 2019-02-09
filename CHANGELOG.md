@@ -1,3 +1,6 @@
+## v.1.2.10 (Feb 9, 2018)
+* package.json updated
+
 ## v.1.2.9 (Feb 9, 2018)
 * CHANGELOG updated
 
