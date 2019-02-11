@@ -1,3 +1,8 @@
+## v.1.2.11 (Feb 11, 2018)
+* NPM updated
+* Removed pm2 from start script in package.json
+* server.js now inits redis stuff only in production
+
 ## v.1.2.10 (Feb 9, 2018)
 * package.json updated
 
