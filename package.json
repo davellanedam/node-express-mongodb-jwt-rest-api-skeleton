@@ -1,6 +1,6 @@
 {
   "name": "node-express-mongodb-jwt-rest-api-skeleton",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "description": "Node.js express.js MongoDB JWT REST API - Basic Project Skeleton. Great for building an MVP for your front-end app (Vue, react, angular, or anything that can consume an API)",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton.git"
   },
   "scripts": {
-    "start": "NODE_ENV=production pm2 start server.js --watch",
+    "start": "NODE_ENV=production node server.js",
     "test": "mocha --timeout=5000",
     "dev": "NODE_ENV=development nodemon server.js",
     "fresh": "npm run clean && npm run seed",
@@ -27,7 +27,7 @@
     "express": "^4.16.4",
     "express-expeditious": "^5.0.0",
     "express-validator": "^5.3.1",
-    "helmet": "^3.15.0",
+    "helmet": "^3.15.1",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.11",
     "mongoose-paginate-v2": "^1.0.20",
