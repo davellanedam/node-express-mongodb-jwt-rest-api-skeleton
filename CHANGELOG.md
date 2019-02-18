@@ -1,15 +1,20 @@
-## v.1.2.11 (Feb 11, 2018)
+## v.1.2.12 (Feb 18, 2019)
+* NPM updated
+* CHANGELOG fixes
+* Typos
+
+## v.1.2.11 (Feb 11, 2019)
 * NPM updated
 * Removed pm2 from start script in package.json
 * server.js now inits redis stuff only in production
 
-## v.1.2.10 (Feb 9, 2018)
+## v.1.2.10 (Feb 9, 2019)
 * package.json updated
 
-## v.1.2.9 (Feb 9, 2018)
+## v.1.2.9 (Feb 9, 2019)
 * CHANGELOG updated
 
-## v.1.2.8 (Feb 9, 2018)
+## v.1.2.8 (Feb 9, 2019)
 * NPM updated
 
 ## v.1.2.7 (Dec 4, 2018)

@@ -91,7 +91,7 @@ exports.sendEmail = async (data, callback) => {
 }
 
 exports.sendRegistrationEmailMessage = async user => {
-  const subject = 'Verirify your email at myProject'
+  const subject = 'Verify your email at myProject'
   const htmlMessage = `<p>Helo ${
     user.name
   }.</p> <p>Welcome! To verify your email, please click in this link:</p> <p>${
@@ -185,9 +185,9 @@ exports.buildErrObject = (code, message) => {
   }
 }
 
-exports.buildSuccObject = msg => {
+exports.buildSuccObject = message => {
   return {
-    msg
+    message
   }
 }
 

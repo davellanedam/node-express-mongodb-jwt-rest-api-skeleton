@@ -32,8 +32,7 @@ This project is created to help other developers create a **basic REST API in an
 - NPM script for keeping good source code formatting using prettier and ESLint.
 - Use of ESLint for good coding practices.
 - Mailer example with Nodemailer and Mailgun.
-- JWT Tokens, provide login with `Authorization` header with value `Basic username:password` where `username:password` **MUST BE ENCODED** with `Base64`.
-- Make requests with a token after login with `Authorization` header with value `Bearer yourToken` where `yourToken` is the **signed and encrypted token** given in the response from the login process.
+- JWT Tokens, make requests with a token after login with `Authorization` header with value `Bearer yourToken` where `yourToken` is the **signed and encrypted token** given in the response from the login process.
 
 ## Requirements
 
@@ -69,7 +68,7 @@ npm install nodemon -g
 
 1. In the root this repository you will find a file named `.env.example`
 2. Create a new file by copying and pasting the file and then renaming it to just `.env`
-3. The file `.env`is already ignored, so you never commit your credentials.
+3. The file `.env` is already ignored, so you never commit your credentials.
 4. Change the values of the file to your environment (development or production)
 5. Upload the `.env` to your environment server(development or production)
 6. If you use the postman collection to try the endpoints, change value of the variable `server` on your environment to the url of your server, for development mode use http://localhost:3000
