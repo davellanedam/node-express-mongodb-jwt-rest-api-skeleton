@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
 router.use('*', (req, res) => {
   res.status(404).json({
     errors: {
-      msg: 'NOT_FOUND'
+      message: 'URL_NOT_FOUND'
     }
   })
 })

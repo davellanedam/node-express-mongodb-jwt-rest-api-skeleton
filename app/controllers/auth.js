@@ -247,7 +247,7 @@ const markResetPasswordAsUsed = async (req, forgot) => {
         reject(buildErrObject(404, 'NOT_FOUND'))
       }
       resolve({
-        msg: 'PASSWORD_CHANGED'
+        message: 'PASSWORD_CHANGED'
       })
     })
   })
@@ -327,7 +327,7 @@ const saveForgotPassword = async req => {
 
 const forgotPasswordResponse = item => {
   return {
-    msg: 'RESET_EMAIL_SENT',
+    message: 'RESET_EMAIL_SENT',
     verification: item.verification
   }
 }
