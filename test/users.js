@@ -81,7 +81,12 @@ describe('*********** USERS ***********', () => {
         name: faker.random.words(),
         email,
         password: faker.random.words(),
-        role: 'admin'
+        role: 'admin',
+        urlTwitter: faker.internet.url(),
+        urlGitHub: faker.internet.url(),
+        phone: faker.phone.phoneNumber(),
+        city: faker.random.words(),
+        country: faker.random.words()
       }
       chai
         .request(server)
@@ -210,7 +215,7 @@ describe('*********** USERS ***********', () => {
             .end((error, res) => {
               res.should.have.status(200)
               res.body.should.be.a('object')
-              res.body.should.have.property('msg').eql('DELETED')
+              res.body.should.have.property('message').eql('DELETED')
             })
         }
         done()

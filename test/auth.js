@@ -104,7 +104,7 @@ describe('*********** AUTH ***********', () => {
         })
         .end((err, res) => {
           res.should.have.status(200)
-          res.body.should.include.keys('msg', 'verification')
+          res.body.should.include.keys('message', 'verification')
           verificationForgot = res.body.verification
           done()
         })
@@ -122,8 +122,8 @@ describe('*********** AUTH ***********', () => {
         })
         .end((err, res) => {
           res.should.have.status(200)
-          res.body.should.include.keys('msg')
-          res.body.msg.should.equal('PASSWORD_CHANGED')
+          res.body.should.be.a('object')
+          res.body.should.have.property('message').eql('PASSWORD_CHANGED')
           done()
         })
     })

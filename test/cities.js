@@ -202,7 +202,7 @@ describe('*********** CITIES ***********', () => {
             .end((error, res) => {
               res.should.have.status(200)
               res.body.should.be.a('object')
-              res.body.should.have.property('msg').eql('DELETED')
+              res.body.should.have.property('message').eql('DELETED')
             })
         }
         done()

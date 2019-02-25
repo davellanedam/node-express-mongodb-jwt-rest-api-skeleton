@@ -2,7 +2,6 @@
 
 process.env.NODE_ENV = 'test'
 
-const User = require('../app/models/user')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../server')
@@ -12,7 +11,6 @@ const loginDetails = {
   password: '12345'
 }
 let token = ''
-const createdID = []
 
 chai.use(chaiHttp)
 
@@ -77,7 +75,11 @@ describe('*********** PROFILE ***********', () => {
     it('it should UPDATE profile', done => {
       const user = {
         name: 'Test123456',
-        email: 'admin@admin.com'
+        urlTwitter: 'https://hello.com',
+        urlGitHub: 'https://hello.io',
+        phone: '123123123',
+        city: 'Bucaramanga',
+        country: 'Colombia'
       }
       chai
         .request(server)
@@ -88,7 +90,11 @@ describe('*********** PROFILE ***********', () => {
           res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.should.have.property('name').eql('Test123456')
-          createdID.push(res.body._id)
+          res.body.should.have.property('urlTwitter').eql('https://hello.com')
+          res.body.should.have.property('urlGitHub').eql('https://hello.io')
+          res.body.should.have.property('phone').eql('123123123')
+          res.body.should.have.property('city').eql('Bucaramanga')
+          res.body.should.have.property('country').eql('Colombia')
           done()
         })
     })
@@ -109,18 +115,43 @@ describe('*********** PROFILE ***********', () => {
         })
     })
   })
-})
-after(() => {
-  createdID.map(item => {
-    return User.deleteOne(
-      {
-        _id: item
-      },
-      error => {
-        if (error !== null) {
-          console.log(error)
-        }
+  describe('/POST profile/changePassword', () => {
+    it('it should NOT change password', done => {
+      const data = {
+        oldPassword: '123456',
+        newPassword: '123456'
       }
-    )
+      chai
+        .request(server)
+        .post('/profile/changePassword')
+        .set('Authorization', `Bearer ${token}`)
+        .send(data)
+        .end((err, res) => {
+          res.should.have.status(409)
+          res.body.should.be.a('object')
+          res.body.should.have
+            .property('errors')
+            .that.has.property('message')
+            .eql('WRONG_PASSWORD')
+          done()
+        })
+    })
+    it('it should change password', done => {
+      const data = {
+        oldPassword: '12345',
+        newPassword: '12345'
+      }
+      chai
+        .request(server)
+        .post('/profile/changePassword')
+        .set('Authorization', `Bearer ${token}`)
+        .send(data)
+        .end((err, res) => {
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+          res.body.should.have.property('message').eql('PASSWORD_CHANGED')
+          done()
+        })
+    })
   })
 })
