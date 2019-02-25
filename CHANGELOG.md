@@ -1,3 +1,10 @@
+## v.2.0.0 (Feb 24, 2019)
+* Breaking changes for success and error responses
+* Added new endpoint in /profile/changePassword
+* Fixes in tests
+* Fixes in validations
+* NPM updated
+
 ## v.1.2.12 (Feb 18, 2019)
 * NPM updated
 * CHANGELOG fixes
