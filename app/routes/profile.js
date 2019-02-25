@@ -29,5 +29,13 @@ router.patch(
   validate.updateProfile,
   controller.updateProfile
 )
+router.post(
+  '/changePassword',
+  requireAuth,
+  AuthController.roleAuthorization(['user', 'admin']),
+  trimRequest.all,
+  validate.changePassword,
+  controller.changePassword
+)
 
 module.exports = router
