@@ -1,3 +1,7 @@
+## v.2.1.0 (Feb 27, 2019)
+* i18n added for registration email and forgot password email
+* Typos
+
 ## v.2.0.1 (Feb 27, 2019)
 * Error response regression
 * NPM updated
