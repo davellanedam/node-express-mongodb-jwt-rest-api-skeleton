@@ -17,7 +17,7 @@ chai.use(chaiHttp)
 before(done => {
   setTimeout(() => {
     done()
-  }, 10)
+  }, 50)
 })
 describe('*********** PROFILE ***********', () => {
   describe('/POST login', () => {
@@ -131,7 +131,7 @@ describe('*********** PROFILE ***********', () => {
           res.body.should.be.a('object')
           res.body.should.have
             .property('errors')
-            .that.has.property('message')
+            .that.has.property('msg')
             .eql('WRONG_PASSWORD')
           done()
         })
@@ -149,7 +149,7 @@ describe('*********** PROFILE ***********', () => {
         .end((err, res) => {
           res.should.have.status(200)
           res.body.should.be.a('object')
-          res.body.should.have.property('message').eql('PASSWORD_CHANGED')
+          res.body.should.have.property('msg').eql('PASSWORD_CHANGED')
           done()
         })
     })

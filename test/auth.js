@@ -22,7 +22,7 @@ chai.use(chaiHttp)
 before(done => {
   setTimeout(() => {
     done()
-  }, 10)
+  }, 50)
 })
 describe('*********** AUTH ***********', () => {
   describe('/POST login', () => {
@@ -104,7 +104,7 @@ describe('*********** AUTH ***********', () => {
         })
         .end((err, res) => {
           res.should.have.status(200)
-          res.body.should.include.keys('message', 'verification')
+          res.body.should.include.keys('msg', 'verification')
           verificationForgot = res.body.verification
           done()
         })
@@ -123,7 +123,7 @@ describe('*********** AUTH ***********', () => {
         .end((err, res) => {
           res.should.have.status(200)
           res.body.should.be.a('object')
-          res.body.should.have.property('message').eql('PASSWORD_CHANGED')
+          res.body.should.have.property('msg').eql('PASSWORD_CHANGED')
           done()
         })
     })

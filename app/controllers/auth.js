@@ -7,6 +7,7 @@ const {
   getIP,
   getBrowserInfo,
   getCountry,
+  buildSuccObject,
   buildErrObject,
   handleError,
   emailExists,
@@ -246,9 +247,7 @@ const markResetPasswordAsUsed = async (req, forgot) => {
       if (!item) {
         reject(buildErrObject(404, 'NOT_FOUND'))
       }
-      resolve({
-        message: 'PASSWORD_CHANGED'
-      })
+      resolve(buildSuccObject('PASSWORD_CHANGED'))
     })
   })
 }
@@ -327,7 +326,7 @@ const saveForgotPassword = async req => {
 
 const forgotPasswordResponse = item => {
   return {
-    message: 'RESET_EMAIL_SENT',
+    msg: 'RESET_EMAIL_SENT',
     verification: item.verification
   }
 }

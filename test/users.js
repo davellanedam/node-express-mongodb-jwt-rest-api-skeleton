@@ -21,7 +21,7 @@ chai.use(chaiHttp)
 before(done => {
   setTimeout(() => {
     done()
-  }, 10)
+  }, 50)
 })
 describe('*********** USERS ***********', () => {
   describe('/POST login', () => {
@@ -215,7 +215,7 @@ describe('*********** USERS ***********', () => {
             .end((error, res) => {
               res.should.have.status(200)
               res.body.should.be.a('object')
-              res.body.should.have.property('message').eql('DELETED')
+              res.body.should.have.property('msg').eql('DELETED')
             })
         }
         done()

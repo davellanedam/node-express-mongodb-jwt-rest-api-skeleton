@@ -173,7 +173,7 @@ exports.handleError = (res, err) => {
   // Sends error to user
   res.status(err.code).json({
     errors: {
-      message: err.message
+      msg: err.message
     }
   })
 }
@@ -187,7 +187,7 @@ exports.buildErrObject = (code, message) => {
 
 exports.buildSuccObject = message => {
   return {
-    message
+    msg: message
   }
 }
 
