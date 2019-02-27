@@ -1,3 +1,6 @@
+## v.2.1.1 (Feb 27, 2019)
+* README.md updated
+
 ## v.2.1.0 (Feb 27, 2019)
 * i18n added for registration email and forgot password email
 * Typos
