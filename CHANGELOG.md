@@ -1,3 +1,7 @@
+## v.2.0.1 (Feb 27, 2019)
+* Error response regression
+* NPM updated
+
 ## v.2.0.0 (Feb 24, 2019)
 * Breaking changes for success and error responses
 * Added new endpoint in /profile/changePassword
