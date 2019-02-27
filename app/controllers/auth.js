@@ -374,13 +374,15 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
   try {
+    // Gets locale from header 'Accept-Language'
+    const locale = req.getLocale()
     req = matchedData(req)
     const doesEmailExists = await emailExists(req.email)
     if (!doesEmailExists) {
       const item = await registerUser(req)
       const userInfo = setUserInfo(item)
       const response = returnRegisterToken(item, userInfo)
-      sendRegistrationEmailMessage(item)
+      sendRegistrationEmailMessage(locale, item)
       res.status(201).json(response)
     }
   } catch (error) {
@@ -400,10 +402,12 @@ exports.verify = async (req, res) => {
 
 exports.forgotPassword = async (req, res) => {
   try {
+    // Gets locale from header 'Accept-Language'
+    const locale = req.getLocale()
     const data = matchedData(req)
     await findUser(data.email)
     const item = await saveForgotPassword(req)
-    sendResetPasswordEmailMessage(item)
+    sendResetPasswordEmailMessage(locale, item)
     res.status(200).json(forgotPasswordResponse(item))
   } catch (error) {
     handleError(res, error)
