@@ -19,6 +19,7 @@ This project is created to help other developers create a **basic REST API in an
 - CORS ready.
 - Cache ready (Redis)
 - HTTP request logger in development mode.
+- i18n ready (for sending emails in multiple languages)
 - User roles.
 - Pagination ready.
 - User profile.
@@ -78,6 +79,10 @@ npm install nodemon -g
 To ensure the deliverability of emails sent by this API, `Mailgun` is used for mailing users when they sign up, so if you want to use that feature go sign up at their website https://www.mailgun.com
 
 If you want to try a different method it´s ok, I used https://nodemailer.com for this API and they have different transport methods like: smtp.
+
+### i18n
+
+Language is automatically detected from `Accept-Language` header on the request. So either you send locale manually on the request or your browser will send its default, if `Accept-Language` header is not sent then it will use `en` locale as default.
 
 ## How to run
 
