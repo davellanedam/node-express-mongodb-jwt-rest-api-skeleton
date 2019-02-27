@@ -153,7 +153,7 @@ const findUser = async email => {
           reject(buildErrObject(422, err.message))
         }
         if (!item) {
-          reject(buildErrObject(404, 'USER_DOES_NOT_EXISTS'))
+          reject(buildErrObject(404, 'USER_DOES_NOT_EXIST'))
         }
         resolve(item)
       }
