@@ -192,7 +192,6 @@ const registerUser = async req => {
 }
 
 const returnRegisterToken = (item, userInfo) => {
-  userInfo.verification = item.verification
   return {
     token: generateToken(item._id),
     user: userInfo
@@ -324,10 +323,10 @@ const saveForgotPassword = async req => {
   })
 }
 
-const forgotPasswordResponse = item => {
+const forgotPasswordResponse = email => {
   return {
     msg: 'RESET_EMAIL_SENT',
-    verification: item.verification
+    email
   }
 }
 
@@ -408,7 +407,7 @@ exports.forgotPassword = async (req, res) => {
     await findUser(data.email)
     const item = await saveForgotPassword(req)
     sendResetPasswordEmailMessage(locale, item)
-    res.status(200).json(forgotPasswordResponse(item))
+    res.status(200).json(forgotPasswordResponse(data.email))
   } catch (error) {
     handleError(res, error)
   }
