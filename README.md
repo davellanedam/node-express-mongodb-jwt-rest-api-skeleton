@@ -45,7 +45,7 @@ This project is created to help other developers create a **basic REST API in an
 
 ### Using Git (recommended)
 
-1. Clone the project from github. Change "myproject" to you project name.
+1. Clone the project from github. Change "myproject" to your project name.
 
 ```bash
 git clone https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton.git ./myproject
@@ -62,7 +62,6 @@ git clone https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skel
 cd myproject
 npm install
 npm update
-npm install nodemon -g
 ```
 
 ### Setting up environments (development or production)
