@@ -1,3 +1,6 @@
+## v.2.1.5 (Mar 4, 2019)
+* Istambul nyc code coverage added
+
 ## v.2.1.4 (Mar 4, 2019)
 * Verification added only in tests responses at registration and forgot password
 * NPM updated
