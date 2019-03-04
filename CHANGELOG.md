@@ -1,3 +1,8 @@
+## v.2.1.4 (Mar 4, 2019)
+* Verification added only in tests responses at registration and forgot password
+* NPM updated
+* FIXED: User creation locale param was missing
+
 ## v.2.1.3 (Mar 2, 2019)
 * Verification removed from responses at registration and forgot password (They were being used for testing and somehow made it here)
 
