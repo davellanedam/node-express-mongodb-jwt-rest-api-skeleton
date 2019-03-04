@@ -1,3 +1,6 @@
+## v.2.1.6 (Mar 4, 2019)
+* Better testing
+
 ## v.2.1.5 (Mar 4, 2019)
 * Istambul nyc code coverage added
 
