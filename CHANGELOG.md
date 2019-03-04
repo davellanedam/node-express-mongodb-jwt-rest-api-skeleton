@@ -1,3 +1,6 @@
+## v.2.1.7 (Mar 4, 2019)
+* More tests added
+
 ## v.2.1.6 (Mar 4, 2019)
 * Better testing
 
