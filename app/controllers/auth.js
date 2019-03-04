@@ -192,10 +192,14 @@ const registerUser = async req => {
 }
 
 const returnRegisterToken = (item, userInfo) => {
-  return {
+  if (process.env.NODE_ENV === 'test') {
+    userInfo.verification = item.verification
+  }
+  const data = {
     token: generateToken(item._id),
     user: userInfo
   }
+  return data
 }
 
 const verificationExists = async id => {
@@ -323,11 +327,15 @@ const saveForgotPassword = async req => {
   })
 }
 
-const forgotPasswordResponse = email => {
-  return {
+const forgotPasswordResponse = item => {
+  const data = {
     msg: 'RESET_EMAIL_SENT',
-    email
+    email: item.email
   }
+  if (process.env.NODE_ENV === 'test') {
+    data.verification = item.verification
+  }
+  return data
 }
 
 const checkPermissions = async (data, next) => {
@@ -407,7 +415,7 @@ exports.forgotPassword = async (req, res) => {
     await findUser(data.email)
     const item = await saveForgotPassword(req)
     sendResetPasswordEmailMessage(locale, item)
-    res.status(200).json(forgotPasswordResponse(data.email))
+    res.status(200).json(forgotPasswordResponse(item))
   } catch (error) {
     handleError(res, error)
   }
