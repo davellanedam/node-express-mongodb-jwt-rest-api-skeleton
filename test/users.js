@@ -123,11 +123,11 @@ describe('*********** USERS ***********', () => {
         .request(server)
         .get(`/users/${id}`)
         .set('Authorization', `Bearer ${token}`)
-        .end((error, result) => {
-          result.should.have.status(200)
-          result.body.should.be.a('object')
-          result.body.should.have.property('name')
-          result.body.should.have.property('_id').eql(id)
+        .end((error, res) => {
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+          res.body.should.have.property('name')
+          res.body.should.have.property('_id').eql(id)
           done()
         })
     })

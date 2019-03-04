@@ -20,6 +20,30 @@ const email = faker.internet.email()
 chai.use(chaiHttp)
 
 describe('*********** AUTH ***********', () => {
+  describe('/GET /', () => {
+    it('it should GET home API url', done => {
+      chai
+        .request(server)
+        .get('/')
+        .end((err, res) => {
+          res.should.have.status(200)
+          done()
+        })
+    })
+  })
+
+  describe('/GET /404url', () => {
+    it('it should GET 404 url', done => {
+      chai
+        .request(server)
+        .get('/404url')
+        .end((err, res) => {
+          res.should.have.status(404)
+          done()
+        })
+    })
+  })
+
   describe('/POST login', () => {
     it('it should GET token', done => {
       chai
