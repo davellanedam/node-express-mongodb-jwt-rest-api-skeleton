@@ -19,13 +19,15 @@ module.exports = () => {
           dbStatus = `*    Error connecting to DB: ${err}\n****************************\n`
         }
         dbStatus = `*    DB Connection: OK\n****************************\n`
-        // Prints initialization
-        console.log('****************************')
-        console.log('*    Starting Server')
-        console.log(`*    Port: ${process.env.PORT || 3000}`)
-        console.log(`*    NODE_ENV: ${process.env.NODE_ENV}`)
-        console.log(`*    Database: MongoDB`)
-        console.log(dbStatus)
+        if (process.env.NODE_ENV !== 'test') {
+          // Prints initialization
+          console.log('****************************')
+          console.log('*    Starting Server')
+          console.log(`*    Port: ${process.env.PORT || 3000}`)
+          console.log(`*    NODE_ENV: ${process.env.NODE_ENV}`)
+          console.log(`*    Database: MongoDB`)
+          console.log(dbStatus)
+        }
       }
     )
     mongoose.set('useCreateIndex', true)

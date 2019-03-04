@@ -18,13 +18,4 @@ const json = [
   }
 ]
 
-for (let i = 0; i < 100; i++) {
-  const tmp = {
-    name: faker.random.words(),
-    createdAt: faker.date.past(),
-    updatedAt: faker.date.recent()
-  }
-  json.push(tmp)
-}
-
 module.exports = json

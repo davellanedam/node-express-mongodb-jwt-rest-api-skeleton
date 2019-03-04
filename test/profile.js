@@ -14,11 +14,6 @@ let token = ''
 
 chai.use(chaiHttp)
 
-before(done => {
-  setTimeout(() => {
-    done()
-  }, 50)
-})
 describe('*********** PROFILE ***********', () => {
   describe('/POST login', () => {
     it('it should GET token', done => {

@@ -18,11 +18,6 @@ const createdID = []
 
 chai.use(chaiHttp)
 
-before(done => {
-  setTimeout(() => {
-    done()
-  }, 50)
-})
 describe('*********** USERS ***********', () => {
   describe('/POST login', () => {
     it('it should GET token', done => {
@@ -123,117 +118,113 @@ describe('*********** USERS ***********', () => {
   })
   describe('/GET/:id user', () => {
     it('it should GET a user by the given id', done => {
-      const user = new User({
-        name: faker.random.words(),
-        email: faker.internet.email(),
-        password: faker.random.words(),
-        role: 'admin'
-      })
-      user.save((err, result) => {
-        if (result) {
-          chai
-            .request(server)
-            .get(`/users/${result.id}`)
-            .set('Authorization', `Bearer ${token}`)
-            .end((error, res) => {
-              res.should.have.status(200)
-              res.body.should.be.a('object')
-              res.body.should.have.property('name')
-              res.body.should.have.property('_id').eql(result.id)
-              createdID.push(result._id)
-            })
-        }
-        done()
-      })
+      const id = createdID.slice(-1).pop()
+      chai
+        .request(server)
+        .get(`/users/${id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .end((error, result) => {
+          result.should.have.status(200)
+          result.body.should.be.a('object')
+          result.body.should.have.property('name')
+          result.body.should.have.property('_id').eql(id)
+          done()
+        })
     })
   })
   describe('/PATCH/:id user', () => {
     it('it should UPDATE a user given the id', done => {
-      const user = new User({
-        name: faker.random.words(),
-        email,
-        password: faker.random.words(),
-        role: 'admin'
-      })
-      user.save((err, result) => {
-        if (result) {
-          chai
-            .request(server)
-            .patch(`/users/${result.id}`)
-            .set('Authorization', `Bearer ${token}`)
-            .send({
-              name: 'JS123456',
-              email: 'emailthatalreadyexists@email.com',
-              role: 'admin'
-            })
-            .end((error, res) => {
-              res.should.have.status(200)
-              res.body.should.be.a('object')
-              res.body.should.have.property('_id').eql(result.id)
-              res.body.should.have.property('name').eql('JS123456')
-              createdID.push(result.id)
-            })
-        }
-        done()
-      })
-    })
-    it('it should NOT UPDATE a user with email that already exists', done => {
-      const user = new User({
-        name: faker.random.words(),
-        email: 'admin@admin.com',
-        password: faker.random.words(),
-        role: 'admin'
-      })
+      const id = createdID.slice(-1).pop()
+      const user = {
+        name: 'JS123456',
+        email: 'emailthatalreadyexists@email.com',
+        role: 'admin',
+        urlTwitter: faker.internet.url(),
+        urlGitHub: faker.internet.url(),
+        phone: faker.phone.phoneNumber(),
+        city: faker.random.words(),
+        country: faker.random.words()
+      }
       chai
         .request(server)
-        .patch(`/users/${createdID}`)
+        .patch(`/users/${id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(user)
+        .end((error, res) => {
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+          res.body.should.have.property('_id').eql(id)
+          res.body.should.have.property('name').eql('JS123456')
+          res.body.should.have
+            .property('email')
+            .eql('emailthatalreadyexists@email.com')
+          createdID.push(res.body._id)
+          done()
+        })
+    })
+    it('it should NOT UPDATE a user with email that already exists', done => {
+      const id = createdID.slice(-1).pop()
+      const user = {
+        name: faker.random.words(),
+        email: 'admin@admin.com',
+        role: 'admin'
+      }
+      chai
+        .request(server)
+        .patch(`/users/${id}`)
         .set('Authorization', `Bearer ${token}`)
         .send(user)
         .end((err, res) => {
           res.should.have.status(422)
           res.body.should.be.a('object')
           res.body.should.have.property('errors')
-          createdID.push(res.body._id)
           done()
         })
     })
   })
   describe('/DELETE/:id user', () => {
     it('it should DELETE a user given the id', done => {
-      const user = new User({
+      const user = {
         name: faker.random.words(),
         email: faker.internet.email(),
         password: faker.random.words(),
-        role: 'admin'
-      })
-      user.save((err, result) => {
-        if (result) {
+        role: 'admin',
+        urlTwitter: faker.internet.url(),
+        urlGitHub: faker.internet.url(),
+        phone: faker.phone.phoneNumber(),
+        city: faker.random.words(),
+        country: faker.random.words()
+      }
+      chai
+        .request(server)
+        .post('/users')
+        .set('Authorization', `Bearer ${token}`)
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(201)
+          res.body.should.be.a('object')
+          res.body.should.include.keys('_id', 'name', 'email', 'verification')
           chai
             .request(server)
-            .delete(`/users/${result.id}`)
+            .delete(`/users/${res.body._id}`)
             .set('Authorization', `Bearer ${token}`)
-            .end((error, res) => {
-              res.should.have.status(200)
-              res.body.should.be.a('object')
-              res.body.should.have.property('msg').eql('DELETED')
+            .end((error, result) => {
+              result.should.have.status(200)
+              result.body.should.be.a('object')
+              result.body.should.have.property('msg').eql('DELETED')
+              done()
             })
-        }
-        done()
-      })
+        })
     })
   })
-})
-after(() => {
-  createdID.map(item => {
-    return User.deleteOne(
-      {
-        _id: item
-      },
-      error => {
-        if (error !== null) {
-          console.log(error)
+
+  after(() => {
+    createdID.forEach(id => {
+      User.findByIdAndRemove(id, err => {
+        if (err) {
+          console.log(err)
         }
-      }
-    )
+      })
+    })
   })
 })

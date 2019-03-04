@@ -15,14 +15,11 @@ const loginDetails = {
 let token = ''
 const createdID = []
 const name = faker.random.words()
+const newName = faker.random.words()
+const repeatedName = faker.random.words()
 
 chai.use(chaiHttp)
 
-before(done => {
-  setTimeout(() => {
-    done()
-  }, 50)
-})
 describe('*********** CITIES ***********', () => {
   describe('/POST login', () => {
     it('it should GET token', done => {
@@ -115,112 +112,108 @@ describe('*********** CITIES ***********', () => {
 
   describe('/GET/:id city', () => {
     it('it should GET a city by the given id', done => {
-      const city = new City({
-        name
-      })
-      city.save((err, result) => {
-        if (result) {
-          chai
-            .request(server)
-            .get(`/cities/${result.id}`)
-            .set('Authorization', `Bearer ${token}`)
-            .end((error, res) => {
-              res.should.have.status(200)
-              res.body.should.be.a('object')
-              res.body.should.have.property('name')
-              res.body.should.have.property('_id').eql(result.id)
-              createdID.push(result.id)
-            })
-        }
-        done()
-      })
+      const id = createdID.slice(-1).pop()
+      chai
+        .request(server)
+        .get(`/cities/${id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .end((error, res) => {
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+          res.body.should.have.property('name')
+          res.body.should.have.property('_id').eql(id)
+          done()
+        })
     })
   })
 
   describe('/PATCH/:id city', () => {
     it('it should UPDATE a city given the id', done => {
-      const city = new City({
-        name
-      })
-      city.save((err, result) => {
-        if (result) {
-          chai
-            .request(server)
-            .patch(`/cities/${result.id}`)
-            .set('Authorization', `Bearer ${token}`)
-            .send({
-              name: 'JS123456'
-            })
-            .end((error, res) => {
-              res.should.have.status(200)
-              res.body.should.be.a('object')
-              res.body.should.have.property('_id').eql(result.id)
-              res.body.should.have.property('name').eql('JS123456')
-              createdID.push(res.body._id)
-            })
-        }
-        done()
-      })
+      const id = createdID.slice(-1).pop()
+      chai
+        .request(server)
+        .patch(`/cities/${id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          name: newName
+        })
+        .end((error, res) => {
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+          res.body.should.have.property('_id').eql(id)
+          res.body.should.have.property('name').eql(newName)
+          done()
+        })
     })
     it('it should NOT UPDATE a city that already exists', done => {
-      const city = new City({
-        name
-      })
-      city.save((err, result) => {
-        if (result) {
-          const cityRepeated = {
-            name
+      const city = {
+        name: repeatedName
+      }
+      chai
+        .request(server)
+        .post('/cities')
+        .set('Authorization', `Bearer ${token}`)
+        .send(city)
+        .end((err, res) => {
+          res.should.have.status(201)
+          res.body.should.be.a('object')
+          res.body.should.include.keys('_id', 'name')
+          res.body.should.have.property('name').eql(repeatedName)
+          createdID.push(res.body._id)
+          const anotherCity = {
+            name: newName
           }
           chai
             .request(server)
             .patch(`/cities/${createdID.slice(-1).pop()}`)
             .set('Authorization', `Bearer ${token}`)
-            .send(cityRepeated)
-            .end((error, res) => {
-              res.should.have.status(422)
-              res.body.should.be.a('object')
-              res.body.should.have.property('errors')
-              createdID.push(result._id)
+            .send(anotherCity)
+            .end((error, result) => {
+              result.should.have.status(422)
+              result.body.should.be.a('object')
+              result.body.should.have.property('errors')
+              done()
             })
-        }
-        done()
-      })
+        })
     })
   })
 
   describe('/DELETE/:id city', () => {
     it('it should DELETE a city given the id', done => {
-      const city = new City({
-        name: faker.random.words()
-      })
-      city.save((err, result) => {
-        if (result) {
+      const city = {
+        name
+      }
+      chai
+        .request(server)
+        .post('/cities')
+        .set('Authorization', `Bearer ${token}`)
+        .send(city)
+        .end((err, res) => {
+          res.should.have.status(201)
+          res.body.should.be.a('object')
+          res.body.should.include.keys('_id', 'name')
+          res.body.should.have.property('name').eql(name)
           chai
             .request(server)
-            .delete(`/cities/${result.id}`)
+            .delete(`/cities/${res.body._id}`)
             .set('Authorization', `Bearer ${token}`)
-            .end((error, res) => {
-              res.should.have.status(200)
-              res.body.should.be.a('object')
-              res.body.should.have.property('msg').eql('DELETED')
+            .end((error, result) => {
+              result.should.have.status(200)
+              result.body.should.be.a('object')
+              result.body.should.have.property('msg').eql('DELETED')
+              done()
             })
-        }
-        done()
-      })
+        })
     })
   })
-})
-after(() => {
-  createdID.map(item => {
-    return City.deleteOne(
-      {
-        _id: item
-      },
-      error => {
-        if (error !== null) {
-          console.log(error)
+
+  after(() => {
+    createdID.forEach(id => {
+      City.findByIdAndRemove(id, err => {
+        if (err) {
+          console.log(err)
         }
-      }
-    )
+      })
+    })
   })
 })
