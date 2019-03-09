@@ -1,3 +1,8 @@
+## v.2.1.8 (Mar 9, 2019)
+* New implementation for query on cities and users
+* More data on seeding
+* NPM updated
+
 ## v.2.1.7 (Mar 4, 2019)
 * More tests added
 
