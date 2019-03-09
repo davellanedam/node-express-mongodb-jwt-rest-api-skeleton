@@ -161,7 +161,7 @@ exports.getAllItems = async (req, res) => {
 
 exports.getItems = async (req, res) => {
   try {
-    const query = await checkQueryString(req.query.filter)
+    const query = await checkQueryString(req.query)
     res.status(200).json(await getItemsFromDB(req, query))
   } catch (error) {
     handleError(res, error)

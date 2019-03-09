@@ -208,14 +208,30 @@ exports.isIDGood = async id => {
 exports.checkQueryString = async query => {
   return new Promise((resolve, reject) => {
     try {
-      return typeof query !== 'undefined'
-        ? resolve(JSON.parse(query))
-        : resolve({})
+      if (
+        typeof query.filter !== 'undefined' &&
+        typeof query.fields !== 'undefined'
+      ) {
+        const data = {}
+        // Takes fields param and builds an array by splitting with ','
+        const arrayFields = query.fields.split(',')
+        // Inits data obj with every field
+        arrayFields.map(item => {
+          // eslint-disable-next-line dot-notation
+          data[item] = {}
+        })
+        // Adds SQL Like %word% with regex
+        arrayFields.map(item => {
+          // eslint-disable-next-line dot-notation
+          data[item]['$regex'] = new RegExp(query.filter, 'i')
+        })
+        resolve(data)
+      } else {
+        resolve({})
+      }
     } catch (err) {
       console.log(err.message)
-      return reject(
-        this.buildErrObject(422, 'BAD_FORMAT_FOR_FILTER_USE_JSON_FORMAT')
-      )
+      return reject(this.buildErrObject(422, 'ERROR_WITH_FILTER'))
     }
   })
 }
@@ -225,7 +241,7 @@ exports.listInitOptions = async req => {
   const sort = req.query.sort || 'createdAt'
   const sortBy = buildSort(sort, order)
   const page = parseInt(req.query.page) || 1
-  const limit = parseInt(req.query.limit) || 10
+  const limit = parseInt(req.query.limit) || 5
   const options = {
     sort: sortBy,
     lean: true,
