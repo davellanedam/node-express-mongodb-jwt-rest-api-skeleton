@@ -14,7 +14,8 @@
     "fresh": "npm run clean && npm run seed",
     "clean": "node clean.js",
     "seed": "node seed.js",
-    "format": "prettier --write --config .prettierrc.json \"**/*.js\""
+    "format": "prettier --write --config .prettierrc.json \"**/*.js\"",
+    "lint": "eslint --fix --config .eslintrc.json \"**/*.js\""
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",

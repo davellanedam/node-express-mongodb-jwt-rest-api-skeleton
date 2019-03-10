@@ -131,6 +131,14 @@ Format your code with prettier by typing:
 npm run format
 ```
 
+### Linting code
+
+Lint your code with ESLint by typing:
+
+```bash
+npm run lint
+```
+
 ## Usage
 
 Once everything is set up to test API routes either use Postman or any other api testing application. Default username/password combination for login is `admin@admin.com/12345`.
@@ -145,7 +153,7 @@ You can import the example collection to Postman
 
 https://www.getpostman.com/collections/d1e27b60e0ccff22a516
 
-If you use Postman please go to `manage environments` and then create one for each of your servers (Ex. myApi-LOCAL, myApi-PRODUCTION). 
+If you use Postman please go to `manage environments` and then create one for each of your servers (Ex. myApi-LOCAL, myApi-PRODUCTION).
 
 On each of the environments you create you will need to:
 
