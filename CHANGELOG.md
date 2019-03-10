@@ -1,3 +1,6 @@
+## v.2.1.9 (Mar 9, 2019)
+* NPM run lint added
+
 ## v.2.1.8 (Mar 9, 2019)
 * New implementation for query on cities and users
 * More data on seeding
