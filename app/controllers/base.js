@@ -212,19 +212,22 @@ exports.checkQueryString = async query => {
         typeof query.filter !== 'undefined' &&
         typeof query.fields !== 'undefined'
       ) {
-        const data = {}
+        const data = {
+          $or: []
+        }
+        const array = []
         // Takes fields param and builds an array by splitting with ','
         const arrayFields = query.fields.split(',')
-        // Inits data obj with every field
-        arrayFields.map(item => {
-          // eslint-disable-next-line dot-notation
-          data[item] = {}
-        })
         // Adds SQL Like %word% with regex
         arrayFields.map(item => {
-          // eslint-disable-next-line dot-notation
-          data[item]['$regex'] = new RegExp(query.filter, 'i')
+          array.push({
+            [item]: {
+              $regex: new RegExp(query.filter, 'i')
+            }
+          })
         })
+        // Puts array result in data
+        data.$or = array
         resolve(data)
       } else {
         resolve({})
