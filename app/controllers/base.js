@@ -231,7 +231,7 @@ exports.checkQueryString = async query => {
       }
     } catch (err) {
       console.log(err.message)
-      return reject(this.buildErrObject(422, 'ERROR_WITH_FILTER'))
+      reject(this.buildErrObject(422, 'ERROR_WITH_FILTER'))
     }
   })
 }
