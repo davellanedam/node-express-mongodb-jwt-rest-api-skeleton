@@ -1,3 +1,7 @@
+## v.2.1.10 (Mar 10, 2019)
+* NPM updated
+* FIX: creation of users were not saving data that validator was asking
+
 ## v.2.1.9 (Mar 9, 2019)
 * NPM run lint added
 
