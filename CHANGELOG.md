@@ -1,3 +1,6 @@
+## v.2.2.0 (Mar 10, 2019)
+* Filtering from multiple fields redesigned
+
 ## v.2.1.10 (Mar 10, 2019)
 * NPM updated
 * FIX: creation of users were not saving data that validator was asking
