@@ -73,6 +73,9 @@ const createItemInDB = async req => {
       email: req.email,
       password: req.password,
       role: req.role,
+      phone: req.phone,
+      city: req.city,
+      country: req.country,
       verification: uuid.v4()
     })
     user.save((err, item) => {
