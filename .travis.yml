@@ -9,3 +9,5 @@ addons:
       - mongodb
 services:
   - mongodb
+before_script:
+  - cp .env.example .env
