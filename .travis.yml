@@ -9,8 +9,16 @@ before_script:
 env:
   - NODE_ENV=test
 deploy:
-  provider: releases
-  api_key:
-    secure: $GITHUB_DEPLOY_TOKEN
-  on:
-    tags: true
+  - provider: releases
+    api_key:
+      secure: $GITHUB_DEPLOY_TOKEN
+    on:
+      tags: true
+      repo: davellanedam/node-express-mongodb-jwt-rest-api-skeleton
+  - provider: npm
+    email: $NPM_EMAIL
+    api_key:
+      secure: $NPM_DEPLOY_TOKEN
+    on:
+      tags: true
+      repo: davellanedam/node-express-mongodb-jwt-rest-api-skeleton
