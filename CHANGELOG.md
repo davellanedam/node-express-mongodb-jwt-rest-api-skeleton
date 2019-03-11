@@ -1,4 +1,4 @@
-## v.2.2.3 (Mar 11, 2019)
+## v.2.2.6 (Mar 11, 2019)
 
 - Use of travis ci to automate deploy to npm
 - Added badge for tags in README.md

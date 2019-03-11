@@ -9,14 +9,9 @@ before_script:
 env:
   - NODE_ENV=test
 deploy:
-  - provider: releases
-    api_key:
-      secure: $GITHUB_DEPLOY_TOKEN
-    on:
-      tags: true
-  - provider: npm
-    email: $NPM_EMAIL
-    api_key:
-      secure: $NPM_DEPLOY_TOKEN
-    on:
-      tags: true
+  provider: npm
+  email: $NPM_EMAIL
+  api_key:
+    secure: $NPM_DEPLOY_TOKEN
+  on:
+    tags: true
