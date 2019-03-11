@@ -2,12 +2,6 @@ dist: xenial
 language: node_js
 node_js:
   - '8'
-addons:
-  apt:
-    sources:
-      - ppa:mongodb-4.0-xenial
-    packages:
-      - mongodb
 services:
   - mongodb
 before_script:
