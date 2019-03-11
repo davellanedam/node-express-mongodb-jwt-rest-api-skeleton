@@ -11,3 +11,5 @@ services:
   - mongodb
 before_script:
   - cp .env.example .env
+env:
+  - NODE_ENV=test
