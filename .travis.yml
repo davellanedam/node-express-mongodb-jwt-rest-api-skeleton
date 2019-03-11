@@ -8,3 +8,9 @@ before_script:
   - cp .env.example .env
 env:
   - NODE_ENV=test
+deploy:
+  provider: releases
+  api_key:
+    secure: $GITHUB_DEPLOY_TOKEN
+  on:
+    tags: true
