@@ -1,6 +1,9 @@
 const { handleError, buildErrObject } = require('./base')
 const { check, validationResult } = require('express-validator/check')
 
+/**
+ * Validates register request
+ */
 exports.register = [
   check('name')
     .exists()
@@ -37,6 +40,9 @@ exports.register = [
   }
 ]
 
+/**
+ * Validates login request
+ */
 exports.login = [
   check('email')
     .exists()
@@ -67,6 +73,9 @@ exports.login = [
   }
 ]
 
+/**
+ * Validates verify request
+ */
 exports.verify = [
   check('id')
     .exists()
@@ -84,6 +93,9 @@ exports.verify = [
   }
 ]
 
+/**
+ * Validates forgot password request
+ */
 exports.forgotPassword = [
   check('email')
     .exists()
@@ -104,6 +116,9 @@ exports.forgotPassword = [
   }
 ]
 
+/**
+ * Validates reset password request
+ */
 exports.resetPassword = [
   check('id')
     .exists()

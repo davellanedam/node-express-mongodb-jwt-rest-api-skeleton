@@ -24,6 +24,10 @@ const LOGIN_ATTEMPTS = 5
  * Private functions *
  *********************/
 
+/**
+ * Generates a token
+ * @param {Object} user - user object
+ */
 const generateToken = user => {
   const obj = {
     _id: user
@@ -35,6 +39,10 @@ const generateToken = user => {
   )
 }
 
+/**
+ * Creates an object with user info
+ * @param {Object} req - request object
+ */
 const setUserInfo = req => {
   const user = {
     _id: req._id,
@@ -50,6 +58,11 @@ const setUserInfo = req => {
   return user
 }
 
+/**
+ * Saves a new user access and then returns token
+ * @param {Object} req - request object
+ * @param {Object} user - user object
+ */
 const saveUserAccessAndReturnToken = async (req, user) => {
   return new Promise((resolve, reject) => {
     const userAccess = new UserAccess({
@@ -72,6 +85,10 @@ const saveUserAccessAndReturnToken = async (req, user) => {
   })
 }
 
+/**
+ * Blocks a user by setting blockExpires to the specified date based on constant HOURS_TO_BLOCK
+ * @param {Object} user - user object
+ */
 const blockUser = async user => {
   return new Promise((resolve, reject) => {
     user.blockExpires = addHours(new Date(), HOURS_TO_BLOCK)
@@ -86,6 +103,10 @@ const blockUser = async user => {
   })
 }
 
+/**
+ * Saves login attempts to dabatabse
+ * @param {Object} user - user object
+ */
 const saveLoginAttemptsToDB = async user => {
   return new Promise((resolve, reject) => {
     user.save((err, result) => {
@@ -99,6 +120,12 @@ const saveLoginAttemptsToDB = async user => {
   })
 }
 
+/**
+ * Checks is password matches
+ * @param {string} password - password
+ * @param {Object} user - user object
+ * @returns {boolean}
+ */
 const checkPassword = async (password, user) => {
   return new Promise((resolve, reject) => {
     user.comparePassword(password, (err, isMatch) => {
@@ -113,9 +140,17 @@ const checkPassword = async (password, user) => {
   })
 }
 
-const blockIsExpired = ({ loginAttempts, blockExpires }) =>
-  loginAttempts > LOGIN_ATTEMPTS && blockExpires <= new Date()
+/**
+ * Checks that login attempts are greater than specified in constant and also that blockexpires is less than now
+ * @param {Object} user - user object
+ */
+const blockIsExpired = user =>
+  user.loginAttempts > LOGIN_ATTEMPTS && user.blockExpires <= new Date()
 
+/**
+ *
+ * @param {Object} user - user object.
+ */
 const checkLoginAttemptsAndBlockExpires = async user => {
   return new Promise((resolve, reject) => {
     // Let user try to login again after blockexpires, resets user loginAttempts
@@ -136,6 +171,10 @@ const checkLoginAttemptsAndBlockExpires = async user => {
   })
 }
 
+/**
+ * Checks if blockExpires from user is greater than now
+ * @param {Object} user - user object
+ */
 const userIsBlocked = async user => {
   return new Promise((resolve, reject) => {
     if (user.blockExpires > new Date()) {
@@ -145,6 +184,10 @@ const userIsBlocked = async user => {
   })
 }
 
+/**
+ * Finds user by email
+ * @param {string} email - user´s email
+ */
 const findUser = async email => {
   return new Promise((resolve, reject) => {
     User.findOne(
@@ -165,6 +208,10 @@ const findUser = async email => {
   })
 }
 
+/**
+ * Adds one attempt to loginAttempts, then compares loginAttempts with the constant LOGIN_ATTEMPTS, if is less returns wrong password, else returns blockUser function
+ * @param {Object} user - user object
+ */
 const passwordsDoNotMatch = async user => {
   user.loginAttempts += 1
   await saveLoginAttemptsToDB(user)
@@ -178,6 +225,10 @@ const passwordsDoNotMatch = async user => {
   })
 }
 
+/**
+ * Registers a new user in database
+ * @param {Object} req - request object
+ */
 const registerUser = async req => {
   return new Promise((resolve, reject) => {
     const user = new User({
@@ -195,6 +246,11 @@ const registerUser = async req => {
   })
 }
 
+/**
+ * Builds the registration token
+ * @param {Object} item - user object that contains created id
+ * @param {Object} userInfo - user object
+ */
 const returnRegisterToken = (item, userInfo) => {
   if (process.env.NODE_ENV !== 'production') {
     userInfo.verification = item.verification
@@ -206,6 +262,10 @@ const returnRegisterToken = (item, userInfo) => {
   return data
 }
 
+/**
+ * Checks if verification id exists for user
+ * @param {string} id - verification id
+ */
 const verificationExists = async id => {
   return new Promise((resolve, reject) => {
     User.findOne(
@@ -226,6 +286,10 @@ const verificationExists = async id => {
   })
 }
 
+/**
+ * Verifies an user
+ * @param {Object} user - user object
+ */
 const verifyUser = async user => {
   return new Promise((resolve, reject) => {
     user.verified = true
@@ -241,6 +305,11 @@ const verifyUser = async user => {
   })
 }
 
+/**
+ * Marks a request to reset password as used
+ * @param {Object} req - request object
+ * @param {Object} forgot - forgot object
+ */
 const markResetPasswordAsUsed = async (req, forgot) => {
   return new Promise((resolve, reject) => {
     forgot.used = true
@@ -259,6 +328,11 @@ const markResetPasswordAsUsed = async (req, forgot) => {
   })
 }
 
+/**
+ * Updates a user password in database
+ * @param {string} password - new password
+ * @param {Object} user - user object
+ */
 const updatePassword = async (password, user) => {
   return new Promise((resolve, reject) => {
     user.password = password
@@ -274,6 +348,10 @@ const updatePassword = async (password, user) => {
   })
 }
 
+/**
+ * Finds user by email to reset password
+ * @param {string} email - user email
+ */
 const findUserToResetPassword = async email => {
   return new Promise((resolve, reject) => {
     User.findOne(
@@ -293,6 +371,10 @@ const findUserToResetPassword = async email => {
   })
 }
 
+/**
+ * Checks if a forgot password verification exists
+ * @param {string} id - verification id
+ */
 const findForgotPassword = async id => {
   return new Promise((resolve, reject) => {
     ForgotPassword.findOne(
@@ -313,6 +395,10 @@ const findForgotPassword = async id => {
   })
 }
 
+/**
+ * Creates a new password forgot
+ * @param {Object} req - request object
+ */
 const saveForgotPassword = async req => {
   return new Promise((resolve, reject) => {
     const forgot = new ForgotPassword({
@@ -331,6 +417,10 @@ const saveForgotPassword = async req => {
   })
 }
 
+/**
+ * Builds an object with created forgot password object, if env is development or testing exposes the verification
+ * @param {Object} item - created forgot password object
+ */
 const forgotPasswordResponse = item => {
   const data = {
     msg: 'RESET_EMAIL_SENT',
@@ -342,6 +432,11 @@ const forgotPasswordResponse = item => {
   return data
 }
 
+/**
+ * Checks against user if has quested role
+ * @param {Object} data - data object
+ * @param {*} next - next callback
+ */
 const checkPermissions = async (data, next) => {
   return new Promise((resolve, reject) => {
     User.findById(data.id, (err, result) => {
@@ -363,6 +458,11 @@ const checkPermissions = async (data, next) => {
  * Public functions *
  ********************/
 
+/**
+ * Login function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.login = async (req, res) => {
   try {
     const data = matchedData(req)
@@ -383,6 +483,11 @@ exports.login = async (req, res) => {
   }
 }
 
+/**
+ * Register function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.register = async (req, res) => {
   try {
     // Gets locale from header 'Accept-Language'
@@ -401,6 +506,11 @@ exports.register = async (req, res) => {
   }
 }
 
+/**
+ * Verify function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.verify = async (req, res) => {
   try {
     req = matchedData(req)
@@ -411,6 +521,11 @@ exports.verify = async (req, res) => {
   }
 }
 
+/**
+ * Forgot password function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.forgotPassword = async (req, res) => {
   try {
     // Gets locale from header 'Accept-Language'
@@ -425,6 +540,11 @@ exports.forgotPassword = async (req, res) => {
   }
 }
 
+/**
+ * Reset password function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.resetPassword = async (req, res) => {
   try {
     const data = matchedData(req)
@@ -438,6 +558,10 @@ exports.resetPassword = async (req, res) => {
   }
 }
 
+/**
+ * Roles authorization function called by route
+ * @param {Array} roles - roles specified on the route
+ */
 exports.roleAuthorization = roles => async (req, res, next) => {
   try {
     const data = {
