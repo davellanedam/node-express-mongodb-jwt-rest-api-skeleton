@@ -8,7 +8,7 @@ const {
   listInitOptions,
   cleanPaginationID,
   checkQueryString
-} = require('./base')
+} = require('./utils')
 
 /*********************
  * Private functions *
