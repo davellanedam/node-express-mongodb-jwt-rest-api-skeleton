@@ -43,6 +43,10 @@ const setUserInfo = req => {
     role: req.role,
     verified: req.verified
   }
+  // Adds verification for testing purposes
+  if (process.env.NODE_ENV !== 'production') {
+    user.verification = req.verification
+  }
   return user
 }
 
@@ -147,7 +151,7 @@ const findUser = async email => {
       {
         email
       },
-      'password loginAttempts blockExpires name email role verified',
+      'password loginAttempts blockExpires name email role verified verification',
       (err, item) => {
         if (err) {
           reject(buildErrObject(422, err.message))
