@@ -1,3 +1,11 @@
+## v.2.3.0 (Mar 13, 2019)
+
+- Added verification in response in test and development env
+- Added verification for default admin user in seeding
+- Added tests for cities and users with filters
+- All functions documentated with JSDoc
+- base.js renamed to utils.js
+
 ## v.2.2.8 (Mar 12, 2019)
 
 - Only builds in travis when tag is present
