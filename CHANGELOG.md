@@ -1,3 +1,8 @@
+## v.2.2.7 (Mar 12, 2019)
+
+- Verification code is showed on development and testing environments
+- NPM updated
+
 ## v.2.2.6 (Mar 11, 2019)
 
 - Use of travis ci to automate deploy to npm
