@@ -1,6 +1,6 @@
 const fs = require('fs')
 const modelsPath = `${__dirname}/`
-const { removeExtensionFromFile } = require('../controllers/base')
+const { removeExtensionFromFile } = require('../controllers/utils')
 
 module.exports = () => {
   /*

@@ -7,12 +7,21 @@ const requestIp = require('request-ip')
 const i18n = require('i18n')
 const User = require('../models/user')
 
+/**
+ * Builds sorting
+ * @param {string} sort - field to sort from
+ * @param {number} order - order for query (1,-1)
+ */
 const buildSort = (sort, order) => {
   const sortBy = {}
   sortBy[sort] = order
   return sortBy
 }
 
+/**
+ * Removes extension from file
+ * @param {string} file - filename
+ */
 exports.removeExtensionFromFile = file => {
   return file
     .split('.')
@@ -21,13 +30,29 @@ exports.removeExtensionFromFile = file => {
     .toString()
 }
 
+/**
+ * Gets IP from user
+ * @param {*} req - request object
+ */
 exports.getIP = req => requestIp.getClientIp(req)
 
+/**
+ * Gets browser info from user
+ * @param {*} req - request object
+ */
 exports.getBrowserInfo = req => req.headers['user-agent']
 
+/**
+ * Gets country from user using CloudFlare header 'cf-ipcountry'
+ * @param {*} req - request object
+ */
 exports.getCountry = req =>
   req.headers['cf-ipcountry'] ? req.headers['cf-ipcountry'] : 'XX'
 
+/**
+ * Checks User model if user with an specific email exists
+ * @param {string} email - user email
+ */
 exports.emailExists = async email => {
   return new Promise((resolve, reject) => {
     User.findOne(
@@ -47,6 +72,11 @@ exports.emailExists = async email => {
   })
 }
 
+/**
+ * Checks User model if user with an specific email exists but excluding user id
+ * @param {string} id - user id
+ * @param {string} email - user email
+ */
 exports.emailExistsExcludingMyself = async (id, email) => {
   return new Promise((resolve, reject) => {
     User.findOne(
@@ -69,6 +99,11 @@ exports.emailExistsExcludingMyself = async (id, email) => {
   })
 }
 
+/**
+ * Sends email
+ * @param {Object} data - data
+ * @param {boolean} callback - callback
+ */
 exports.sendEmail = async (data, callback) => {
   const auth = {
     auth: {
@@ -91,6 +126,11 @@ exports.sendEmail = async (data, callback) => {
   })
 }
 
+/**
+ * Sends registration email
+ * @param {string} locale - locale
+ * @param {Object} user - user object
+ */
 exports.sendRegistrationEmailMessage = async (locale, user) => {
   i18n.setLocale(locale)
   const subject = i18n.__('registration.SUBJECT')
@@ -122,6 +162,11 @@ exports.sendRegistrationEmailMessage = async (locale, user) => {
   }
 }
 
+/**
+ * Sends reset password email
+ * @param {string} locale - locale
+ * @param {Object} user - user object
+ */
 exports.sendResetPasswordEmailMessage = async (locale, user) => {
   i18n.setLocale(locale)
   const subject = i18n.__('forgotPassword.SUBJECT')
@@ -152,6 +197,10 @@ exports.sendResetPasswordEmailMessage = async (locale, user) => {
   }
 }
 
+/**
+ * Encrypts text
+ * @param {string} text - text to encrypt
+ */
 exports.encrypt = text => {
   const cipher = crypto.createCipher(algorithm, password)
   let crypted = cipher.update(text, 'utf8', 'hex')
@@ -159,6 +208,10 @@ exports.encrypt = text => {
   return crypted
 }
 
+/**
+ * Decrypts text
+ * @param {string} text - text to decrypt
+ */
 exports.decrypt = text => {
   const decipher = crypto.createDecipher(algorithm, password)
   try {
@@ -170,6 +223,11 @@ exports.decrypt = text => {
   }
 }
 
+/**
+ * Handles error by printing to console in development env and builds and sends an error response
+ * @param {Object} res - response object
+ * @param {Object} err - error object
+ */
 exports.handleError = (res, err) => {
   // Prints error in console
   if (process.env.NODE_ENV === 'development') {
@@ -183,6 +241,11 @@ exports.handleError = (res, err) => {
   })
 }
 
+/**
+ * Builds error object
+ * @param {number} code - error code
+ * @param {string} message - error text
+ */
 exports.buildErrObject = (code, message) => {
   return {
     code,
@@ -190,12 +253,20 @@ exports.buildErrObject = (code, message) => {
   }
 }
 
+/**
+ * Builds success object
+ * @param {string} message - success text
+ */
 exports.buildSuccObject = message => {
   return {
     msg: message
   }
 }
 
+/**
+ * Checks if given ID is good for MongoDB
+ * @param {string} id - id to check
+ */
 exports.isIDGood = async id => {
   return new Promise((resolve, reject) => {
     const goodID = String(id).match(/^[0-9a-fA-F]{24}$/)
@@ -205,6 +276,12 @@ exports.isIDGood = async id => {
   })
 }
 
+/**
+ * Checks the query string for filtering records
+ * query.filter should be the text to search (string)
+ * query.fields should be the fields to search into (array)
+ * @param {Object} query - query object
+ */
 exports.checkQueryString = async query => {
   return new Promise((resolve, reject) => {
     try {
@@ -239,6 +316,10 @@ exports.checkQueryString = async query => {
   })
 }
 
+/**
+ * Builds initial options for query
+ * @param {Object} query - query object
+ */
 exports.listInitOptions = async req => {
   const order = req.query.order || -1
   const sort = req.query.sort || 'createdAt'
@@ -254,7 +335,10 @@ exports.listInitOptions = async req => {
   return options
 }
 
-// Hack for mongoose-paginate, removes 'id' from results
+/**
+ * Hack for mongoose-paginate, removes 'id' from results
+ * @param {Object} result - result object
+ */
 exports.cleanPaginationID = result => {
   result.docs.map(element => delete element.id)
   return result

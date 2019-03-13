@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const fs = require('fs')
 const routesPath = `${__dirname}/`
-const { removeExtensionFromFile } = require('../controllers/base')
+const { removeExtensionFromFile } = require('../controllers/utils')
 
 /*
  * Load routes statically and/or dynamically

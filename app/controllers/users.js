@@ -12,7 +12,7 @@ const {
   emailExistsExcludingMyself,
   emailExists,
   sendRegistrationEmailMessage
-} = require('./base')
+} = require('./utils')
 
 /*********************
  * Private functions *

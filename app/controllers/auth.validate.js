@@ -1,4 +1,4 @@
-const { handleError, buildErrObject } = require('./base')
+const { handleError, buildErrObject } = require('./utils')
 const { check, validationResult } = require('express-validator/check')
 
 /**

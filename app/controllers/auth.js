@@ -13,7 +13,7 @@ const {
   emailExists,
   sendRegistrationEmailMessage,
   sendResetPasswordEmailMessage
-} = require('./base')
+} = require('./utils')
 const uuid = require('uuid')
 const { addHours } = require('date-fns')
 const { matchedData } = require('express-validator/filter')

@@ -4,7 +4,7 @@ const {
   buildSuccObject,
   buildErrObject,
   handleError
-} = require('./base')
+} = require('./utils')
 const { matchedData } = require('express-validator/filter')
 
 /*********************
