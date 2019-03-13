@@ -11,9 +11,12 @@ const requireAuth = passport.authenticate('jwt', {
 const trimRequest = require('trim-request')
 
 /*
- ROUTES
-*/
+ * Profile routes
+ */
 
+/*
+ * Get profile route
+ */
 router.get(
   '/',
   requireAuth,
@@ -21,6 +24,10 @@ router.get(
   trimRequest.all,
   controller.getProfile
 )
+
+/*
+ * Update profile route
+ */
 router.patch(
   '/',
   requireAuth,
@@ -29,6 +36,10 @@ router.patch(
   validate.updateProfile,
   controller.updateProfile
 )
+
+/*
+ * Change password route
+ */
 router.post(
   '/changePassword',
   requireAuth,

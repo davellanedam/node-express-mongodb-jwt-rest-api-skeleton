@@ -11,6 +11,29 @@ const { matchedData } = require('express-validator/filter')
  * Private functions *
  *********************/
 
+/**
+ * Gets profile from database by id
+ * @param {string} id - user id
+ */
+const getProfileFromDB = async id => {
+  return new Promise((resolve, reject) => {
+    model.findById(id, '-_id -updatedAt -createdAt', (err, user) => {
+      if (err) {
+        reject(buildErrObject(422, err.message))
+      }
+      if (!user) {
+        reject(buildErrObject(404, 'NOT_FOUND'))
+      }
+      resolve(user)
+    })
+  })
+}
+
+/**
+ * Updates profile in database
+ * @param {Object} req - request object
+ * @param {string} id - user id
+ */
 const updateProfileInDB = async (req, id) => {
   return new Promise((resolve, reject) => {
     model.findByIdAndUpdate(
@@ -34,20 +57,10 @@ const updateProfileInDB = async (req, id) => {
   })
 }
 
-const getProfileFromDB = async id => {
-  return new Promise((resolve, reject) => {
-    model.findById(id, '-_id -updatedAt -createdAt', (err, user) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!user) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
-      resolve(user)
-    })
-  })
-}
-
+/**
+ * Finds user by id
+ * @param {string} email - user id
+ */
 const findUser = async id => {
   return new Promise((resolve, reject) => {
     model.findById(id, 'password email', (err, item) => {
@@ -62,6 +75,12 @@ const findUser = async id => {
   })
 }
 
+/**
+ * Checks is password matches
+ * @param {string} password - password
+ * @param {Object} user - user object
+ * @returns {boolean}
+ */
 const checkPassword = async (password, user) => {
   return new Promise((resolve, reject) => {
     user.comparePassword(password, (err, isMatch) => {
@@ -76,12 +95,21 @@ const checkPassword = async (password, user) => {
   })
 }
 
+/**
+ * Build passwords do not match object
+ * @param {Object} user - user object
+ */
 const passwordsDoNotMatch = async () => {
   return new Promise(resolve => {
     resolve(buildErrObject(409, 'WRONG_PASSWORD'))
   })
 }
 
+/**
+ * Changes password in database
+ * @param {string} id - user id
+ * @param {Object} req - request object
+ */
 const changePasswordInDB = async (id, req) => {
   return new Promise((resolve, reject) => {
     model.findById(id, '+password', (err, user) => {
@@ -110,6 +138,11 @@ const changePasswordInDB = async (id, req) => {
  * Public functions *
  ********************/
 
+/**
+ * Get profile function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.getProfile = async (req, res) => {
   try {
     const id = await isIDGood(req.user._id)
@@ -119,6 +152,11 @@ exports.getProfile = async (req, res) => {
   }
 }
 
+/**
+ * Update profile function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.updateProfile = async (req, res) => {
   try {
     const id = await isIDGood(req.user._id)
@@ -129,6 +167,11 @@ exports.updateProfile = async (req, res) => {
   }
 }
 
+/**
+ * Change password function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.changePassword = async (req, res) => {
   try {
     const id = await isIDGood(req.user._id)

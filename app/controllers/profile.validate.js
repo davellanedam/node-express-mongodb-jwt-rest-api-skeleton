@@ -2,6 +2,9 @@ const { handleError, buildErrObject } = require('./utils')
 const validator = require('validator')
 const { check, validationResult } = require('express-validator/check')
 
+/**
+ * Validates update profile request
+ */
 exports.updateProfile = [
   check('name')
     .exists()
@@ -48,6 +51,9 @@ exports.updateProfile = [
   }
 ]
 
+/**
+ * Validates change password request
+ */
 exports.changePassword = [
   check('oldPassword')
     .optional()
