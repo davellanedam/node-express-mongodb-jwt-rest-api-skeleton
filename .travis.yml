@@ -8,6 +8,7 @@ before_script:
   - cp .env.example .env
 env:
   - NODE_ENV=test
+if: tag IS present
 deploy:
   provider: npm
   email: $NPM_EMAIL

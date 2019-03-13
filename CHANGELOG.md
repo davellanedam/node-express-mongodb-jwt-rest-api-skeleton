@@ -1,3 +1,7 @@
+## v.2.2.8 (Mar 12, 2019)
+
+- Only builds in travis when tag is present
+
 ## v.2.2.7 (Mar 12, 2019)
 
 - Verification code is showed on development and testing environments
