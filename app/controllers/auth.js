@@ -192,7 +192,7 @@ const registerUser = async req => {
 }
 
 const returnRegisterToken = (item, userInfo) => {
-  if (process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV !== 'production') {
     userInfo.verification = item.verification
   }
   const data = {
@@ -332,7 +332,7 @@ const forgotPasswordResponse = item => {
     msg: 'RESET_EMAIL_SENT',
     email: item.email
   }
-  if (process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV !== 'production') {
     data.verification = item.verification
   }
   return data
