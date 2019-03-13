@@ -58,6 +58,20 @@ describe('*********** CITIES ***********', () => {
           done()
         })
     })
+    it('it should GET the cities with filters', done => {
+      chai
+        .request(server)
+        .get('/cities?filter=Bucaramanga&fields=name')
+        .set('Authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          res.should.have.status(200)
+          res.body.should.be.an('object')
+          res.body.docs.should.be.a('array')
+          res.body.docs.should.have.lengthOf(1)
+          res.body.docs[0].should.have.property('name').eql('Bucaramanga')
+          done()
+        })
+    })
   })
 
   describe('/POST city', () => {

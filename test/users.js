@@ -55,6 +55,20 @@ describe('*********** USERS ***********', () => {
           done()
         })
     })
+    it('it should GET the users with filters', done => {
+      chai
+        .request(server)
+        .get('/users?filter=admin&fields=name,email,city,country,phone')
+        .set('Authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          res.should.have.status(200)
+          res.body.should.be.an('object')
+          res.body.docs.should.be.a('array')
+          res.body.docs.should.have.lengthOf(1)
+          res.body.docs[0].should.have.property('email').eql('admin@admin.com')
+          done()
+        })
+    })
   })
   describe('/POST user', () => {
     it('it should NOT POST a user without name', done => {
