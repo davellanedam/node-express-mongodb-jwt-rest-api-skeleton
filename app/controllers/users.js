@@ -18,6 +18,11 @@ const {
  * Private functions *
  *********************/
 
+/**
+ * Gets items from database
+ * @param {Object} req - request object
+ * @param {Object} query - query object
+ */
 const getItemsFromDB = async (req, query) => {
   const options = await listInitOptions(req)
   return new Promise((resolve, reject) => {
@@ -30,6 +35,29 @@ const getItemsFromDB = async (req, query) => {
   })
 }
 
+/**
+ * Gets item from database by id
+ * @param {string} id - item id
+ */
+const getItemFromDB = async id => {
+  return new Promise((resolve, reject) => {
+    model.findById(id, (err, item) => {
+      if (err) {
+        reject(buildErrObject(422, err.message))
+      }
+      if (!item) {
+        reject(buildErrObject(404, 'NOT_FOUND'))
+      }
+      resolve(item)
+    })
+  })
+}
+
+/**
+ * Updates an item in database by id
+ * @param {string} id - item id
+ * @param {Object} req - request object
+ */
 const updateItemInDB = async (id, req) => {
   return new Promise((resolve, reject) => {
     model.findByIdAndUpdate(
@@ -52,20 +80,10 @@ const updateItemInDB = async (id, req) => {
   })
 }
 
-const getItemFromDB = async id => {
-  return new Promise((resolve, reject) => {
-    model.findById(id, (err, item) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!item) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
-      resolve(item)
-    })
-  })
-}
-
+/**
+ * Creates a new item in database
+ * @param {Object} req - request object
+ */
 const createItemInDB = async req => {
   return new Promise((resolve, reject) => {
     const user = new model({
@@ -91,6 +109,10 @@ const createItemInDB = async req => {
   })
 }
 
+/**
+ * Deletes an item from database by id
+ * @param {string} id - id of item
+ */
 const deleteItemFromDB = async id => {
   return new Promise((resolve, reject) => {
     model.findByIdAndRemove(id, (err, item) => {
@@ -109,6 +131,11 @@ const deleteItemFromDB = async id => {
  * Public functions *
  ********************/
 
+/**
+ * Get items function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.getItems = async (req, res) => {
   try {
     const query = await checkQueryString(req.query)
@@ -118,6 +145,11 @@ exports.getItems = async (req, res) => {
   }
 }
 
+/**
+ * Get item function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.getItem = async (req, res) => {
   try {
     req = matchedData(req)
@@ -128,6 +160,11 @@ exports.getItem = async (req, res) => {
   }
 }
 
+/**
+ * Update item function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.updateItem = async (req, res) => {
   try {
     req = matchedData(req)
@@ -141,6 +178,11 @@ exports.updateItem = async (req, res) => {
   }
 }
 
+/**
+ * Create item function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.createItem = async (req, res) => {
   try {
     // Gets locale from header 'Accept-Language'
@@ -157,6 +199,11 @@ exports.createItem = async (req, res) => {
   }
 }
 
+/**
+ * Delete item function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.deleteItem = async (req, res) => {
   try {
     req = matchedData(req)

@@ -11,9 +11,12 @@ const requireAuth = passport.authenticate('jwt', {
 const trimRequest = require('trim-request')
 
 /*
- ROUTES
-*/
+ * Users routes
+ */
 
+/*
+ * Get items route
+ */
 router.get(
   '/',
   requireAuth,
@@ -21,6 +24,10 @@ router.get(
   trimRequest.all,
   controller.getItems
 )
+
+/*
+ * Create new item route
+ */
 router.post(
   '/',
   requireAuth,
@@ -29,6 +36,10 @@ router.post(
   validate.createItem,
   controller.createItem
 )
+
+/*
+ * Get item route
+ */
 router.get(
   '/:id',
   requireAuth,
@@ -37,6 +48,10 @@ router.get(
   validate.getItem,
   controller.getItem
 )
+
+/*
+ * Update item route
+ */
 router.patch(
   '/:id',
   requireAuth,
@@ -45,6 +60,10 @@ router.patch(
   validate.updateItem,
   controller.updateItem
 )
+
+/*
+ * Delete item route
+ */
 router.delete(
   '/:id',
   requireAuth,
