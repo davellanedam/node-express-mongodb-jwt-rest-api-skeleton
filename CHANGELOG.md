@@ -1,3 +1,7 @@
+## v.2.3.2 (Mar 14, 2019)
+
+- Test for npm publish
+
 ## v.2.3.1 (Mar 14, 2019)
 
 - Migrated to travis.com
