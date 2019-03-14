@@ -16,3 +16,4 @@ deploy:
     secure: $NPM_DEPLOY_TOKEN
   on:
     tags: true
+    repo: davellanedam/node-express-mongodb-jwt-rest-api-skeleton

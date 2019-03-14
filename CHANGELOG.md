@@ -1,3 +1,7 @@
+## v.2.3.1 (Mar 14, 2019)
+
+- Migrated to travis.com
+
 ## v.2.3.0 (Mar 13, 2019)
 
 - Added verification in response in test and development env
