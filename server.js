@@ -18,8 +18,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
 
-// Redis cache enabled only for production
-if (process.env.NODE_ENV === 'production') {
+// Redis cache enabled by env variable
+if (process.env.USE_REDIS === 'true') {
   const getExpeditiousCache = require('express-expeditious')
   const cache = getExpeditiousCache({
     namespace: 'expresscache',
