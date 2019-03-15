@@ -9,6 +9,7 @@ const passport = require('passport')
 const app = express()
 const i18n = require('i18n')
 const initMongo = require('./config/mongo')
+const path = require('path')
 
 // Setup express server port fron ENV, default: 3000
 app.set('port', process.env.PORT || 3000)
@@ -61,6 +62,9 @@ app.use(passport.initialize())
 app.use(compression())
 app.use(helmet())
 app.use(express.static('public'))
+app.set('views', path.join(__dirname, 'views'))
+app.engine('html', require('ejs').renderFile)
+app.set('view engine', 'html')
 app.use(require('./app/routes'))
 app.listen(app.get('port'))
 
