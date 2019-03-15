@@ -100,11 +100,17 @@ const createItemInDB = async req => {
       if (err) {
         reject(buildErrObject(422, err.message))
       }
-      item = item.toObject()
-      delete item.password
-      delete item.blockExpires
-      delete item.loginAttempts
-      resolve(item)
+      // Removes properties with rest operator
+      const removeProperties = ({
+        // eslint-disable-next-line no-unused-vars
+        password,
+        // eslint-disable-next-line no-unused-vars
+        blockExpires,
+        // eslint-disable-next-line no-unused-vars
+        loginAttempts,
+        ...rest
+      }) => rest
+      resolve(removeProperties(item.toObject()))
     })
   })
 }
