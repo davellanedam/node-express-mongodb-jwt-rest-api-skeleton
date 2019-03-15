@@ -107,6 +107,7 @@ exports.emailExistsExcludingMyself = async (id, email) => {
 exports.sendEmail = async (data, callback) => {
   const auth = {
     auth: {
+      // eslint-disable-next-line camelcase
       api_key: process.env.EMAIL_SMTP_API_MAILGUN,
       domain: process.env.EMAIL_SMTP_DOMAIN_MAILGUN
     }
