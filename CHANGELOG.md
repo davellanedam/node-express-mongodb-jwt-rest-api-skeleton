@@ -1,3 +1,8 @@
+## v.2.4.0 (Mar 14, 2019)
+
+- Redis now works based on env variable
+- .gitignore included docker files
+
 ## v.2.3.2 (Mar 14, 2019)
 
 - Test for npm publish
