@@ -44,7 +44,7 @@ const generateToken = user => {
  * @param {Object} req - request object
  */
 const setUserInfo = req => {
-  const user = {
+  let user = {
     _id: req._id,
     name: req.name,
     email: req.email,
@@ -53,7 +53,10 @@ const setUserInfo = req => {
   }
   // Adds verification for testing purposes
   if (process.env.NODE_ENV !== 'production') {
-    user.verification = req.verification
+    user = {
+      ...user,
+      verification: req.verification
+    }
   }
   return user
 }
@@ -422,12 +425,15 @@ const saveForgotPassword = async req => {
  * @param {Object} item - created forgot password object
  */
 const forgotPasswordResponse = item => {
-  const data = {
+  let data = {
     msg: 'RESET_EMAIL_SENT',
     email: item.email
   }
   if (process.env.NODE_ENV !== 'production') {
-    data.verification = item.verification
+    data = {
+      ...data,
+      verification: item.verification
+    }
   }
   return data
 }
