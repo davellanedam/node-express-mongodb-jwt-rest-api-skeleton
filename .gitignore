@@ -65,7 +65,5 @@ typings/
 # don't ignore keep files
 !.gitkeep
 
-# ignore
-.openode
-docker-compose.yml
-Dockerfile
+# ignore production configuration
+.env.production
