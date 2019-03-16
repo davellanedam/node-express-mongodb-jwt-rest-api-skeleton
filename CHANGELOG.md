@@ -1,3 +1,8 @@
+## v.3.0.1 (Mar 15, 2019)
+
+- NPM updated
+- README.md updated
+
 ## v.3.0.0 (Mar 15, 2019)
 
 - Demo added
