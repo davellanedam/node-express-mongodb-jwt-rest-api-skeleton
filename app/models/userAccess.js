@@ -30,11 +30,4 @@ const UserAccessSchema = new mongoose.Schema(
     timestamps: true
   }
 )
-
-UserAccessSchema.index({
-  email: 'text',
-  ip: 'text',
-  browser: 'text',
-  country: 'text'
-})
 module.exports = mongoose.model('UserAccess', UserAccessSchema)

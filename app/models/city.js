@@ -13,8 +13,5 @@ const CitySchema = new mongoose.Schema(
     timestamps: true
   }
 )
-CitySchema.index({
-  name: 'text'
-})
 CitySchema.plugin(mongoosePaginate)
 module.exports = mongoose.model('City', CitySchema)

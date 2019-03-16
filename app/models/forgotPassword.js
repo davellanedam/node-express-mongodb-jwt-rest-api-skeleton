@@ -43,9 +43,4 @@ const ForgotPasswordSchema = new mongoose.Schema(
     timestamps: true
   }
 )
-
-ForgotPasswordSchema.index({
-  email: 'text',
-  verificationKey: 'text'
-})
 module.exports = mongoose.model('ForgotPassword', ForgotPasswordSchema)

@@ -115,12 +115,5 @@ UserSchema.methods.comparePassword = function(passwordAttempt, cb) {
     err ? cb(err) : cb(null, isMatch)
   )
 }
-
-UserSchema.index({
-  email: 'text',
-  name: 'text',
-  role: 'text',
-  verification: 'text'
-})
 UserSchema.plugin(mongoosePaginate)
 module.exports = mongoose.model('User', UserSchema)
