@@ -1,7 +1,7 @@
-## v.2.4.0 (Mar 14, 2019)
+## v.2.3.3 (Mar 15, 2019)
 
-- Redis now works based on env variable
-- .gitignore included docker files
+- Enable Redis based on env variable
+- API '/' route now renders an html view
 
 ## v.2.3.2 (Mar 14, 2019)
 
