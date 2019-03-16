@@ -1,3 +1,7 @@
+## v.3.0.0 (Mar 15, 2019)
+
+- Demo added
+
 ## v.2.3.3 (Mar 15, 2019)
 
 - Enable Redis based on env variable

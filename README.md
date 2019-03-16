@@ -43,6 +43,25 @@ This project is created to help other developers create a **basic REST API in an
 - MongoDB **3.6+**
 - Redis **5.0+**
 
+## Demo
+
+A demo of this API is located at: https://api-demo.daniel-avellaneda.com
+
+### Login credentials:
+
+email: `admin@admin.com`  
+password: `12345`
+
+**IMPORTANT:** Database resets every 30 mins like "12:00am, 12:30am, 1:00am" and so on. So anything you do with the API will be lost after a short time.
+
+[API documentation](###api-documentation)  
+[Postman API example collection](###postman-api-example-collection) - If you want to test it don´t forget to change the server variable to:  
+`https://api-demo.daniel-avellaneda.com`
+
+Demo is also linked to a VueJS project that shows how this API can be integrated to a frontend that is able to consume an API.  
+Repo is here: https://github.com/davellanedam/vue-skeleton-mvp  
+Running demo is here: https://vue-demo.daniel-avellaneda.com
+
 ## How to install
 
 ### Using Git (recommended)
