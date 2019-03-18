@@ -1,5 +1,5 @@
-const { handleError, buildErrObject } = require('./utils')
-const { check, validationResult } = require('express-validator/check')
+const { errorValidation } = require('../middleware/utils')
+const { check } = require('express-validator/check')
 
 /**
  * Validates register request
@@ -31,12 +31,7 @@ exports.register = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]
 
@@ -64,12 +59,7 @@ exports.login = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]
 
@@ -84,12 +74,7 @@ exports.verify = [
     .isEmpty()
     .withMessage('IS_EMPTY'),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]
 
@@ -107,12 +92,7 @@ exports.forgotPassword = [
     .withMessage('EMAIL_IS_NOT_VALID')
     .normalizeEmail(),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]
 
@@ -137,11 +117,6 @@ exports.resetPassword = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]

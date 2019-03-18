@@ -4,8 +4,9 @@ const {
   buildSuccObject,
   buildErrObject,
   handleError
-} = require('./utils')
+} = require('../middleware/utils')
 const { matchedData } = require('express-validator/filter')
+const auth = require('../middleware/auth')
 
 /*********************
  * Private functions *
@@ -71,26 +72,6 @@ const findUser = async id => {
         reject(buildErrObject(404, 'USER_DOES_NOT_EXIST'))
       }
       resolve(item)
-    })
-  })
-}
-
-/**
- * Checks is password matches
- * @param {string} password - password
- * @param {Object} user - user object
- * @returns {boolean}
- */
-const checkPassword = async (password, user) => {
-  return new Promise((resolve, reject) => {
-    user.comparePassword(password, (err, isMatch) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!isMatch) {
-        resolve(false)
-      }
-      resolve(true)
     })
   })
 }
@@ -177,7 +158,7 @@ exports.changePassword = async (req, res) => {
     const id = await isIDGood(req.user._id)
     const user = await findUser(id)
     req = matchedData(req)
-    const isPasswordMatch = await checkPassword(req.oldPassword, user)
+    const isPasswordMatch = await auth.checkPassword(req.oldPassword, user)
     if (!isPasswordMatch) {
       handleError(res, await passwordsDoNotMatch())
     } else {

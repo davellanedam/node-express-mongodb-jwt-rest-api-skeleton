@@ -1,90 +1,19 @@
 const model = require('../models/user')
 const uuid = require('uuid')
 const { matchedData } = require('express-validator/filter')
-const {
-  isIDGood,
-  buildSuccObject,
-  buildErrObject,
-  handleError,
-  listInitOptions,
-  cleanPaginationID,
-  checkQueryString,
-  emailExistsExcludingMyself,
-  emailExists,
-  sendRegistrationEmailMessage
-} = require('./utils')
+const { isIDGood, buildErrObject, handleError } = require('../middleware/utils')
+const db = require('../middleware/db')
+const emailer = require('../middleware/emailer')
 
 /*********************
  * Private functions *
  *********************/
 
 /**
- * Gets items from database
- * @param {Object} req - request object
- * @param {Object} query - query object
- */
-const getItemsFromDB = async (req, query) => {
-  const options = await listInitOptions(req)
-  return new Promise((resolve, reject) => {
-    model.paginate(query, options, (err, items) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      resolve(cleanPaginationID(items))
-    })
-  })
-}
-
-/**
- * Gets item from database by id
- * @param {string} id - item id
- */
-const getItemFromDB = async id => {
-  return new Promise((resolve, reject) => {
-    model.findById(id, (err, item) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!item) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
-      resolve(item)
-    })
-  })
-}
-
-/**
- * Updates an item in database by id
- * @param {string} id - item id
- * @param {Object} req - request object
- */
-const updateItemInDB = async (id, req) => {
-  return new Promise((resolve, reject) => {
-    model.findByIdAndUpdate(
-      id,
-      req,
-      {
-        new: true,
-        runValidators: true
-      },
-      (err, item) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (!item) {
-          reject(buildErrObject(404, 'NOT_FOUND'))
-        }
-        resolve(item)
-      }
-    )
-  })
-}
-
-/**
  * Creates a new item in database
  * @param {Object} req - request object
  */
-const createItemInDB = async req => {
+const createItem = async req => {
   return new Promise((resolve, reject) => {
     const user = new model({
       name: req.name,
@@ -115,24 +44,6 @@ const createItemInDB = async req => {
   })
 }
 
-/**
- * Deletes an item from database by id
- * @param {string} id - id of item
- */
-const deleteItemFromDB = async id => {
-  return new Promise((resolve, reject) => {
-    model.findByIdAndRemove(id, (err, item) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!item) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
-      resolve(buildSuccObject('DELETED'))
-    })
-  })
-}
-
 /********************
  * Public functions *
  ********************/
@@ -144,8 +55,8 @@ const deleteItemFromDB = async id => {
  */
 exports.getItems = async (req, res) => {
   try {
-    const query = await checkQueryString(req.query)
-    res.status(200).json(await getItemsFromDB(req, query))
+    const query = await db.checkQueryString(req.query)
+    res.status(200).json(await db.getItems(req, model, query))
   } catch (error) {
     handleError(res, error)
   }
@@ -160,7 +71,7 @@ exports.getItem = async (req, res) => {
   try {
     req = matchedData(req)
     const id = await isIDGood(req.id)
-    res.status(200).json(await getItemFromDB(id))
+    res.status(200).json(await db.getItem(id, model))
   } catch (error) {
     handleError(res, error)
   }
@@ -175,9 +86,12 @@ exports.updateItem = async (req, res) => {
   try {
     req = matchedData(req)
     const id = await isIDGood(req.id)
-    const doesEmailExists = await emailExistsExcludingMyself(id, req.email)
+    const doesEmailExists = await emailer.emailExistsExcludingMyself(
+      id,
+      req.email
+    )
     if (!doesEmailExists) {
-      res.status(200).json(await updateItemInDB(id, req))
+      res.status(200).json(await db.updateItem(id, model, req))
     }
   } catch (error) {
     handleError(res, error)
@@ -194,10 +108,10 @@ exports.createItem = async (req, res) => {
     // Gets locale from header 'Accept-Language'
     const locale = req.getLocale()
     req = matchedData(req)
-    const doesEmailExists = await emailExists(req.email)
+    const doesEmailExists = await emailer.emailExists(req.email)
     if (!doesEmailExists) {
-      const item = await createItemInDB(req)
-      sendRegistrationEmailMessage(locale, item)
+      const item = await createItem(req)
+      emailer.sendRegistrationEmailMessage(locale, item)
       res.status(201).json(item)
     }
   } catch (error) {
@@ -214,7 +128,7 @@ exports.deleteItem = async (req, res) => {
   try {
     req = matchedData(req)
     const id = await isIDGood(req.id)
-    res.status(200).json(await deleteItemFromDB(id))
+    res.status(200).json(await db.deleteItem(id, model))
   } catch (error) {
     handleError(res, error)
   }

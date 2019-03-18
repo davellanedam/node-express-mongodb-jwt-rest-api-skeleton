@@ -3,20 +3,18 @@ const User = require('../models/user')
 const UserAccess = require('../models/userAccess')
 const ForgotPassword = require('../models/forgotPassword')
 const {
-  encrypt,
   getIP,
   getBrowserInfo,
   getCountry,
   buildSuccObject,
   buildErrObject,
-  handleError,
-  emailExists,
-  sendRegistrationEmailMessage,
-  sendResetPasswordEmailMessage
-} = require('./utils')
+  handleError
+} = require('../middleware/utils')
 const uuid = require('uuid')
 const { addHours } = require('date-fns')
 const { matchedData } = require('express-validator/filter')
+const auth = require('../middleware/auth')
+const emailer = require('../middleware/emailer')
 const HOURS_TO_BLOCK = 2
 const LOGIN_ATTEMPTS = 5
 
@@ -32,7 +30,7 @@ const generateToken = user => {
   const obj = {
     _id: user
   }
-  return encrypt(
+  return auth.encrypt(
     jwt.sign(obj, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRATION
     })
@@ -119,26 +117,6 @@ const saveLoginAttemptsToDB = async user => {
       if (result) {
         resolve(true)
       }
-    })
-  })
-}
-
-/**
- * Checks is password matches
- * @param {string} password - password
- * @param {Object} user - user object
- * @returns {boolean}
- */
-const checkPassword = async (password, user) => {
-  return new Promise((resolve, reject) => {
-    user.comparePassword(password, (err, isMatch) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!isMatch) {
-        resolve(false)
-      }
-      resolve(true)
     })
   })
 }
@@ -475,7 +453,7 @@ exports.login = async (req, res) => {
     const user = await findUser(data.email)
     await userIsBlocked(user)
     await checkLoginAttemptsAndBlockExpires(user)
-    const isPasswordMatch = await checkPassword(data.password, user)
+    const isPasswordMatch = await auth.checkPassword(data.password, user)
     if (!isPasswordMatch) {
       handleError(res, await passwordsDoNotMatch(user))
     } else {
@@ -499,12 +477,12 @@ exports.register = async (req, res) => {
     // Gets locale from header 'Accept-Language'
     const locale = req.getLocale()
     req = matchedData(req)
-    const doesEmailExists = await emailExists(req.email)
+    const doesEmailExists = await emailer.emailExists(req.email)
     if (!doesEmailExists) {
       const item = await registerUser(req)
       const userInfo = setUserInfo(item)
       const response = returnRegisterToken(item, userInfo)
-      sendRegistrationEmailMessage(locale, item)
+      emailer.sendRegistrationEmailMessage(locale, item)
       res.status(201).json(response)
     }
   } catch (error) {
@@ -539,7 +517,7 @@ exports.forgotPassword = async (req, res) => {
     const data = matchedData(req)
     await findUser(data.email)
     const item = await saveForgotPassword(req)
-    sendResetPasswordEmailMessage(locale, item)
+    emailer.sendResetPasswordEmailMessage(locale, item)
     res.status(200).json(forgotPasswordResponse(item))
   } catch (error) {
     handleError(res, error)

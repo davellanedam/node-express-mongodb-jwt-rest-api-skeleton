@@ -1,5 +1,5 @@
-const { handleError, buildErrObject } = require('./utils')
-const { check, validationResult } = require('express-validator/check')
+const { errorValidation } = require('../middleware/utils')
+const { check } = require('express-validator/check')
 
 /**
  * Validates create new item request
@@ -13,12 +13,7 @@ exports.createItem = [
     .withMessage('IS_EMPTY')
     .trim(),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]
 
@@ -39,12 +34,7 @@ exports.updateItem = [
     .isEmpty()
     .withMessage('IS_EMPTY'),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]
 
@@ -59,12 +49,7 @@ exports.getItem = [
     .isEmpty()
     .withMessage('IS_EMPTY'),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]
 
@@ -79,11 +64,6 @@ exports.deleteItem = [
     .isEmpty()
     .withMessage('IS_EMPTY'),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]

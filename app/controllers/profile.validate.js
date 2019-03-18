@@ -1,6 +1,6 @@
-const { handleError, buildErrObject } = require('./utils')
+const { errorValidation } = require('../middleware/utils')
 const validator = require('validator')
-const { check, validationResult } = require('express-validator/check')
+const { check } = require('express-validator/check')
 
 /**
  * Validates update profile request
@@ -42,12 +42,7 @@ exports.updateProfile = [
     .custom(v => (v === '' ? true : validator.isURL(v)))
     .withMessage('NOT_A_VALID_URL'),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]
 
@@ -74,11 +69,6 @@ exports.changePassword = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    try {
-      validationResult(req).throw()
-      return next()
-    } catch (err) {
-      return handleError(res, buildErrObject(422, err.array()))
-    }
+    errorValidation(req, res, next)
   }
 ]
