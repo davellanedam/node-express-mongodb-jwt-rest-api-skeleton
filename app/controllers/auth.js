@@ -8,7 +8,8 @@ const {
   getCountry,
   buildSuccObject,
   buildErrObject,
-  handleError
+  handleError,
+  itemNotFound
 } = require('../middleware/utils')
 const uuid = require('uuid')
 const { addHours } = require('date-fns')
@@ -177,12 +178,7 @@ const findUser = async email => {
       },
       'password loginAttempts blockExpires name email role verified verification',
       (err, item) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (!item) {
-          reject(buildErrObject(404, 'USER_DOES_NOT_EXIST'))
-        }
+        itemNotFound(err, item, reject, 'USER_DOES_NOT_EXIST')
         resolve(item)
       }
     )
@@ -255,12 +251,7 @@ const verificationExists = async id => {
         verified: false
       },
       (err, user) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (!user) {
-          reject(buildErrObject(404, 'NOT_FOUND_OR_ALREADY_VERIFIED'))
-        }
+        itemNotFound(err, user, reject, 'NOT_FOUND_OR_ALREADY_VERIFIED')
         resolve(user)
       }
     )
@@ -298,12 +289,7 @@ const markResetPasswordAsUsed = async (req, forgot) => {
     forgot.browserChanged = getBrowserInfo(req)
     forgot.countryChanged = getCountry(req)
     forgot.save((err, item) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!item) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
+      itemNotFound(err, item, reject, 'NOT_FOUND')
       resolve(buildSuccObject('PASSWORD_CHANGED'))
     })
   })
@@ -318,12 +304,7 @@ const updatePassword = async (password, user) => {
   return new Promise((resolve, reject) => {
     user.password = password
     user.save((err, item) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!item) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
+      itemNotFound(err, item, reject, 'NOT_FOUND')
       resolve(item)
     })
   })
@@ -340,12 +321,7 @@ const findUserToResetPassword = async email => {
         email
       },
       (err, user) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (!user) {
-          reject(buildErrObject(404, 'NOT_FOUND'))
-        }
+        itemNotFound(err, user, reject, 'NOT_FOUND')
         resolve(user)
       }
     )
@@ -364,12 +340,7 @@ const findForgotPassword = async id => {
         used: false
       },
       (err, item) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (!item) {
-          reject(buildErrObject(404, 'NOT_FOUND_OR_ALREADY_USED'))
-        }
+        itemNotFound(err, item, reject, 'NOT_FOUND_OR_ALREADY_USED')
         resolve(item)
       }
     )
@@ -424,12 +395,7 @@ const forgotPasswordResponse = item => {
 const checkPermissions = async (data, next) => {
   return new Promise((resolve, reject) => {
     User.findById(data.id, (err, result) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!result) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
+      itemNotFound(err, result, reject, 'NOT_FOUND')
       if (data.roles.indexOf(result.role) > -1) {
         return resolve(next())
       }

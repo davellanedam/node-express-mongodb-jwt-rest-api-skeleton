@@ -3,7 +3,8 @@ const {
   isIDGood,
   buildSuccObject,
   buildErrObject,
-  handleError
+  handleError,
+  itemNotFound
 } = require('../middleware/utils')
 const { matchedData } = require('express-validator/filter')
 const auth = require('../middleware/auth')
@@ -19,12 +20,7 @@ const auth = require('../middleware/auth')
 const getProfileFromDB = async id => {
   return new Promise((resolve, reject) => {
     model.findById(id, '-_id -updatedAt -createdAt', (err, user) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!user) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
+      itemNotFound(err, user, reject, 'NOT_FOUND')
       resolve(user)
     })
   })
@@ -46,12 +42,7 @@ const updateProfileInDB = async (req, id) => {
         select: '-role -_id -updatedAt -createdAt'
       },
       (err, user) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (!user) {
-          reject(buildErrObject(404, 'NOT_FOUND'))
-        }
+        itemNotFound(err, user, reject, 'NOT_FOUND')
         resolve(user)
       }
     )
@@ -64,14 +55,9 @@ const updateProfileInDB = async (req, id) => {
  */
 const findUser = async id => {
   return new Promise((resolve, reject) => {
-    model.findById(id, 'password email', (err, item) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!item) {
-        reject(buildErrObject(404, 'USER_DOES_NOT_EXIST'))
-      }
-      resolve(item)
+    model.findById(id, 'password email', (err, user) => {
+      itemNotFound(err, user, reject, 'USER_DOES_NOT_EXIST')
+      resolve(user)
     })
   })
 }
@@ -94,12 +80,7 @@ const passwordsDoNotMatch = async () => {
 const changePasswordInDB = async (id, req) => {
   return new Promise((resolve, reject) => {
     model.findById(id, '+password', (err, user) => {
-      if (err) {
-        reject(buildErrObject(422, err.message))
-      }
-      if (!user) {
-        reject(buildErrObject(404, 'NOT_FOUND'))
-      }
+      itemNotFound(err, user, reject, 'NOT_FOUND')
 
       // Assigns new password to user
       user.password = req.newPassword

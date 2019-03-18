@@ -1,4 +1,8 @@
-const { buildSuccObject, buildErrObject } = require('../middleware/utils')
+const {
+  buildSuccObject,
+  buildErrObject,
+  itemNotFound
+} = require('../middleware/utils')
 
 /**
  * Builds sorting
@@ -25,18 +29,20 @@ const cleanPaginationID = result => {
  * @param {Object} query - query object
  */
 const listInitOptions = async req => {
-  const order = req.query.order || -1
-  const sort = req.query.sort || 'createdAt'
-  const sortBy = buildSort(sort, order)
-  const page = parseInt(req.query.page, 10) || 1
-  const limit = parseInt(req.query.limit, 10) || 5
-  const options = {
-    sort: sortBy,
-    lean: true,
-    page,
-    limit
-  }
-  return options
+  return new Promise(resolve => {
+    const order = req.query.order || -1
+    const sort = req.query.sort || 'createdAt'
+    const sortBy = buildSort(sort, order)
+    const page = parseInt(req.query.page, 10) || 1
+    const limit = parseInt(req.query.limit, 10) || 5
+    const options = {
+      sort: sortBy,
+      lean: true,
+      page,
+      limit
+    }
+    resolve(options)
+  })
 }
 
 module.exports = {
@@ -86,8 +92,8 @@ module.exports = {
    * @param {Object} query - query object
    */
   async getItems(req, model, query) {
+    const options = await listInitOptions(req)
     return new Promise((resolve, reject) => {
-      const options = listInitOptions(req)
       model.paginate(query, options, (err, items) => {
         if (err) {
           reject(buildErrObject(422, err.message))
@@ -104,12 +110,7 @@ module.exports = {
   async getItem(id, model) {
     return new Promise((resolve, reject) => {
       model.findById(id, (err, item) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (!item) {
-          reject(buildErrObject(404, 'NOT_FOUND'))
-        }
+        itemNotFound(err, item, reject, 'NOT_FOUND')
         resolve(item)
       })
     })
@@ -145,12 +146,7 @@ module.exports = {
           runValidators: true
         },
         (err, item) => {
-          if (err) {
-            reject(buildErrObject(422, err.message))
-          }
-          if (!item) {
-            reject(buildErrObject(404, 'NOT_FOUND'))
-          }
+          itemNotFound(err, item, reject, 'NOT_FOUND')
           resolve(item)
         }
       )
@@ -164,12 +160,7 @@ module.exports = {
   async deleteItem(id, model) {
     return new Promise((resolve, reject) => {
       model.findByIdAndRemove(id, (err, item) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (!item) {
-          reject(buildErrObject(404, 'NOT_FOUND'))
-        }
+        itemNotFound(err, item, reject, 'NOT_FOUND')
         resolve(buildSuccObject('DELETED'))
       })
     })

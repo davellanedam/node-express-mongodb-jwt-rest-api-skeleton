@@ -99,3 +99,18 @@ exports.isIDGood = async id => {
       : reject(this.buildErrObject(422, 'ID_MALFORMED'))
   })
 }
+
+/**
+ * Item not found
+ * @param {Object} err - error object
+ * @param {Object} item - item result object
+ * @param {Object} reject - reject object
+ */
+exports.itemNotFound = (err, item, reject, message) => {
+  if (err) {
+    reject(this.buildErrObject(422, err.message))
+  }
+  if (!item) {
+    reject(this.buildErrObject(404, message))
+  }
+}
