@@ -1,3 +1,8 @@
+## v.4.0.0 (Mar 18, 2019)
+
+-   Big refactor
+-   NPM update
+
 ## v.3.0.4 (Mar 17, 2019)
 
 -   Bumped to v.3.0.4
