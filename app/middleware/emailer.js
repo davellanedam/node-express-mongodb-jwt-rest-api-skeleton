@@ -2,24 +2,7 @@ const nodemailer = require('nodemailer')
 const mg = require('nodemailer-mailgun-transport')
 const i18n = require('i18n')
 const User = require('../models/user')
-const { buildErrObject } = require('../middleware/utils')
-
-/**
- * Response for an email that already exists
- * @param {Object} err - error object
- * @param {Object} item - item result object
- * @param {Object} resolve - resolve object
- * @param {Object} reject - reject object
- */
-const emailAlreadyExists = (err, item, resolve, reject) => {
-  if (err) {
-    reject(buildErrObject(422, err.message))
-  }
-  if (item) {
-    reject(buildErrObject(422, 'EMAIL_ALREADY_EXISTS'))
-  }
-  resolve(false)
-}
+const { itemAlreadyExists } = require('../middleware/utils')
 
 /**
  * Prepares to send email
@@ -61,7 +44,8 @@ module.exports = {
           email
         },
         (err, item) => {
-          emailAlreadyExists(err, item, resolve, reject)
+          itemAlreadyExists(err, item, reject, 'EMAIL_ALREADY_EXISTS')
+          resolve(false)
         }
       )
     })
@@ -82,7 +66,8 @@ module.exports = {
           }
         },
         (err, item) => {
-          emailAlreadyExists(err, item, resolve, reject)
+          itemAlreadyExists(err, item, reject, 'EMAIL_ALREADY_EXISTS')
+          resolve(false)
         }
       )
     })

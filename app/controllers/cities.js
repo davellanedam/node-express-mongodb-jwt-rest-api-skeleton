@@ -1,6 +1,11 @@
 const model = require('../models/city')
 const { matchedData } = require('express-validator/filter')
-const { isIDGood, buildErrObject, handleError } = require('../middleware/utils')
+const {
+  isIDGood,
+  buildErrObject,
+  handleError,
+  itemAlreadyExists
+} = require('../middleware/utils')
 const db = require('../middleware/db')
 
 /*********************
@@ -22,12 +27,7 @@ const cityExistsExcludingItself = async (id, name) => {
         }
       },
       (err, item) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (item) {
-          reject(buildErrObject(422, 'CITY_ALREADY_EXISTS'))
-        }
+        itemAlreadyExists(err, item, reject, 'CITY_ALREADY_EXISTS')
         resolve(false)
       }
     )
@@ -45,12 +45,7 @@ const cityExists = async name => {
         name
       },
       (err, item) => {
-        if (err) {
-          reject(buildErrObject(422, err.message))
-        }
-        if (item) {
-          reject(buildErrObject(422, 'CITY_ALREADY_EXISTS'))
-        }
+        itemAlreadyExists(err, item, reject, 'CITY_ALREADY_EXISTS')
         resolve(false)
       }
     )
