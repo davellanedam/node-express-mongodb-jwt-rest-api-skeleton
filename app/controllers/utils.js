@@ -325,8 +325,8 @@ exports.listInitOptions = async req => {
   const order = req.query.order || -1
   const sort = req.query.sort || 'createdAt'
   const sortBy = buildSort(sort, order)
-  const page = parseInt(req.query.page) || 1
-  const limit = parseInt(req.query.limit) || 5
+  const page = parseInt(req.query.page, 10) || 1
+  const limit = parseInt(req.query.limit, 10) || 5
   const options = {
     sort: sortBy,
     lean: true,
