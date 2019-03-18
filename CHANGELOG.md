@@ -1,3 +1,7 @@
+## v.4.0.3 (Mar 18, 2019)
+
+-   itemAlreadyExists refactor
+
 ## v.4.0.2 (Mar 18, 2019)
 
 -   itemNotFound refactor
