@@ -1,3 +1,7 @@
+## v.4.0.1 (Mar 18, 2019)
+
+-   Refactor emailer
+
 ## v.4.0.0 (Mar 18, 2019)
 
 -   Big refactor
