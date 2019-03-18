@@ -4,6 +4,51 @@ const i18n = require('i18n')
 const User = require('../models/user')
 const { buildErrObject } = require('../middleware/utils')
 
+/**
+ * Response for an email that already exists
+ * @param {Object} err - error object
+ * @param {Object} item - item result object
+ * @param {Object} resolve - resolve object
+ * @param {Object} reject - reject object
+ */
+const emailAlreadyExists = (err, item, resolve, reject) => {
+  if (err) {
+    reject(buildErrObject(422, err.message))
+  }
+  if (item) {
+    reject(buildErrObject(422, 'EMAIL_ALREADY_EXISTS'))
+  }
+  resolve(false)
+}
+
+/**
+ * Prepares to send email
+ * @param {string} user - user object
+ * @param {string} subject - subject
+ * @param {string} htmlMessage - html message
+ */
+const prepareToSendEmail = (user, subject, htmlMessage) => {
+  const data = {
+    user,
+    subject,
+    htmlMessage
+  }
+  const email = {
+    subject,
+    htmlMessage,
+    verification: user.verification
+  }
+  if (process.env.NODE_ENV === 'production') {
+    this.sendEmail(data, messageSent =>
+      messageSent
+        ? console.log(`Email SENT to: ${user.email}`)
+        : console.log(`Email FAILED to: ${user.email}`)
+    )
+  } else if (process.env.NODE_ENV === 'development') {
+    console.log(email)
+  }
+}
+
 module.exports = {
   /**
    * Checks User model if user with an specific email exists
@@ -16,13 +61,7 @@ module.exports = {
           email
         },
         (err, item) => {
-          if (err) {
-            reject(buildErrObject(422, err.message))
-          }
-          if (item) {
-            reject(buildErrObject(422, 'EMAIL_ALREADY_EXISTS'))
-          }
-          resolve(false)
+          emailAlreadyExists(err, item, resolve, reject)
         }
       )
     })
@@ -43,13 +82,7 @@ module.exports = {
           }
         },
         (err, item) => {
-          if (err) {
-            reject(buildErrObject(422, err.message))
-          }
-          if (item) {
-            reject(buildErrObject(422, 'EMAIL_ALREADY_EXISTS'))
-          }
-          resolve(false)
+          emailAlreadyExists(err, item, resolve, reject)
         }
       )
     })
@@ -99,26 +132,7 @@ module.exports = {
       process.env.FRONTEND_URL,
       user.verification
     )
-    const data = {
-      user,
-      subject,
-      htmlMessage
-    }
-    const email = {
-      subject,
-      htmlMessage,
-      verification: user.verification
-    }
-
-    if (process.env.NODE_ENV === 'production') {
-      this.sendEmail(data, messageSent =>
-        messageSent
-          ? console.log(`Email SENT to: ${user.email}`)
-          : console.log(`Email FAILED to: ${user.email}`)
-      )
-    } else if (process.env.NODE_ENV === 'development') {
-      console.log(email)
-    }
+    prepareToSendEmail(user, subject, htmlMessage)
   },
 
   /**
@@ -135,24 +149,6 @@ module.exports = {
       process.env.FRONTEND_URL,
       user.verification
     )
-    const data = {
-      user,
-      subject,
-      htmlMessage
-    }
-    const email = {
-      subject,
-      htmlMessage,
-      verification: user.verification
-    }
-    if (process.env.NODE_ENV === 'production') {
-      this.sendEmail(data, messageSent =>
-        messageSent
-          ? console.log(`Email SENT to: ${user.email}`)
-          : console.log(`Email FAILED to: ${user.email}`)
-      )
-    } else if (process.env.NODE_ENV === 'development') {
-      console.log(email)
-    }
+    prepareToSendEmail(user, subject, htmlMessage)
   }
 }
