@@ -1,5 +1,4 @@
-Contributing
-================================================================================
+# Contributing
 
 Awesome!  We're happy that you want to contribute.
 

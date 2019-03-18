@@ -16,7 +16,8 @@
     "clean": "node clean.js",
     "seed": "node seed.js",
     "format": "prettier --write --config .prettierrc.json \"**/*.js\"",
-    "lint": "eslint --fix --config .eslintrc.json \"**/*.js\""
+    "lint": "eslint --fix --config .eslintrc.json \"**/*.js\"",
+    "remark": "remark . -o"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -40,6 +41,7 @@
     "nodemailer-mailgun-transport": "^1.4.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "remark-cli": "^6.0.1",
     "request-ip": "^2.1.3",
     "trim-request": "^1.0.6",
     "uuid": "^3.3.2",
