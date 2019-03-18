@@ -127,7 +127,7 @@ exports.itemAlreadyExists = (err, item, reject, message) => {
   if (err) {
     reject(this.buildErrObject(422, err.message))
   }
-  if (!item) {
+  if (item) {
     reject(this.buildErrObject(422, message))
   }
 }
