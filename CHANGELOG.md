@@ -1,6 +1,14 @@
-## v.4.0.4 (Mar 18, 2019)
+## v.4.0.6 (Mar 18, 2019)
+
+-   CHANGELOG updated
+
+## v.4.0.5 (Mar 18, 2019)
 
 -   Fix itemAlreadyExists refactor
+
+## v.4.0.4 (Mar 18, 2019)
+
+-   itemAlreadyExists refactor
 
 ## v.4.0.3 (Mar 18, 2019)
 
