@@ -1,3 +1,7 @@
+## v.4.0.2 (Mar 18, 2019)
+
+-   itemNotFound refactor
+
 ## v.4.0.1 (Mar 18, 2019)
 
 -   Refactor emailer
