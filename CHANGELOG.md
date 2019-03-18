@@ -1,3 +1,7 @@
+## v.3.0.3 (Mar 17, 2019)
+
+-   Use of remark to format markdown files
+
 ## v.3.0.2 (Mar 17, 2019)
 
 -   Use of remark to format markdown files
