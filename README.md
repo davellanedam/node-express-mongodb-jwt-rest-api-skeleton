@@ -48,7 +48,7 @@ This project is created to help other developers create a **basic REST API in an
 
 A demo of this API is located at: <https://api-demo.daniel-avellaneda.com>
 
-### Login credentials:
+### Login credentials
 
 email: `admin@admin.com`  
 password: `12345`
@@ -214,7 +214,7 @@ When you create a new controller file, try to also create another file with vali
 
 Feel free to report any bugs or improvements. Pull requests are always welcome.
 
-## I love this! How can I help?
+## I love this! How can I help
 
 It´s amazing you feel like that! Send me a tweet <https://twitter.com/davellanedam>, share this with others, make a pull request or if you feel really thankful you can always buy me a beer! Enjoy!
 
