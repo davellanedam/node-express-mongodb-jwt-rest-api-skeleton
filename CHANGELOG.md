@@ -1,3 +1,7 @@
+## v.4.0.7 (Mar 18, 2019)
+
+-   Travis CI changes
+
 ## v.4.0.6 (Mar 18, 2019)
 
 -   CHANGELOG updated

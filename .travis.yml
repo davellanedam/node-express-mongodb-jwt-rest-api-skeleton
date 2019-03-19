@@ -2,6 +2,8 @@ dist: xenial
 language: node_js
 node_js:
   - '8'
+cache:
+  npm: true
 services:
   - mongodb
 before_script:
