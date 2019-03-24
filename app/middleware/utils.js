@@ -131,3 +131,11 @@ exports.itemAlreadyExists = (err, item, reject, message) => {
     reject(this.buildErrObject(422, message))
   }
 }
+
+/**
+ * Converts an email in the request to lowercase
+ * @param {Object} req - the request object
+ */
+exports.emailToLowerCase = req => {
+  return req.body.email ? req.body.email.toLowerCase() : ''
+}

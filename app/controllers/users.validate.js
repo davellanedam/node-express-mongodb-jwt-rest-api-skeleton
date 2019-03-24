@@ -1,4 +1,4 @@
-const { errorValidation } = require('../middleware/utils')
+const { emailToLowerCase, errorValidation } = require('../middleware/utils')
 const validator = require('validator')
 const { check } = require('express-validator/check')
 
@@ -19,8 +19,7 @@ exports.createItem = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .isEmail()
-    .withMessage('EMAIL_IS_NOT_VALID')
-    .normalizeEmail(),
+    .withMessage('EMAIL_IS_NOT_VALID'),
   check('password')
     .exists()
     .withMessage('MISSING')
@@ -67,6 +66,7 @@ exports.createItem = [
     .custom(v => (v === '' ? true : validator.isURL(v)))
     .withMessage('NOT_A_VALID_URL'),
   (req, res, next) => {
+    emailToLowerCase(req)
     errorValidation(req, res, next)
   }
 ]
@@ -86,8 +86,7 @@ exports.updateItem = [
     .withMessage('MISSING')
     .not()
     .isEmpty()
-    .withMessage('IS_EMPTY')
-    .normalizeEmail(),
+    .withMessage('IS_EMPTY'),
   check('role')
     .exists()
     .withMessage('MISSING')
@@ -130,6 +129,7 @@ exports.updateItem = [
     .isEmpty()
     .withMessage('IS_EMPTY'),
   (req, res, next) => {
+    emailToLowerCase(req)
     errorValidation(req, res, next)
   }
 ]

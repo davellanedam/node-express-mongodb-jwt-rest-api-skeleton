@@ -1,4 +1,4 @@
-const { errorValidation } = require('../middleware/utils')
+const { emailToLowerCase, errorValidation } = require('../middleware/utils')
 const { check } = require('express-validator/check')
 
 /**
@@ -18,8 +18,7 @@ exports.register = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .isEmail()
-    .withMessage('EMAIL_IS_NOT_VALID')
-    .normalizeEmail(),
+    .withMessage('EMAIL_IS_NOT_VALID'),
   check('password')
     .exists()
     .withMessage('MISSING')
@@ -31,6 +30,7 @@ exports.register = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
+    emailToLowerCase(req)
     errorValidation(req, res, next)
   }
 ]
@@ -46,8 +46,7 @@ exports.login = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .isEmail()
-    .withMessage('EMAIL_IS_NOT_VALID')
-    .normalizeEmail(),
+    .withMessage('EMAIL_IS_NOT_VALID'),
   check('password')
     .exists()
     .withMessage('MISSING')
@@ -59,6 +58,7 @@ exports.login = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
+    emailToLowerCase(req)
     errorValidation(req, res, next)
   }
 ]
@@ -89,9 +89,9 @@ exports.forgotPassword = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .isEmail()
-    .withMessage('EMAIL_IS_NOT_VALID')
-    .normalizeEmail(),
+    .withMessage('EMAIL_IS_NOT_VALID'),
   (req, res, next) => {
+    emailToLowerCase(req)
     errorValidation(req, res, next)
   }
 ]
