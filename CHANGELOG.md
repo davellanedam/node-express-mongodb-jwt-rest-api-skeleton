@@ -1,3 +1,7 @@
+## v.4.0.8 (Mar 24, 2019)
+
+-   Removed normalizeEmail() function from validator.js. It was removing dots from email addresses. New function in utils to convert an email in request to lowercase. Fixes [#11](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/11)
+
 ## v.4.0.7 (Mar 18, 2019)
 
 -   Travis CI changes
