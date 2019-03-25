@@ -30,7 +30,9 @@ exports.register = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    emailToLowerCase(req)
+    if (req.body.email) {
+      req.body.email = req.body.email.toLowerCase()
+    }
     errorValidation(req, res, next)
   }
 ]
@@ -58,7 +60,9 @@ exports.login = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    emailToLowerCase(req)
+    if (req.body.email) {
+      req.body.email = req.body.email.toLowerCase()
+    }
     errorValidation(req, res, next)
   }
 ]
@@ -91,7 +95,9 @@ exports.forgotPassword = [
     .isEmail()
     .withMessage('EMAIL_IS_NOT_VALID'),
   (req, res, next) => {
-    emailToLowerCase(req)
+    if (req.body.email) {
+      req.body.email = req.body.email.toLowerCase()
+    }
     errorValidation(req, res, next)
   }
 ]
