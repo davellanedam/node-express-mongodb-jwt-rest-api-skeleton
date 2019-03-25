@@ -1,3 +1,7 @@
+## v.4.0.14 (Mar 25, 2019)
+
+-   Removed unused code
+
 ## v.4.0.13 (Mar 25, 2019)
 
 -   FIX: remark

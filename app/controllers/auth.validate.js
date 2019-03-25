@@ -1,4 +1,4 @@
-const { emailToLowerCase, errorValidation } = require('../middleware/utils')
+const { errorValidation } = require('../middleware/utils')
 const { check } = require('express-validator/check')
 
 /**
@@ -30,9 +30,6 @@ exports.register = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    if (req.body.email) {
-      req.body.email = req.body.email.toLowerCase()
-    }
     errorValidation(req, res, next)
   }
 ]
@@ -60,9 +57,6 @@ exports.login = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    if (req.body.email) {
-      req.body.email = req.body.email.toLowerCase()
-    }
     errorValidation(req, res, next)
   }
 ]
@@ -95,9 +89,6 @@ exports.forgotPassword = [
     .isEmail()
     .withMessage('EMAIL_IS_NOT_VALID'),
   (req, res, next) => {
-    if (req.body.email) {
-      req.body.email = req.body.email.toLowerCase()
-    }
     errorValidation(req, res, next)
   }
 ]
