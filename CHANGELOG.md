@@ -1,3 +1,7 @@
+## v.4.0.11 (Mar 25, 2019)
+
+-   README.md updated
+
 ## v.4.0.10 (Mar 25, 2019)
 
 -   README.md updated

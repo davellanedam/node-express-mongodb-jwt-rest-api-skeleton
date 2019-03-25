@@ -17,7 +17,7 @@ This project is created to help other developers create a **basic REST API in an
 
 Hi! I'm Daniel Avellaneda, I'm currently an open source enthusiast and dedicate my free time to open source projects.
 
-I'm the creator and maintainer of node-express-mongodb-jwt-rest-api-skeleton and vue-skeleton-mvp both with thousands of downloads. These projects are what I call a Free starter web app combo: API + Frontend.
+I'm the creator and maintainer of [node-express-mongodb-jwt-rest-api-skeleton](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/blob/master/README.md) and [vue-skeleton-mvp](https://github.com/davellanedam/vue-skeleton-mvp/blob/master/README.md) both with thousands of downloads. These projects are what I call a Free starter web app combo: API + Frontend.
 
 I'm doing my best to provide you a good experience when using my apps, so if you like what I'm doing and wish to say "thanks!", feel free to buy me a coffee :coffee:
 
