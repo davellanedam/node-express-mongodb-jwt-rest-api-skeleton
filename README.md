@@ -13,6 +13,18 @@ This is a basic API REST skeleton written on JavaScript using async/await. Great
 
 This project is created to help other developers create a **basic REST API in an easy way with Node.js**. This basic example shows how powerful and simple JavaScript can be. Do you want to contribute? Pull requests are always welcome to show more features.
 
+## Donate
+
+Hi! I'm Daniel Avellaneda, I'm currently an open source enthusiast and dedicate my free time to open source projects.
+
+I'm the creator and maintainer of node-express-mongodb-jwt-rest-api-skeleton and vue-skeleton-mvp both with thousands of downloads. These projects are what I call a Free starter web app combo: API + Frontend.
+
+I'm doing my best to provide you a good experience when using my apps, so if you like what I'm doing and wish to say "thanks!", feel free to buy me a coffee :coffee:
+
+<style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#FFFFFF !important;background-color:#FF813F !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 1px 9px !important;font-size: 22px !important;letter-spacing:0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Cookie', cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#FFFFFF !important;}</style><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/muGHf41NT"><img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
+
+Feel free to send me a tweet <https://twitter.com/davellanedam>, share this with others or make a pull request
+
 ## Features
 
 -   Multiple environment ready (development, production)
@@ -213,10 +225,6 @@ When you create a new controller file, try to also create another file with vali
 ## Bugs or improvements
 
 Feel free to report any bugs or improvements. Pull requests are always welcome.
-
-## I love this! How can I help
-
-It´s amazing you feel like that! Send me a tweet <https://twitter.com/davellanedam>, share this with others, make a pull request or if you feel really thankful you can always buy me a beer! Enjoy!
 
 ## License
 
