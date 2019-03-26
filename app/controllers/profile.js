@@ -1,11 +1,5 @@
 const model = require('../models/user')
-const {
-  isIDGood,
-  buildSuccObject,
-  buildErrObject,
-  handleError,
-  itemNotFound
-} = require('../middleware/utils')
+const utils = require('../middleware/utils')
 const { matchedData } = require('express-validator/filter')
 const auth = require('../middleware/auth')
 
@@ -20,7 +14,7 @@ const auth = require('../middleware/auth')
 const getProfileFromDB = async id => {
   return new Promise((resolve, reject) => {
     model.findById(id, '-_id -updatedAt -createdAt', (err, user) => {
-      itemNotFound(err, user, reject, 'NOT_FOUND')
+      utils.itemNotFound(err, user, reject, 'NOT_FOUND')
       resolve(user)
     })
   })
@@ -42,7 +36,7 @@ const updateProfileInDB = async (req, id) => {
         select: '-role -_id -updatedAt -createdAt'
       },
       (err, user) => {
-        itemNotFound(err, user, reject, 'NOT_FOUND')
+        utils.itemNotFound(err, user, reject, 'NOT_FOUND')
         resolve(user)
       }
     )
@@ -56,7 +50,7 @@ const updateProfileInDB = async (req, id) => {
 const findUser = async id => {
   return new Promise((resolve, reject) => {
     model.findById(id, 'password email', (err, user) => {
-      itemNotFound(err, user, reject, 'USER_DOES_NOT_EXIST')
+      utils.itemNotFound(err, user, reject, 'USER_DOES_NOT_EXIST')
       resolve(user)
     })
   })
@@ -68,7 +62,7 @@ const findUser = async id => {
  */
 const passwordsDoNotMatch = async () => {
   return new Promise(resolve => {
-    resolve(buildErrObject(409, 'WRONG_PASSWORD'))
+    resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'))
   })
 }
 
@@ -80,7 +74,7 @@ const passwordsDoNotMatch = async () => {
 const changePasswordInDB = async (id, req) => {
   return new Promise((resolve, reject) => {
     model.findById(id, '+password', (err, user) => {
-      itemNotFound(err, user, reject, 'NOT_FOUND')
+      utils.itemNotFound(err, user, reject, 'NOT_FOUND')
 
       // Assigns new password to user
       user.password = req.newPassword
@@ -88,9 +82,9 @@ const changePasswordInDB = async (id, req) => {
       // Saves in DB
       user.save(error => {
         if (err) {
-          reject(buildErrObject(422, error.message))
+          reject(utils.buildErrObject(422, error.message))
         }
-        resolve(buildSuccObject('PASSWORD_CHANGED'))
+        resolve(utils.buildSuccObject('PASSWORD_CHANGED'))
       })
     })
   })
@@ -107,10 +101,10 @@ const changePasswordInDB = async (id, req) => {
  */
 exports.getProfile = async (req, res) => {
   try {
-    const id = await isIDGood(req.user._id)
+    const id = await utils.isIDGood(req.user._id)
     res.status(200).json(await getProfileFromDB(id))
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -121,11 +115,11 @@ exports.getProfile = async (req, res) => {
  */
 exports.updateProfile = async (req, res) => {
   try {
-    const id = await isIDGood(req.user._id)
+    const id = await utils.isIDGood(req.user._id)
     req = matchedData(req)
     res.status(200).json(await updateProfileInDB(req, id))
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -136,17 +130,17 @@ exports.updateProfile = async (req, res) => {
  */
 exports.changePassword = async (req, res) => {
   try {
-    const id = await isIDGood(req.user._id)
+    const id = await utils.isIDGood(req.user._id)
     const user = await findUser(id)
     req = matchedData(req)
     const isPasswordMatch = await auth.checkPassword(req.oldPassword, user)
     if (!isPasswordMatch) {
-      handleError(res, await passwordsDoNotMatch())
+      utils.handleError(res, await passwordsDoNotMatch())
     } else {
       // all ok, proceed to change password
       res.status(200).json(await changePasswordInDB(id, req))
     }
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }

@@ -1,7 +1,7 @@
 const model = require('../models/user')
 const uuid = require('uuid')
 const { matchedData } = require('express-validator/filter')
-const { isIDGood, buildErrObject, handleError } = require('../middleware/utils')
+const utils = require('../middleware/utils')
 const db = require('../middleware/db')
 const emailer = require('../middleware/emailer')
 
@@ -27,7 +27,7 @@ const createItem = async req => {
     })
     user.save((err, item) => {
       if (err) {
-        reject(buildErrObject(422, err.message))
+        reject(utils.buildErrObject(422, err.message))
       }
       // Removes properties with rest operator
       const removeProperties = ({
@@ -58,7 +58,7 @@ exports.getItems = async (req, res) => {
     const query = await db.checkQueryString(req.query)
     res.status(200).json(await db.getItems(req, model, query))
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -70,10 +70,10 @@ exports.getItems = async (req, res) => {
 exports.getItem = async (req, res) => {
   try {
     req = matchedData(req)
-    const id = await isIDGood(req.id)
+    const id = await utils.isIDGood(req.id)
     res.status(200).json(await db.getItem(id, model))
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -85,7 +85,7 @@ exports.getItem = async (req, res) => {
 exports.updateItem = async (req, res) => {
   try {
     req = matchedData(req)
-    const id = await isIDGood(req.id)
+    const id = await utils.isIDGood(req.id)
     const doesEmailExists = await emailer.emailExistsExcludingMyself(
       id,
       req.email
@@ -94,7 +94,7 @@ exports.updateItem = async (req, res) => {
       res.status(200).json(await db.updateItem(id, model, req))
     }
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -115,7 +115,7 @@ exports.createItem = async (req, res) => {
       res.status(201).json(item)
     }
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -127,9 +127,9 @@ exports.createItem = async (req, res) => {
 exports.deleteItem = async (req, res) => {
   try {
     req = matchedData(req)
-    const id = await isIDGood(req.id)
+    const id = await utils.isIDGood(req.id)
     res.status(200).json(await db.deleteItem(id, model))
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }

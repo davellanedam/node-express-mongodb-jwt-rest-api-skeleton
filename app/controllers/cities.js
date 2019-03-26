@@ -1,11 +1,6 @@
 const model = require('../models/city')
 const { matchedData } = require('express-validator/filter')
-const {
-  isIDGood,
-  buildErrObject,
-  handleError,
-  itemAlreadyExists
-} = require('../middleware/utils')
+const utils = require('../middleware/utils')
 const db = require('../middleware/db')
 
 /*********************
@@ -27,7 +22,7 @@ const cityExistsExcludingItself = async (id, name) => {
         }
       },
       (err, item) => {
-        itemAlreadyExists(err, item, reject, 'CITY_ALREADY_EXISTS')
+        utils.itemAlreadyExists(err, item, reject, 'CITY_ALREADY_EXISTS')
         resolve(false)
       }
     )
@@ -45,7 +40,7 @@ const cityExists = async name => {
         name
       },
       (err, item) => {
-        itemAlreadyExists(err, item, reject, 'CITY_ALREADY_EXISTS')
+        utils.itemAlreadyExists(err, item, reject, 'CITY_ALREADY_EXISTS')
         resolve(false)
       }
     )
@@ -67,7 +62,7 @@ const getAllItemsFromDB = async () => {
       },
       (err, items) => {
         if (err) {
-          reject(buildErrObject(422, err.message))
+          reject(utils.buildErrObject(422, err.message))
         }
         resolve(items)
       }
@@ -88,7 +83,7 @@ exports.getAllItems = async (req, res) => {
   try {
     res.status(200).json(await getAllItemsFromDB())
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -102,7 +97,7 @@ exports.getItems = async (req, res) => {
     const query = await db.checkQueryString(req.query)
     res.status(200).json(await db.getItems(req, model, query))
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -114,10 +109,10 @@ exports.getItems = async (req, res) => {
 exports.getItem = async (req, res) => {
   try {
     req = matchedData(req)
-    const id = await isIDGood(req.id)
+    const id = await utils.isIDGood(req.id)
     res.status(200).json(await db.getItem(id, model))
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -129,13 +124,13 @@ exports.getItem = async (req, res) => {
 exports.updateItem = async (req, res) => {
   try {
     req = matchedData(req)
-    const id = await isIDGood(req.id)
+    const id = await utils.isIDGood(req.id)
     const doesCityExists = await cityExistsExcludingItself(id, req.name)
     if (!doesCityExists) {
       res.status(200).json(await db.updateItem(id, model, req))
     }
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -152,7 +147,7 @@ exports.createItem = async (req, res) => {
       res.status(201).json(await db.createItem(req, model))
     }
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }
 
@@ -164,9 +159,9 @@ exports.createItem = async (req, res) => {
 exports.deleteItem = async (req, res) => {
   try {
     req = matchedData(req)
-    const id = await isIDGood(req.id)
+    const id = await utils.isIDGood(req.id)
     res.status(200).json(await db.deleteItem(id, model))
   } catch (error) {
-    handleError(res, error)
+    utils.handleError(res, error)
   }
 }

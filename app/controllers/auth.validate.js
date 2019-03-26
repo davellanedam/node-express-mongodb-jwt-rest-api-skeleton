@@ -1,4 +1,4 @@
-const { errorValidation } = require('../middleware/utils')
+const { validationResult } = require('../middleware/utils')
 const { check } = require('express-validator/check')
 
 /**
@@ -30,7 +30,7 @@ exports.register = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    errorValidation(req, res, next)
+    validationResult(req, res, next)
   }
 ]
 
@@ -57,7 +57,7 @@ exports.login = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    errorValidation(req, res, next)
+    validationResult(req, res, next)
   }
 ]
 
@@ -72,7 +72,7 @@ exports.verify = [
     .isEmpty()
     .withMessage('IS_EMPTY'),
   (req, res, next) => {
-    errorValidation(req, res, next)
+    validationResult(req, res, next)
   }
 ]
 
@@ -89,7 +89,7 @@ exports.forgotPassword = [
     .isEmail()
     .withMessage('EMAIL_IS_NOT_VALID'),
   (req, res, next) => {
-    errorValidation(req, res, next)
+    validationResult(req, res, next)
   }
 ]
 
@@ -114,6 +114,6 @@ exports.resetPassword = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    errorValidation(req, res, next)
+    validationResult(req, res, next)
   }
 ]

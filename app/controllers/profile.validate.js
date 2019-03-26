@@ -1,4 +1,4 @@
-const { errorValidation } = require('../middleware/utils')
+const { validationResult } = require('../middleware/utils')
 const validator = require('validator')
 const { check } = require('express-validator/check')
 
@@ -42,7 +42,7 @@ exports.updateProfile = [
     .custom(v => (v === '' ? true : validator.isURL(v)))
     .withMessage('NOT_A_VALID_URL'),
   (req, res, next) => {
-    errorValidation(req, res, next)
+    validationResult(req, res, next)
   }
 ]
 
@@ -69,6 +69,6 @@ exports.changePassword = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    errorValidation(req, res, next)
+    validationResult(req, res, next)
   }
 ]

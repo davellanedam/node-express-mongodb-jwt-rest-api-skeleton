@@ -68,9 +68,12 @@ exports.buildErrObject = (code, message) => {
  * @param {Object} res - response object
  * @param {Object} next - next object
  */
-exports.errorValidation = (req, res, next) => {
+exports.validationResult = (req, res, next) => {
   try {
     validationResult(req).throw()
+    if (req.body.email) {
+      req.body.email = req.body.email.toLowerCase()
+    }
     return next()
   } catch (err) {
     return this.handleError(res, this.buildErrObject(422, err.array()))

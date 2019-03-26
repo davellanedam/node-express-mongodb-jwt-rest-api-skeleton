@@ -1,3 +1,8 @@
+## v.5.0.0 (Mar 25, 2019)
+
+-   Big refactor
+-   FIX: send emails with mailgun
+
 ## v.4.0.14 (Mar 25, 2019)
 
 -   Removed unused code
