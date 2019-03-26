@@ -1,3 +1,7 @@
+## v.5.0.1 (Mar 25, 2019)
+
+-   NPM update
+
 ## v.5.0.0 (Mar 25, 2019)
 
 -   Big refactor
