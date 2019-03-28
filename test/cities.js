@@ -30,6 +30,7 @@ describe('*********** CITIES ***********', () => {
         .send(loginDetails)
         .end((err, res) => {
           res.should.have.status(200)
+          res.body.should.be.an('object')
           res.body.should.have.property('token')
           token = res.body.token
           done()
