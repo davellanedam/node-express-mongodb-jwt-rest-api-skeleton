@@ -32,9 +32,10 @@ Feel free to send me a tweet <https://twitter.com/davellanedam>, share this with
 -   Compressed responses.
 -   Secured HTTP headers.
 -   CORS ready.
--   Cache ready (Redis)
+-   Cache ready (Redis).
 -   HTTP request logger in development mode.
--   i18n ready (for sending emails in multiple languages)
+-   Ability to refresh token
+-   i18n ready (for sending emails in multiple languages).
 -   User roles.
 -   Pagination ready.
 -   User profile.
@@ -107,6 +108,8 @@ npm update
 4.  Change the values of the file to your environment (development or production)
 5.  Upload the `.env` to your environment server(development or production)
 6.  If you use the postman collection to try the endpoints, change value of the variable `server` on your environment to the url of your server, for development mode use <http://localhost:3000>
+
+**IMPORTANT:** By default token expires in 3 days (4320 minutes set in .env.example). You can refresh token at endpoint POST /token and sending the token as a param. If everythong it´s ok you will get a new token.
 
 ### Mailer
 
