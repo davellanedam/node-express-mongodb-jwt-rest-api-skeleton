@@ -20,13 +20,21 @@ const LOGIN_ATTEMPTS = 5
  * @param {Object} user - user object
  */
 const generateToken = user => {
-  const obj = {
-    _id: user
-  }
+  // Gets expiration time
+  const expiration =
+    Math.floor(Date.now() / 1000) + 60 * process.env.JWT_EXPIRATION_IN_MINUTES
+
+  // returns signed and encrypted token
   return auth.encrypt(
-    jwt.sign(obj, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRATION
-    })
+    jwt.sign(
+      {
+        data: {
+          _id: user
+        },
+        exp: expiration
+      },
+      process.env.JWT_SECRET
+    )
   )
 }
 
@@ -174,6 +182,19 @@ const findUser = async email => {
         resolve(item)
       }
     )
+  })
+}
+
+/**
+ * Finds user by ID
+ * @param {string} id - user´s id
+ */
+const findUserById = async userId => {
+  return new Promise((resolve, reject) => {
+    User.findById(userId, (err, item) => {
+      utils.itemNotFound(err, item, reject, 'USER_DOES_NOT_EXIST')
+      resolve(item)
+    })
   })
 }
 
@@ -396,6 +417,26 @@ const checkPermissions = async (data, next) => {
   })
 }
 
+/**
+ * Gets user id from token
+ * @param {Object} req - request object
+ */
+const getUserIdFromToken = async req => {
+  return new Promise((resolve, reject) => {
+    // Decrypts, verifies and decode token
+    jwt.verify(
+      auth.decrypt(req.token),
+      process.env.JWT_SECRET,
+      (err, decoded) => {
+        if (err) {
+          reject(utils.buildErrObject(409, 'BAD_TOKEN'))
+        }
+        resolve(decoded.data._id)
+      }
+    )
+  })
+}
+
 /********************
  * Public functions *
  ********************/
@@ -495,6 +536,26 @@ exports.resetPassword = async (req, res) => {
     await updatePassword(data.password, user)
     const result = await markResetPasswordAsUsed(req, forgotPassword)
     res.status(200).json(result)
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
+ * Refresh token function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.getRefreshToken = async (req, res) => {
+  try {
+    const data = matchedData(req)
+    let userId = await getUserIdFromToken(data)
+    userId = await utils.isIDGood(userId)
+    const user = await findUserById(userId)
+    const token = await saveUserAccessAndReturnToken(req, user)
+    // Removes user info from response
+    delete token.user
+    res.status(200).json(token)
   } catch (error) {
     utils.handleError(res, error)
   }
