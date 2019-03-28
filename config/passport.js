@@ -18,6 +18,7 @@ const jwtExtractor = req => {
     token = req.query.token.replace(' ', '')
   }
   if (token) {
+    // Decrypts token
     token = auth.decrypt(token)
   }
   return token
@@ -35,9 +36,9 @@ const jwtOptions = {
  * Login with JWT middleware
  */
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-  User.findById(payload._id, (err, user) => {
+  User.findById(payload.data._id, (err, user) => {
     if (err) {
-      return done(null, false)
+      return done(err, false)
     }
     return !user ? done(null, false) : done(null, user)
   })
