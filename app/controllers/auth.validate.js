@@ -117,3 +117,18 @@ exports.resetPassword = [
     validationResult(req, res, next)
   }
 ]
+
+/**
+ * Validates request to refresh token
+ */
+exports.getRefreshToken = [
+  check('token')
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  (req, res, next) => {
+    validationResult(req, res, next)
+  }
+]
