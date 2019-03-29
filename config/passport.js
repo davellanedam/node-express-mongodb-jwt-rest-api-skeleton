@@ -11,11 +11,11 @@ const JwtStrategy = require('passport-jwt').Strategy
 const jwtExtractor = req => {
   let token = null
   if (req.headers.authorization) {
-    token = req.headers.authorization.replace('Bearer ', '').replace(' ', '')
+    token = req.headers.authorization.replace('Bearer ', '').trim()
   } else if (req.body.token) {
-    token = req.body.token.replace(' ', '')
+    token = req.body.token.trim()
   } else if (req.query.token) {
-    token = req.query.token.replace(' ', '')
+    token = req.query.token.trim()
   }
   if (token) {
     // Decrypts token

@@ -109,7 +109,7 @@ npm update
 5.  Upload the `.env` to your environment server(development or production)
 6.  If you use the postman collection to try the endpoints, change value of the variable `server` on your environment to the url of your server, for development mode use <http://localhost:3000>
 
-**IMPORTANT:** By default token expires in 3 days (4320 minutes set in .env.example). You can refresh token at endpoint POST /token and sending the token as a param. If everythong it´s ok you will get a new token.
+**IMPORTANT:** By default token expires in 3 days (4320 minutes set in .env.example). You can refresh token at endpoint GET /token. If everything it´s ok you will get a new token.
 
 ### Mailer
 

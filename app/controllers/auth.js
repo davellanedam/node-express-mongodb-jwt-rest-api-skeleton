@@ -419,21 +419,17 @@ const checkPermissions = async (data, next) => {
 
 /**
  * Gets user id from token
- * @param {Object} req - request object
+ * @param {string} token - Encrypted and encoded token
  */
-const getUserIdFromToken = async req => {
+const getUserIdFromToken = async token => {
   return new Promise((resolve, reject) => {
     // Decrypts, verifies and decode token
-    jwt.verify(
-      auth.decrypt(req.token),
-      process.env.JWT_SECRET,
-      (err, decoded) => {
-        if (err) {
-          reject(utils.buildErrObject(409, 'BAD_TOKEN'))
-        }
-        resolve(decoded.data._id)
+    jwt.verify(auth.decrypt(token), process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        reject(utils.buildErrObject(409, 'BAD_TOKEN'))
       }
-    )
+      resolve(decoded.data._id)
+    })
   })
 }
 
@@ -548,8 +544,10 @@ exports.resetPassword = async (req, res) => {
  */
 exports.getRefreshToken = async (req, res) => {
   try {
-    const data = matchedData(req)
-    let userId = await getUserIdFromToken(data)
+    const tokenEncrypted = req.headers.authorization
+      .replace('Bearer ', '')
+      .trim()
+    let userId = await getUserIdFromToken(tokenEncrypted)
     userId = await utils.isIDGood(userId)
     const user = await findUserById(userId)
     const token = await saveUserAccessAndReturnToken(req, user)
