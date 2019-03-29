@@ -156,11 +156,11 @@ describe('*********** AUTH ***********', () => {
     })
   })
 
-  describe('/POST token', () => {
+  describe('/GET token', () => {
     it('it should NOT be able to consume the route since no token was sent', done => {
       chai
         .request(server)
-        .post('/token')
+        .get('/token')
         .end((err, res) => {
           res.should.have.status(401)
           done()
@@ -169,11 +169,8 @@ describe('*********** AUTH ***********', () => {
     it('it should GET a fresh token', done => {
       chai
         .request(server)
-        .post('/token')
+        .get('/token')
         .set('Authorization', `Bearer ${token}`)
-        .send({
-          token
-        })
         .end((err, res) => {
           res.should.have.status(200)
           res.body.should.be.an('object')

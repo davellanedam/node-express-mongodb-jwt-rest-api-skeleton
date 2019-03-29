@@ -52,12 +52,11 @@ router.post(
 /*
  * Get new refresh token
  */
-router.post(
+router.get(
   '/token',
   requireAuth,
   AuthController.roleAuthorization(['user', 'admin']),
   trimRequest.all,
-  validate.getRefreshToken,
   controller.getRefreshToken
 )
 

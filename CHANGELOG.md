@@ -1,3 +1,7 @@
+## v6.1.0 (Mar 29, 2019)
+
+-   ENHANCEMENT: Refresh token endpoint now works as GET instead of POST
+
 ## v6.0.0 (Mar 28, 2019)
 
 -   BREAKING CHANGE: Token payload and expiration have changed
