@@ -50,7 +50,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
-    "eslint": "^5.15.3",
+    "eslint": "^5.16.0",
     "eslint-config-formidable": "^4.0.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.0.1",
