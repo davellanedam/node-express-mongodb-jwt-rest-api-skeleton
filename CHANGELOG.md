@@ -1,3 +1,7 @@
+## v6.1.1 (Mar 30, 2019)
+
+-   NPM updated
+
 ## v6.1.0 (Mar 29, 2019)
 
 -   ENHANCEMENT: Refresh token endpoint now works as GET instead of POST

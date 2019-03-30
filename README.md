@@ -34,7 +34,6 @@ Feel free to send me a tweet <https://twitter.com/davellanedam>, share this with
 -   CORS ready.
 -   Cache ready (Redis).
 -   HTTP request logger in development mode.
--   Ability to refresh token
 -   i18n ready (for sending emails in multiple languages).
 -   User roles.
 -   Pagination ready.
@@ -49,6 +48,7 @@ Feel free to send me a tweet <https://twitter.com/davellanedam>, share this with
 -   NPM script for keeping good source code formatting using prettier and ESLint.
 -   Use of ESLint for good coding practices.
 -   Mailer example with Nodemailer and Mailgun.
+-   Ability to refresh token
 -   JWT Tokens, make requests with a token after login with `Authorization` header with value `Bearer yourToken` where `yourToken` is the **signed and encrypted token** given in the response from the login process.
 
 ## Requirements
