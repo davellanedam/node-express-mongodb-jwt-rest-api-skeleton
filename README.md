@@ -13,13 +13,13 @@ This is a basic API REST skeleton written on JavaScript using async/await. Great
 
 This project is created to help other developers create a **basic REST API in an easy way with Node.js**. This basic example shows how powerful and simple JavaScript can be. Do you want to contribute? Pull requests are always welcome to show more features.
 
-## Donate
+## Buy me a coffee
 
 Hi! I'm Daniel Avellaneda, I'm currently an open source enthusiast and dedicate my free time to open source projects.
 
 I'm the creator and maintainer of [node-express-mongodb-jwt-rest-api-skeleton](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/blob/master/README.md) and [vue-skeleton-mvp](https://github.com/davellanedam/vue-skeleton-mvp/blob/master/README.md) both with thousands of downloads. These projects are what I call a Free starter web app combo: API + Frontend.
 
-I'm doing my best to provide you a good experience when using my apps, so if you like what I'm doing and wish to say "thanks!", feel free to buy me a coffee :coffee:
+I'm doing my best to provide you a good experience when using my apps, so if you like what I'm doing and wish to say "thanks!", please buy me a coffee :coffee:
 
 <a href="https://www.buymeacoffee.com/muGHf41NT" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
