@@ -1,6 +1,6 @@
 {
   "name": "node-express-mongodb-jwt-rest-api-skeleton",
-  "version": "6.1.6",
+  "version": "6.1.7",
   "description": "Node.js express.js MongoDB JWT REST API - This is a basic API REST skeleton written on JavaScript using async/await. Great for building a starter web API for your front-end (Android, iOS, Vue, react, angular, or anything that can consume an API)",
   "license": "MIT",
   "repository": {
@@ -34,7 +34,7 @@
     "helmet": "^3.16.0",
     "i18n": "^0.8.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.5.0",
+    "mongoose": "^5.5.1",
     "mongoose-paginate-v2": "^1.0.24",
     "morgan": "^1.9.1",
     "nodemailer": "^6.1.0",
