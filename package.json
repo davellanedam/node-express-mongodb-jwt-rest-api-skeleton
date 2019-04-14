@@ -59,7 +59,7 @@
     "mongo-seeding": "^3.1.0",
     "nodemon": "^1.18.11",
     "nyc": "^13.3.0",
-    "prettier": "^1.16.4",
+    "prettier": "^1.17.0",
     "prettier-eslint": "^8.8.2"
   },
   "keywords": [
