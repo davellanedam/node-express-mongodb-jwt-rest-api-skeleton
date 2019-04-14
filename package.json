@@ -19,6 +19,12 @@
     "lint": "eslint --fix --config .eslintrc.json \"**/*.js\"",
     "remark": "remark . -o"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run remark",
+      "pre-push": "npm run test"
+    }
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
@@ -55,6 +61,7 @@
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.0.1",
     "faker": "^4.1.0",
+    "husky": "^1.3.1",
     "mocha": "^6.1.3",
     "mongo-seeding": "^3.1.0",
     "nodemon": "^1.18.11",
