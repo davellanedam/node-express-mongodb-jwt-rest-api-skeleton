@@ -37,7 +37,7 @@
     "express": "^4.16.4",
     "express-expeditious": "^5.0.0",
     "express-validator": "^5.3.1",
-    "helmet": "^3.17.0",
+    "helmet": "^3.18.0",
     "i18n": "^0.8.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.5",
