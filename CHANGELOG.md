@@ -1,3 +1,7 @@
+## v6.1.13 (May 18, 2019)
+
+-   Add role validation to User creator, Fixes [#35](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/35)
+
 ## v6.1.12 (May 17, 2019)
 
 -   NPM updated
