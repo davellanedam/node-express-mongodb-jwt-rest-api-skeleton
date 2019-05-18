@@ -131,6 +131,25 @@ describe('*********** USERS ***********', () => {
           done()
         })
     })
+    it('it should NOT POST a user with not known role', done => {
+      const user = {
+        name: faker.random.words(),
+        email,
+        password: faker.random.words(),
+        role: faker.random.words()
+      }
+      chai
+        .request(server)
+        .post('/users')
+        .set('Authorization', `Bearer ${token}`)
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(422)
+          res.body.should.be.a('object')
+          res.body.should.have.property('errors')
+          done()
+        })
+    })
   })
   describe('/GET/:id user', () => {
     it('it should GET a user by the given id', done => {
