@@ -1,3 +1,7 @@
+## v6.1.15 (May 23, 2019)
+
+-   NPM updated
+
 ## v6.1.14 (May 22, 2019)
 
 -   NPM updated
