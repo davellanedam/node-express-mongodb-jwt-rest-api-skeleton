@@ -11,10 +11,10 @@ const i18n = require('i18n')
 const initMongo = require('./config/mongo')
 const path = require('path')
 
-// Setup express server port fron ENV, default: 3000
+// Setup express server port from ENV, default: 3000
 app.set('port', process.env.PORT || 3000)
 
-// Enable only in develoment HTTP request logger middleware
+// Enable only in development HTTP request logger middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
