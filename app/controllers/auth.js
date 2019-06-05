@@ -199,7 +199,7 @@ const findUserById = async userId => {
 }
 
 /**
- * Adds one attempt to loginAttempts, then compares loginAttempts with the constant LOGIN_ATTEMPTS, if is less returns wrong password, else returns blockUser function
+ * Adds one attempt to loginAttempts, then compares loginAttempts with the constant LOGIN_ATTEMPTS, if is less returns wrong credentials, else returns blockUser function
  * @param {Object} user - user object
  */
 const passwordsDoNotMatch = async user => {
@@ -207,7 +207,7 @@ const passwordsDoNotMatch = async user => {
   await saveLoginAttemptsToDB(user)
   return new Promise((resolve, reject) => {
     if (user.loginAttempts <= LOGIN_ATTEMPTS) {
-      resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'))
+      resolve(utils.buildErrObject(409, 'WRONG_CREDENTIALS'))
     } else {
       resolve(blockUser(user))
     }
