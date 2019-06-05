@@ -153,7 +153,7 @@ describe('*********** PROFILE ***********', () => {
           res.body.should.have
             .property('errors')
             .that.has.property('msg')
-            .eql('WRONG_PASSWORD')
+            .eql('WRONG_CREDENTIALS')
           done()
         })
     })
