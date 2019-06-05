@@ -62,7 +62,7 @@ const findUser = async id => {
  */
 const passwordsDoNotMatch = async () => {
   return new Promise(resolve => {
-    resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'))
+    resolve(utils.buildErrObject(409, 'WRONG_CREDENTIALS'))
   })
 }
 
