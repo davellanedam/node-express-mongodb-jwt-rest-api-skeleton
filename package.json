@@ -61,7 +61,7 @@
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "faker": "^4.1.0",
-    "husky": "^2.4.1",
+    "husky": "^3.0.0",
     "mocha": "^6.1.4",
     "mongo-seeding": "^3.2.0",
     "nodemon": "^1.19.1",
