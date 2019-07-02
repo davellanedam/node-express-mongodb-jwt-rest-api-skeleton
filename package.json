@@ -36,7 +36,7 @@
     "expeditious-engine-redis": "^0.1.2",
     "express": "^4.17.1",
     "express-expeditious": "^5.1.0",
-    "express-validator": "^5.3.1",
+    "express-validator": "^6.1.1",
     "helmet": "^3.18.0",
     "i18n": "^0.8.3",
     "jsonwebtoken": "^8.5.1",
