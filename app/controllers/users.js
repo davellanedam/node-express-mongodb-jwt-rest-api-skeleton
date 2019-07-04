@@ -1,6 +1,6 @@
 const model = require('../models/user')
 const uuid = require('uuid')
-const { matchedData } = require('express-validator/filter')
+const { matchedData } = require('express-validator')
 const utils = require('../middleware/utils')
 const db = require('../middleware/db')
 const emailer = require('../middleware/emailer')
