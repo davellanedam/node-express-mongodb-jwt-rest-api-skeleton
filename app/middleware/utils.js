@@ -1,5 +1,5 @@
 const requestIp = require('request-ip')
-const { validationResult } = require('express-validator/check')
+const { validationResult } = require('express-validator')
 
 /**
  * Removes extension from file

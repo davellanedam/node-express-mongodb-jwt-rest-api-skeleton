@@ -1,3 +1,11 @@
+## v7.0.0 (July 3, 2019)
+
+-   Making express-validator happy
+
+## v6.1.20 (July 3, 2019)
+
+-   NPM updated
+
 ## v6.1.19 (June 12, 2019)
 
 -   NPM updated
