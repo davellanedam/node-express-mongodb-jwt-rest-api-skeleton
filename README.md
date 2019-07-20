@@ -199,15 +199,11 @@ Once everything is set up to test API routes either use Postman or any other api
 
 ### Postman API example collection
 
-You can import the example collection to Postman
+You can import the example collection to Postman. To import, click the import button located and select `postman-setup.json` located within the root directory.
 
-<https://www.getpostman.com/collections/d1e27b60e0ccff22a516>
+Then create environments for dev, prod etc. Within each of the environments you create you will need to:
 
-If you use Postman please go to `manage environments` and then create one for each of your servers (Ex. myApi-LOCAL, myApi-PRODUCTION).
-
-On each of the environments you create you will need to:
-
-1.  Create a new key `authToken` with `token` value (the token you got from the login process), each time you make a request to the API it will send `Authorization` header with the token value in the request, you can check this on the headers of users or cities endpoints in the Postman example.
+1.  Create a new key `token` and within the `/login` request this value is automatically updated after a successfull login through a script located in the `tests` tab. Each time you make a request to the API it will send `Authorization` header with the `token` value in the request, you can check this on the headers of users or cities endpoints in the Postman example.
 2.  Create a second key `server` with the url of your server, for development mode use <http://localhost:3000>
 
 This is a REST API, so it works using the following HTTP methods:
