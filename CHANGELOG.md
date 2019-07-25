@@ -1,3 +1,8 @@
+## v7.1.0 (July 25, 2019)
+
+-   Postman Collection example now included in root directory. Now /login has a test that automatically gets ans sets token. Thank you Glen! ([#92](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/pull/92))
+-   NPM updated
+
 ## v7.0.2 (July 12, 2019)
 
 -   NPM updated
