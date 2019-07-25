@@ -199,15 +199,12 @@ Once everything is set up to test API routes either use Postman or any other api
 
 ### Postman API example collection
 
-You can import the example collection to Postman
+You can import the example collection to Postman. To import, click the import button located and select `postman-example.json` located within the root directory.
 
-<https://www.getpostman.com/collections/d1e27b60e0ccff22a516>
+Go to `manage environments` to create environments for development, production, etc. On each of the environments you create you will need to:
 
-If you use Postman please go to `manage environments` and then create one for each of your servers (Ex. myApi-LOCAL, myApi-PRODUCTION).
+1.  Create a new key `authToken` and within the `/login` request this value is automatically updated after a successfull login through a script located in the `tests` tab. Each time you make a request to the API it will send `Authorization` header with the `token` value in the request, you can check this on the headers of users or cities endpoints in the Postman example.
 
-On each of the environments you create you will need to:
-
-1.  Create a new key `authToken` with `token` value (the token you got from the login process), each time you make a request to the API it will send `Authorization` header with the token value in the request, you can check this on the headers of users or cities endpoints in the Postman example.
 2.  Create a second key `server` with the url of your server, for development mode use <http://localhost:3000>
 
 This is a REST API, so it works using the following HTTP methods:
@@ -227,7 +224,7 @@ If you need to add more routes to the project just create a new file in `/app/ro
 
 ### Creating new controllers
 
-When you create a new controller file, try to also create another file with validations. Ex. `countries.js` `countries.validate.js` An example of this is included in the repository.
+When you create a new controller file, try to also create another file with validations. Ex. `countries.js` and `countries.validate.js`. An example of this is included in the repository.
 
 ## Bugs or improvements
 
