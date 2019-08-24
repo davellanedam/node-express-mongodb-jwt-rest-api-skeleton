@@ -145,7 +145,13 @@ npm run command
 npm run dev
 ```
 
-You will know server is running by checking the output of the command `npm run dev`
+Or if you are using Windows with git bash
+
+```bash
+npm run devWin
+```
+
+You will know server is running by checking the output of the command `npm run dev` or `npm run devWin`
 
 ```bash
 ****************************
