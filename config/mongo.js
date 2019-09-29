@@ -11,7 +11,8 @@ module.exports = () => {
       {
         keepAlive: true,
         reconnectTries: Number.MAX_VALUE,
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        useUnifiedTopology: true
       },
       err => {
         let dbStatus = ''
