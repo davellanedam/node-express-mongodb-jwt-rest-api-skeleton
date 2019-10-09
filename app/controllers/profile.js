@@ -60,11 +60,7 @@ const findUser = async id => {
  * Build passwords do not match object
  * @param {Object} user - user object
  */
-const passwordsDoNotMatch = async () => {
-  return new Promise(resolve => {
-    resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'))
-  })
-}
+const passwordsDoNotMatch = () => Promise.resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'));
 
 /**
  * Changes password in database
