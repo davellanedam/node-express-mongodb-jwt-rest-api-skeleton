@@ -64,7 +64,7 @@
     "husky": "^3.0.7",
     "mocha": "^6.2.1",
     "mongo-seeding": "^3.3.0",
-    "nodemon": "^1.19.3",
+    "nodemon": "^2.0.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "prettier-eslint": "^9.0.0"
