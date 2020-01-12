@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const requestIp = require('request-ip')
 const { validationResult } = require('express-validator')
 
@@ -97,7 +96,7 @@ exports.buildSuccObject = message => {
  */
 exports.isIDGood = async id => {
   return new Promise((resolve, reject) => {
-    const goodID = mongoose.Types.ObjectId.isValid(id)
+    const goodID = String(id).match(/^[0-9a-fA-F]{24}$/)
     return goodID
       ? resolve(id)
       : reject(this.buildErrObject(422, 'ID_MALFORMED'))
