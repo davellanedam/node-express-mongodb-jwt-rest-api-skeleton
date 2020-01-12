@@ -1,3 +1,9 @@
+## v7.1.2 (January 12, 2020)
+
+-   Added cross-env to solve windows envionment issues
+-   Use Mongoose built in function to validate ID
+-   NPM updated
+
 ## v7.1.1 (September 29, 2019)
 
 -   Added new option MongoClient constructor
