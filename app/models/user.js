@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcrypt')
 const validator = require('validator')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
@@ -83,7 +83,7 @@ const UserSchema = new mongoose.Schema(
 )
 
 const hash = (user, salt, next) => {
-  bcrypt.hash(user.password, salt, null, (error, newHash) => {
+  bcrypt.hash(user.password, salt, (error, newHash) => {
     if (error) {
       return next(error)
     }
