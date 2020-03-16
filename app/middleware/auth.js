@@ -1,6 +1,11 @@
 const crypto = require('crypto')
-const algorithm = 'aes-256-ecb'
-const secret = process.env.JWT_SECRET
+
+const password = process.env.JWT_SECRET
+const algorithm = 'aes-192-cbc'
+// Key length is dependent on the algorithm. In this case for aes192, it is
+// 24 bytes (192 bits).
+const key = crypto.scryptSync(password, 'salt', 24)
+const iv = Buffer.alloc(16, 0) // Initialization crypto vector
 
 module.exports = {
   /**
@@ -27,23 +32,28 @@ module.exports = {
    * Encrypts text
    * @param {string} text - text to encrypt
    */
+
   encrypt(text) {
-    const cipher = crypto.createCipher(algorithm, secret)
-    let crypted = cipher.update(text, 'utf8', 'hex')
-    crypted += cipher.final('hex')
-    return crypted
+    const cipher = crypto.createCipheriv(algorithm, key, iv)
+
+    let encrypted = cipher.update(text, 'utf8', 'hex')
+    encrypted += cipher.final('hex')
+
+    return encrypted
   },
 
   /**
    * Decrypts text
    * @param {string} text - text to decrypt
    */
+
   decrypt(text) {
-    const decipher = crypto.createDecipher(algorithm, secret)
+    const decipher = crypto.createDecipheriv(algorithm, key, iv)
+
     try {
-      let dec = decipher.update(text, 'hex', 'utf8')
-      dec += decipher.final('utf8')
-      return dec
+      let decrypted = decipher.update(text, 'hex', 'utf8')
+      decrypted += decipher.final('utf8')
+      return decrypted
     } catch (err) {
       return err
     }
