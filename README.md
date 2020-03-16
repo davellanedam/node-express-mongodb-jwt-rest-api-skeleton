@@ -57,7 +57,7 @@ Feel free to send me a tweet <https://twitter.com/davellanedam>, share this with
 
 ## Requirements
 
--   Node.js **8+**
+-   Node.js **10+**
 -   MongoDB **3.6+**
 -   Redis **5.0+**
 
