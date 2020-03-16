@@ -10,10 +10,22 @@ const server = require('../server')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const loginDetails = {
-  email: 'admin@admin.com',
-  password: '12345'
+  admin: {
+    id: '5aa1c2c35ef7a4e97b5e995a',
+    email: 'admin@admin.com',
+    password: '12345'
+  },
+  user: {
+    id: '5aa1c2c35ef7a4e97b5e995b',
+    email: 'user@user.com',
+    password: '12345'
+  }
 }
-let token = ''
+const tokens = {
+  admin: '',
+  user: ''
+}
+
 const email = faker.internet.email()
 const createdID = []
 
@@ -21,16 +33,29 @@ chai.use(chaiHttp)
 
 describe('*********** USERS ***********', () => {
   describe('/POST login', () => {
-    it('it should GET token', done => {
+    it('it should GET token as admin', done => {
       chai
         .request(server)
         .post('/login')
-        .send(loginDetails)
+        .send(loginDetails.admin)
         .end((err, res) => {
           res.should.have.status(200)
           res.body.should.be.an('object')
           res.body.should.have.property('token')
-          token = res.body.token
+          tokens.admin = res.body.token
+          done()
+        })
+    })
+    it('it should GET token as user', done => {
+      chai
+        .request(server)
+        .post('/login')
+        .send(loginDetails.user)
+        .end((err, res) => {
+          res.should.have.status(200)
+          res.body.should.be.an('object')
+          res.body.should.have.property('token')
+          tokens.user = res.body.token
           done()
         })
     })
@@ -49,7 +74,7 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .get('/users')
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .end((err, res) => {
           res.should.have.status(200)
           res.body.should.be.an('object')
@@ -61,7 +86,7 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .get('/users?filter=admin&fields=name,email,city,country,phone')
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .end((err, res) => {
           res.should.have.status(200)
           res.body.should.be.an('object')
@@ -78,7 +103,7 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .post('/users')
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .send(user)
         .end((err, res) => {
           res.should.have.status(422)
@@ -102,7 +127,7 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .post('/users')
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .send(user)
         .end((err, res) => {
           res.should.have.status(201)
@@ -122,7 +147,7 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .post('/users')
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .send(user)
         .end((err, res) => {
           res.should.have.status(422)
@@ -141,7 +166,7 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .post('/users')
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .send(user)
         .end((err, res) => {
           res.should.have.status(422)
@@ -157,7 +182,7 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .get(`/users/${id}`)
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .end((error, res) => {
           res.should.have.status(200)
           res.body.should.be.a('object')
@@ -183,7 +208,7 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .patch(`/users/${id}`)
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .send(user)
         .end((error, res) => {
           res.should.have.status(200)
@@ -207,10 +232,29 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .patch(`/users/${id}`)
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .send(user)
         .end((err, res) => {
           res.should.have.status(422)
+          res.body.should.be.a('object')
+          res.body.should.have.property('errors')
+          done()
+        })
+    })
+    it('it should NOT UPDATE another user if not an admin', done => {
+      const id = createdID.slice(-1).pop()
+      const user = {
+        name: faker.random.words(),
+        email: 'toto@toto.com',
+        role: 'user'
+      }
+      chai
+        .request(server)
+        .patch(`/users/${id}`)
+        .set('Authorization', `Bearer ${tokens.user}`)
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(401)
           res.body.should.be.a('object')
           res.body.should.have.property('errors')
           done()
@@ -233,7 +277,7 @@ describe('*********** USERS ***********', () => {
       chai
         .request(server)
         .post('/users')
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${tokens.admin}`)
         .send(user)
         .end((err, res) => {
           res.should.have.status(201)
@@ -242,7 +286,7 @@ describe('*********** USERS ***********', () => {
           chai
             .request(server)
             .delete(`/users/${res.body._id}`)
-            .set('Authorization', `Bearer ${token}`)
+            .set('Authorization', `Bearer ${tokens.admin}`)
             .end((error, result) => {
               result.should.have.status(200)
               result.body.should.be.a('object')

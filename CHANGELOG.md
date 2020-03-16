@@ -1,3 +1,14 @@
+## v8.0.1 (March 16, 2020)
+
+-   NPM updated
+
+## v8.0.0 (March 16, 2020)
+
+-   This major version requires node 10+ because new bcrypt lib
+-   Use of bcrypt lib
+-   New test for users
+-   NPM updated
+
 ## v7.1.2 (January 12, 2020)
 
 -   Added cross-env to solve windows envionment issues
