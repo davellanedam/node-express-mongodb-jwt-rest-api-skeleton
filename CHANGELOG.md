@@ -1,3 +1,7 @@
+## v8.0.1 (March 16, 2020)
+
+-   NPM updated
+
 ## v8.0.0 (March 16, 2020)
 
 -   This major version requires node 10+ because new bcrypt lib
