@@ -10,7 +10,6 @@ module.exports = () => {
       DB_URL,
       {
         keepAlive: true,
-        reconnectTries: Number.MAX_VALUE,
         useNewUrlParser: true,
         useUnifiedTopology: true
       },
