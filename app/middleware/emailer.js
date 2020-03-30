@@ -24,7 +24,7 @@ const sendEmail = async (data, callback) => {
     subject: data.subject,
     html: data.htmlMessage
   }
-  transporter.sendMail(mailOptions, err => {
+  transporter.sendMail(mailOptions, (err) => {
     if (err) {
       return callback(false)
     }
@@ -50,7 +50,7 @@ const prepareToSendEmail = (user, subject, htmlMessage) => {
     htmlMessage
   }
   if (process.env.NODE_ENV === 'production') {
-    sendEmail(data, messageSent =>
+    sendEmail(data, (messageSent) =>
       messageSent
         ? console.log(`Email SENT to: ${user.email}`)
         : console.log(`Email FAILED to: ${user.email}`)

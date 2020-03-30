@@ -17,7 +17,7 @@ chai.use(chaiHttp)
 
 describe('*********** PROFILE ***********', () => {
   describe('/POST login', () => {
-    it('it should GET token', done => {
+    it('it should GET token', (done) => {
       chai
         .request(server)
         .post('/login')
@@ -32,7 +32,7 @@ describe('*********** PROFILE ***********', () => {
     })
   })
   describe('/GET profile', () => {
-    it('it should NOT be able to consume the route since no token was sent', done => {
+    it('it should NOT be able to consume the route since no token was sent', (done) => {
       chai
         .request(server)
         .get('/profile')
@@ -41,7 +41,7 @@ describe('*********** PROFILE ***********', () => {
           done()
         })
     })
-    it('it should GET profile', done => {
+    it('it should GET profile', (done) => {
       chai
         .request(server)
         .get('/profile')
@@ -55,7 +55,7 @@ describe('*********** PROFILE ***********', () => {
     })
   })
   describe('/PATCH profile', () => {
-    it('it should NOT UPDATE profile empty name/email', done => {
+    it('it should NOT UPDATE profile empty name/email', (done) => {
       const user = {}
       chai
         .request(server)
@@ -69,7 +69,7 @@ describe('*********** PROFILE ***********', () => {
           done()
         })
     })
-    it('it should UPDATE profile', done => {
+    it('it should UPDATE profile', (done) => {
       const user = {
         name: 'Test123456',
         urlTwitter: 'https://hello.com',
@@ -95,7 +95,7 @@ describe('*********** PROFILE ***********', () => {
           done()
         })
     })
-    it('it should NOT UPDATE profile with email that already exists', done => {
+    it('it should NOT UPDATE profile with email that already exists', (done) => {
       const user = {
         email: 'programmer@programmer.com'
       }
@@ -111,7 +111,7 @@ describe('*********** PROFILE ***********', () => {
           done()
         })
     })
-    it('it should NOT UPDATE profile with not valid URL´s', done => {
+    it('it should NOT UPDATE profile with not valid URL´s', (done) => {
       const user = {
         name: 'Test123456',
         urlTwitter: 'hello',
@@ -137,7 +137,7 @@ describe('*********** PROFILE ***********', () => {
     })
   })
   describe('/POST profile/changePassword', () => {
-    it('it should NOT change password', done => {
+    it('it should NOT change password', (done) => {
       const data = {
         oldPassword: '123456',
         newPassword: '123456'
@@ -157,7 +157,7 @@ describe('*********** PROFILE ***********', () => {
           done()
         })
     })
-    it('it should NOT change a too short password', done => {
+    it('it should NOT change a too short password', (done) => {
       const data = {
         oldPassword: '1234',
         newPassword: '1234'
@@ -177,7 +177,7 @@ describe('*********** PROFILE ***********', () => {
           done()
         })
     })
-    it('it should change password', done => {
+    it('it should change password', (done) => {
       const data = {
         oldPassword: '12345',
         newPassword: '12345'

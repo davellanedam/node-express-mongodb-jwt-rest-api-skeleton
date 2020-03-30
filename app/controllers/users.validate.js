@@ -61,11 +61,11 @@ exports.createItem = [
     .trim(),
   check('urlTwitter')
     .optional()
-    .custom(v => (v === '' ? true : validator.isURL(v)))
+    .custom((v) => (v === '' ? true : validator.isURL(v)))
     .withMessage('NOT_A_VALID_URL'),
   check('urlGitHub')
     .optional()
-    .custom(v => (v === '' ? true : validator.isURL(v)))
+    .custom((v) => (v === '' ? true : validator.isURL(v)))
     .withMessage('NOT_A_VALID_URL'),
   (req, res, next) => {
     validationResult(req, res, next)
@@ -117,11 +117,11 @@ exports.updateItem = [
     .trim(),
   check('urlTwitter')
     .optional()
-    .custom(v => (v === '' ? true : validator.isURL(v)))
+    .custom((v) => (v === '' ? true : validator.isURL(v)))
     .withMessage('NOT_A_VALID_URL'),
   check('urlGitHub')
     .optional()
-    .custom(v => (v === '' ? true : validator.isURL(v)))
+    .custom((v) => (v === '' ? true : validator.isURL(v)))
     .withMessage('NOT_A_VALID_URL'),
   check('id')
     .exists()
