@@ -23,7 +23,7 @@ chai.use(chaiHttp)
 
 describe('*********** CITIES ***********', () => {
   describe('/POST login', () => {
-    it('it should GET token', done => {
+    it('it should GET token', (done) => {
       chai
         .request(server)
         .post('/login')
@@ -39,7 +39,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/GET cities', () => {
-    it('it should NOT be able to consume the route since no token was sent', done => {
+    it('it should NOT be able to consume the route since no token was sent', (done) => {
       chai
         .request(server)
         .get('/cities')
@@ -48,7 +48,7 @@ describe('*********** CITIES ***********', () => {
           done()
         })
     })
-    it('it should GET all the cities', done => {
+    it('it should GET all the cities', (done) => {
       chai
         .request(server)
         .get('/cities')
@@ -60,7 +60,7 @@ describe('*********** CITIES ***********', () => {
           done()
         })
     })
-    it('it should GET the cities with filters', done => {
+    it('it should GET the cities with filters', (done) => {
       chai
         .request(server)
         .get('/cities?filter=Bucaramanga&fields=name')
@@ -77,7 +77,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/POST city', () => {
-    it('it should NOT POST a city without name', done => {
+    it('it should NOT POST a city without name', (done) => {
       const city = {}
       chai
         .request(server)
@@ -91,7 +91,7 @@ describe('*********** CITIES ***********', () => {
           done()
         })
     })
-    it('it should POST a city ', done => {
+    it('it should POST a city ', (done) => {
       const city = {
         name
       }
@@ -108,7 +108,7 @@ describe('*********** CITIES ***********', () => {
           done()
         })
     })
-    it('it should NOT POST a city that already exists', done => {
+    it('it should NOT POST a city that already exists', (done) => {
       const city = {
         name
       }
@@ -127,7 +127,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/GET/:id city', () => {
-    it('it should GET a city by the given id', done => {
+    it('it should GET a city by the given id', (done) => {
       const id = createdID.slice(-1).pop()
       chai
         .request(server)
@@ -144,7 +144,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/PATCH/:id city', () => {
-    it('it should UPDATE a city given the id', done => {
+    it('it should UPDATE a city given the id', (done) => {
       const id = createdID.slice(-1).pop()
       chai
         .request(server)
@@ -161,7 +161,7 @@ describe('*********** CITIES ***********', () => {
           done()
         })
     })
-    it('it should NOT UPDATE a city that already exists', done => {
+    it('it should NOT UPDATE a city that already exists', (done) => {
       const city = {
         name: repeatedName
       }
@@ -195,7 +195,7 @@ describe('*********** CITIES ***********', () => {
   })
 
   describe('/DELETE/:id city', () => {
-    it('it should DELETE a city given the id', done => {
+    it('it should DELETE a city given the id', (done) => {
       const city = {
         name
       }
@@ -224,8 +224,8 @@ describe('*********** CITIES ***********', () => {
   })
 
   after(() => {
-    createdID.forEach(id => {
-      City.findByIdAndRemove(id, err => {
+    createdID.forEach((id) => {
+      City.findByIdAndRemove(id, (err) => {
         if (err) {
           console.log(err)
         }

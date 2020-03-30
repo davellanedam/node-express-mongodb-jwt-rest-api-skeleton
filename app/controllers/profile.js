@@ -11,7 +11,7 @@ const auth = require('../middleware/auth')
  * Gets profile from database by id
  * @param {string} id - user id
  */
-const getProfileFromDB = async id => {
+const getProfileFromDB = async (id) => {
   return new Promise((resolve, reject) => {
     model.findById(id, '-_id -updatedAt -createdAt', (err, user) => {
       utils.itemNotFound(err, user, reject, 'NOT_FOUND')
@@ -47,7 +47,7 @@ const updateProfileInDB = async (req, id) => {
  * Finds user by id
  * @param {string} email - user id
  */
-const findUser = async id => {
+const findUser = async (id) => {
   return new Promise((resolve, reject) => {
     model.findById(id, 'password email', (err, user) => {
       utils.itemNotFound(err, user, reject, 'USER_DOES_NOT_EXIST')
@@ -61,7 +61,7 @@ const findUser = async id => {
  * @param {Object} user - user object
  */
 const passwordsDoNotMatch = async () => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'))
   })
 }
@@ -80,7 +80,7 @@ const changePasswordInDB = async (id, req) => {
       user.password = req.newPassword
 
       // Saves in DB
-      user.save(error => {
+      user.save((error) => {
         if (err) {
           reject(utils.buildErrObject(422, error.message))
         }

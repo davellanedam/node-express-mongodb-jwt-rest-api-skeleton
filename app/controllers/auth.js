@@ -19,7 +19,7 @@ const LOGIN_ATTEMPTS = 5
  * Generates a token
  * @param {Object} user - user object
  */
-const generateToken = user => {
+const generateToken = (user) => {
   // Gets expiration time
   const expiration =
     Math.floor(Date.now() / 1000) + 60 * process.env.JWT_EXPIRATION_IN_MINUTES
@@ -42,7 +42,7 @@ const generateToken = user => {
  * Creates an object with user info
  * @param {Object} req - request object
  */
-const setUserInfo = req => {
+const setUserInfo = (req) => {
   let user = {
     _id: req._id,
     name: req.name,
@@ -73,7 +73,7 @@ const saveUserAccessAndReturnToken = async (req, user) => {
       browser: utils.getBrowserInfo(req),
       country: utils.getCountry(req)
     })
-    userAccess.save(err => {
+    userAccess.save((err) => {
       if (err) {
         reject(utils.buildErrObject(422, err.message))
       }
@@ -91,7 +91,7 @@ const saveUserAccessAndReturnToken = async (req, user) => {
  * Blocks a user by setting blockExpires to the specified date based on constant HOURS_TO_BLOCK
  * @param {Object} user - user object
  */
-const blockUser = async user => {
+const blockUser = async (user) => {
   return new Promise((resolve, reject) => {
     user.blockExpires = addHours(new Date(), HOURS_TO_BLOCK)
     user.save((err, result) => {
@@ -109,7 +109,7 @@ const blockUser = async user => {
  * Saves login attempts to dabatabse
  * @param {Object} user - user object
  */
-const saveLoginAttemptsToDB = async user => {
+const saveLoginAttemptsToDB = async (user) => {
   return new Promise((resolve, reject) => {
     user.save((err, result) => {
       if (err) {
@@ -126,14 +126,14 @@ const saveLoginAttemptsToDB = async user => {
  * Checks that login attempts are greater than specified in constant and also that blockexpires is less than now
  * @param {Object} user - user object
  */
-const blockIsExpired = user =>
+const blockIsExpired = (user) =>
   user.loginAttempts > LOGIN_ATTEMPTS && user.blockExpires <= new Date()
 
 /**
  *
  * @param {Object} user - user object.
  */
-const checkLoginAttemptsAndBlockExpires = async user => {
+const checkLoginAttemptsAndBlockExpires = async (user) => {
   return new Promise((resolve, reject) => {
     // Let user try to login again after blockexpires, resets user loginAttempts
     if (blockIsExpired(user)) {
@@ -157,7 +157,7 @@ const checkLoginAttemptsAndBlockExpires = async user => {
  * Checks if blockExpires from user is greater than now
  * @param {Object} user - user object
  */
-const userIsBlocked = async user => {
+const userIsBlocked = async (user) => {
   return new Promise((resolve, reject) => {
     if (user.blockExpires > new Date()) {
       reject(utils.buildErrObject(409, 'BLOCKED_USER'))
@@ -170,7 +170,7 @@ const userIsBlocked = async user => {
  * Finds user by email
  * @param {string} email - user´s email
  */
-const findUser = async email => {
+const findUser = async (email) => {
   return new Promise((resolve, reject) => {
     User.findOne(
       {
@@ -189,7 +189,7 @@ const findUser = async email => {
  * Finds user by ID
  * @param {string} id - user´s id
  */
-const findUserById = async userId => {
+const findUserById = async (userId) => {
   return new Promise((resolve, reject) => {
     User.findById(userId, (err, item) => {
       utils.itemNotFound(err, item, reject, 'USER_DOES_NOT_EXIST')
@@ -202,7 +202,7 @@ const findUserById = async userId => {
  * Adds one attempt to loginAttempts, then compares loginAttempts with the constant LOGIN_ATTEMPTS, if is less returns wrong password, else returns blockUser function
  * @param {Object} user - user object
  */
-const passwordsDoNotMatch = async user => {
+const passwordsDoNotMatch = async (user) => {
   user.loginAttempts += 1
   await saveLoginAttemptsToDB(user)
   return new Promise((resolve, reject) => {
@@ -219,7 +219,7 @@ const passwordsDoNotMatch = async user => {
  * Registers a new user in database
  * @param {Object} req - request object
  */
-const registerUser = async req => {
+const registerUser = async (req) => {
   return new Promise((resolve, reject) => {
     const user = new User({
       name: req.name,
@@ -256,7 +256,7 @@ const returnRegisterToken = (item, userInfo) => {
  * Checks if verification id exists for user
  * @param {string} id - verification id
  */
-const verificationExists = async id => {
+const verificationExists = async (id) => {
   return new Promise((resolve, reject) => {
     User.findOne(
       {
@@ -275,7 +275,7 @@ const verificationExists = async id => {
  * Verifies an user
  * @param {Object} user - user object
  */
-const verifyUser = async user => {
+const verifyUser = async (user) => {
   return new Promise((resolve, reject) => {
     user.verified = true
     user.save((err, item) => {
@@ -327,7 +327,7 @@ const updatePassword = async (password, user) => {
  * Finds user by email to reset password
  * @param {string} email - user email
  */
-const findUserToResetPassword = async email => {
+const findUserToResetPassword = async (email) => {
   return new Promise((resolve, reject) => {
     User.findOne(
       {
@@ -345,7 +345,7 @@ const findUserToResetPassword = async email => {
  * Checks if a forgot password verification exists
  * @param {string} id - verification id
  */
-const findForgotPassword = async id => {
+const findForgotPassword = async (id) => {
   return new Promise((resolve, reject) => {
     ForgotPassword.findOne(
       {
@@ -364,7 +364,7 @@ const findForgotPassword = async id => {
  * Creates a new password forgot
  * @param {Object} req - request object
  */
-const saveForgotPassword = async req => {
+const saveForgotPassword = async (req) => {
   return new Promise((resolve, reject) => {
     const forgot = new ForgotPassword({
       email: req.body.email,
@@ -386,7 +386,7 @@ const saveForgotPassword = async req => {
  * Builds an object with created forgot password object, if env is development or testing exposes the verification
  * @param {Object} item - created forgot password object
  */
-const forgotPasswordResponse = item => {
+const forgotPasswordResponse = (item) => {
   let data = {
     msg: 'RESET_EMAIL_SENT',
     email: item.email
@@ -421,7 +421,7 @@ const checkPermissions = async (data, next) => {
  * Gets user id from token
  * @param {string} token - Encrypted and encoded token
  */
-const getUserIdFromToken = async token => {
+const getUserIdFromToken = async (token) => {
   return new Promise((resolve, reject) => {
     // Decrypts, verifies and decode token
     jwt.verify(auth.decrypt(token), process.env.JWT_SECRET, (err, decoded) => {
@@ -563,7 +563,7 @@ exports.getRefreshToken = async (req, res) => {
  * Roles authorization function called by route
  * @param {Array} roles - roles specified on the route
  */
-exports.roleAuthorization = roles => async (req, res, next) => {
+exports.roleAuthorization = (roles) => async (req, res, next) => {
   try {
     const data = {
       id: req.user._id,

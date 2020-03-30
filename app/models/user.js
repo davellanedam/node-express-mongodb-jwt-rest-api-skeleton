@@ -101,7 +101,7 @@ const genSalt = (user, SALT_FACTOR, next) => {
   })
 }
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
   const that = this
   const SALT_FACTOR = 5
   if (!that.isModified('password')) {
@@ -110,7 +110,7 @@ UserSchema.pre('save', function(next) {
   return genSalt(that, SALT_FACTOR, next)
 })
 
-UserSchema.methods.comparePassword = function(passwordAttempt, cb) {
+UserSchema.methods.comparePassword = function (passwordAttempt, cb) {
   bcrypt.compare(passwordAttempt, this.password, (err, isMatch) =>
     err ? cb(err) : cb(null, isMatch)
   )

@@ -7,11 +7,11 @@ const { removeExtensionFromFile } = require('./app/middleware/utils')
 initMongo()
 
 // Loop models path and loads every file as a model except index file
-const models = fs.readdirSync(modelsPath).filter(file => {
+const models = fs.readdirSync(modelsPath).filter((file) => {
   return removeExtensionFromFile(file) !== 'index'
 })
 
-const deleteModelFromDB = model => {
+const deleteModelFromDB = (model) => {
   return new Promise((resolve, reject) => {
     model = require(`./app/models/${model}`)
     model.deleteMany({}, (err, row) => {
@@ -27,7 +27,7 @@ const deleteModelFromDB = model => {
 const clean = async () => {
   try {
     const promiseArray = models.map(
-      async model => await deleteModelFromDB(model)
+      async (model) => await deleteModelFromDB(model)
     )
     await Promise.all(promiseArray)
     console.log('Cleanup complete!')

@@ -33,7 +33,7 @@ const cityExistsExcludingItself = async (id, name) => {
  * Checks if a city already exists in database
  * @param {string} name - name of item
  */
-const cityExists = async name => {
+const cityExists = async (name) => {
   return new Promise((resolve, reject) => {
     model.findOne(
       {

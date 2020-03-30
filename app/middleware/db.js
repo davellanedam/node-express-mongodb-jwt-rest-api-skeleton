@@ -19,8 +19,8 @@ const buildSort = (sort, order) => {
  * Hack for mongoose-paginate, removes 'id' from results
  * @param {Object} result - result object
  */
-const cleanPaginationID = result => {
-  result.docs.map(element => delete element.id)
+const cleanPaginationID = (result) => {
+  result.docs.map((element) => delete element.id)
   return result
 }
 
@@ -28,8 +28,8 @@ const cleanPaginationID = result => {
  * Builds initial options for query
  * @param {Object} query - query object
  */
-const listInitOptions = async req => {
-  return new Promise(resolve => {
+const listInitOptions = async (req) => {
+  return new Promise((resolve) => {
     const order = req.query.order || -1
     const sort = req.query.sort || 'createdAt'
     const sortBy = buildSort(sort, order)
@@ -66,7 +66,7 @@ module.exports = {
           // Takes fields param and builds an array by splitting with ','
           const arrayFields = query.fields.split(',')
           // Adds SQL Like %word% with regex
-          arrayFields.map(item => {
+          arrayFields.map((item) => {
             array.push({
               [item]: {
                 $regex: new RegExp(query.filter, 'i')

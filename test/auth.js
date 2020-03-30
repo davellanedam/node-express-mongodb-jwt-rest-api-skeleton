@@ -23,7 +23,7 @@ chai.use(chaiHttp)
 
 describe('*********** AUTH ***********', () => {
   describe('/GET /', () => {
-    it('it should GET home API url', done => {
+    it('it should GET home API url', (done) => {
       chai
         .request(server)
         .get('/')
@@ -35,7 +35,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/GET /404url', () => {
-    it('it should GET 404 url', done => {
+    it('it should GET 404 url', (done) => {
       chai
         .request(server)
         .get('/404url')
@@ -48,7 +48,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/POST login', () => {
-    it('it should GET token', done => {
+    it('it should GET token', (done) => {
       chai
         .request(server)
         .post('/login')
@@ -64,7 +64,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/POST register', () => {
-    it('it should POST register', done => {
+    it('it should POST register', (done) => {
       const user = {
         name: faker.random.words(),
         email,
@@ -83,7 +83,7 @@ describe('*********** AUTH ***********', () => {
           done()
         })
     })
-    it('it should NOT POST a register if email already exists', done => {
+    it('it should NOT POST a register if email already exists', (done) => {
       const user = {
         name: faker.random.words(),
         email,
@@ -103,7 +103,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/POST verify', () => {
-    it('it should POST verify', done => {
+    it('it should POST verify', (done) => {
       chai
         .request(server)
         .post('/verify')
@@ -121,7 +121,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/POST forgot', () => {
-    it('it should POST forgot', done => {
+    it('it should POST forgot', (done) => {
       chai
         .request(server)
         .post('/forgot')
@@ -139,7 +139,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/POST reset', () => {
-    it('it should POST reset', done => {
+    it('it should POST reset', (done) => {
       chai
         .request(server)
         .post('/reset')
@@ -157,7 +157,7 @@ describe('*********** AUTH ***********', () => {
   })
 
   describe('/GET token', () => {
-    it('it should NOT be able to consume the route since no token was sent', done => {
+    it('it should NOT be able to consume the route since no token was sent', (done) => {
       chai
         .request(server)
         .get('/token')
@@ -166,7 +166,7 @@ describe('*********** AUTH ***********', () => {
           done()
         })
     })
-    it('it should GET a fresh token', done => {
+    it('it should GET a fresh token', (done) => {
       chai
         .request(server)
         .get('/token')
@@ -181,8 +181,8 @@ describe('*********** AUTH ***********', () => {
   })
 
   after(() => {
-    createdID.forEach(id => {
-      User.findByIdAndRemove(id, err => {
+    createdID.forEach((id) => {
+      User.findByIdAndRemove(id, (err) => {
         if (err) {
           console.log(err)
         }
