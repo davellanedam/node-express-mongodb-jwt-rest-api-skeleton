@@ -1,7 +1,7 @@
 dist: xenial
 language: node_js
 node_js:
-  - '10'
+  - '12'
 cache:
   npm: true
 services:
@@ -14,8 +14,7 @@ if: tag IS present
 deploy:
   provider: npm
   email: $NPM_EMAIL
-  api_key:
-    secure: $NPM_DEPLOY_TOKEN
+  api_key: $NPM_DEPLOY_TOKEN
   on:
     branch: master
     tags: true
