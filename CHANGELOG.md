@@ -1,6 +1,11 @@
 ## v8.1.0 (March 30, 2020)
 
 -   NPM updated
+-   Travis CI updated.
+
+## v8.1.0 (March 30, 2020)
+
+-   NPM updated
 -   Prettier updated to 2.x
 
 ## v8.0.1 (March 16, 2020)
