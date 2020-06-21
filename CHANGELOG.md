@@ -1,3 +1,7 @@
+## v8.1.4 (June 21, 2020)
+
+-   lint-staged package added
+
 ## v8.1.3 (June 21, 2020)
 
 -   Adding additional key to redis ([#200](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/200))
