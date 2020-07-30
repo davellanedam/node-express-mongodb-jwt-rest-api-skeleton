@@ -1,3 +1,7 @@
+## v8.1.5 (July 30, 2020)
+
+-   NPM updated
+
 ## v8.1.4 (June 21, 2020)
 
 -   lint-staged package added
