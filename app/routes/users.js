@@ -1,6 +1,3 @@
-const controller = require('../controllers/users')
-const validate = require('../controllers/users.validate')
-const AuthController = require('../controllers/auth')
 const express = require('express')
 const router = express.Router()
 require('../../config/passport')
@@ -9,6 +6,23 @@ const requireAuth = passport.authenticate('jwt', {
   session: false
 })
 const trimRequest = require('trim-request')
+
+const { roleAuthorization } = require('../controllers/auth')
+
+const {
+  getUsers,
+  createUser,
+  getUser,
+  updateUser,
+  deleteUser
+} = require('../controllers/users')
+
+const {
+  validateCreateUser,
+  validateGetUser,
+  validateUpdateUser,
+  validateDeleteUser
+} = require('../controllers/users/validators')
 
 /*
  * Users routes
@@ -20,9 +34,9 @@ const trimRequest = require('trim-request')
 router.get(
   '/',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  controller.getItems
+  getUsers
 )
 
 /*
@@ -31,10 +45,10 @@ router.get(
 router.post(
   '/',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  validate.createItem,
-  controller.createItem
+  validateCreateUser,
+  createUser
 )
 
 /*
@@ -43,10 +57,10 @@ router.post(
 router.get(
   '/:id',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  validate.getItem,
-  controller.getItem
+  validateGetUser,
+  getUser
 )
 
 /*
@@ -55,10 +69,10 @@ router.get(
 router.patch(
   '/:id',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  validate.updateItem,
-  controller.updateItem
+  validateUpdateUser,
+  updateUser
 )
 
 /*
@@ -67,10 +81,10 @@ router.patch(
 router.delete(
   '/:id',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  validate.deleteItem,
-  controller.deleteItem
+  validateDeleteUser,
+  deleteUser
 )
 
 module.exports = router

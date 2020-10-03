@@ -1,26 +1,31 @@
 {
+  "parser": "babel-eslint",
+
   "env": {
     "node": true,
-    "mocha": true
-  },
-
-  "parserOptions": {
-    "ecmaVersion": 9
+    "mocha": true,
+    "es6": true
   },
 
   "globals": {
     "Promise": true,
     "_": true,
-    "async": true
+    "async": true,
+    "expect": true,
+    "jest": true
   },
 
   "rules": {
     "callback-return": [
-      "error", ["done", "proceed", "next", "onwards", "callback", "cb"]
+      "error",
+      ["done", "proceed", "next", "onwards", "callback", "cb"]
     ],
-    "camelcase": ["warn", {
-      "properties": "always"
-    }],
+    "camelcase": [
+      "warn",
+      {
+        "properties": "always"
+      }
+    ],
     "comma-style": ["warn", "last"],
     "curly": ["error"],
     "eqeqeq": ["error", "always"],
@@ -48,20 +53,26 @@
     "new-cap": ["off"],
     "consistent-this": ["error", "that"],
     "no-unused-vars": [
-      "warn",
+      "error",
       {
         "caughtErrors": "all",
         "caughtErrorsIgnorePattern": "^unused($|[A-Z].*$)"
       }
     ],
-    "no-use-before-define": ["error", {
-      "functions": false
-    }],
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false
+      }
+    ],
     "no-var": 2,
     "one-var": ["warn", "never"],
-    "prefer-arrow-callback": ["warn", {
-      "allowNamedFunctions": true
-    }],
+    "prefer-arrow-callback": [
+      "warn",
+      {
+        "allowNamedFunctions": true
+      }
+    ],
     "quotes": [
       "warn",
       "single",
@@ -70,17 +81,19 @@
         "allowTemplateLiterals": true
       }
     ],
-    "semi": ["error", "never"],
-    "semi-spacing": ["warn", {
-      "before": false,
-      "after": true
-    }],
+    "semi-spacing": [
+      "warn",
+      {
+        "before": false,
+        "after": true
+      }
+    ],
     "semi-style": ["warn", "last"],
     "space-before-function-paren": ["off", 2],
     "prettier/prettier": "error"
   },
   "extends": [
-    "formidable/rules/eslint/best-practices/on",
+    "formidable/rules/eslint/best-practices/off",
     "formidable/rules/eslint/es6/on",
     "formidable/rules/eslint/errors/off",
     "formidable/rules/eslint/strict/on",
@@ -89,7 +102,5 @@
     "formidable/rules/eslint/variables/on",
     "prettier"
   ],
-  "plugins": [
-    "prettier"
-  ]
+  "plugins": ["prettier"]
 }

@@ -1,6 +1,3 @@
-const controller = require('../controllers/profile')
-const validate = require('../controllers/profile.validate')
-const AuthController = require('../controllers/auth')
 const express = require('express')
 const router = express.Router()
 require('../../config/passport')
@@ -9,6 +6,19 @@ const requireAuth = passport.authenticate('jwt', {
   session: false
 })
 const trimRequest = require('trim-request')
+
+const { roleAuthorization } = require('../controllers/auth')
+
+const {
+  getProfile,
+  updateProfile,
+  changePassword
+} = require('../controllers/profile')
+
+const {
+  validateUpdateProfile,
+  validateChangePassword
+} = require('../controllers/profile/validators')
 
 /*
  * Profile routes
@@ -20,9 +30,9 @@ const trimRequest = require('trim-request')
 router.get(
   '/',
   requireAuth,
-  AuthController.roleAuthorization(['user', 'admin']),
+  roleAuthorization(['user', 'admin']),
   trimRequest.all,
-  controller.getProfile
+  getProfile
 )
 
 /*
@@ -31,10 +41,10 @@ router.get(
 router.patch(
   '/',
   requireAuth,
-  AuthController.roleAuthorization(['user', 'admin']),
+  roleAuthorization(['user', 'admin']),
   trimRequest.all,
-  validate.updateProfile,
-  controller.updateProfile
+  validateUpdateProfile,
+  updateProfile
 )
 
 /*
@@ -43,10 +53,10 @@ router.patch(
 router.post(
   '/changePassword',
   requireAuth,
-  AuthController.roleAuthorization(['user', 'admin']),
+  roleAuthorization(['user', 'admin']),
   trimRequest.all,
-  validate.changePassword,
-  controller.changePassword
+  validateChangePassword,
+  changePassword
 )
 
 module.exports = router
