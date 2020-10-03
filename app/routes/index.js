@@ -16,7 +16,7 @@ fs.readdirSync(routesPath).filter((file) => {
   // Take filename and remove last part (extension)
   const routeFile = removeExtensionFromFile(file)
   // Prevents loading of this file and auth file
-  return routeFile !== 'index' && routeFile !== 'auth'
+  return routeFile !== 'index' && routeFile !== 'auth' && file !== '.DS_Store'
     ? router.use(`/${routeFile}`, require(`./${routeFile}`))
     : ''
 })
