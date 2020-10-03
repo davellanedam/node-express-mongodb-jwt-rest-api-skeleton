@@ -5,7 +5,7 @@ const { itemNotFound } = require('../../../middleware/utils')
  * @param {string} password - new password
  * @param {Object} user - user object
  */
-const updatePassword = (password, user) => {
+const updatePassword = (password = '', user = {}) => {
   return new Promise((resolve) => {
     user.password = password
     user.save((err, item) => {

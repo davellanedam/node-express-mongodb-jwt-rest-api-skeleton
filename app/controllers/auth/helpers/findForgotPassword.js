@@ -5,7 +5,7 @@ const { itemNotFound } = require('../../../middleware/utils')
  * Checks if a forgot password verification exists
  * @param {string} id - verification id
  */
-const findForgotPassword = (id) => {
+const findForgotPassword = (id = '') => {
   return new Promise((resolve) => {
     ForgotPassword.findOne(
       {

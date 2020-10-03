@@ -10,7 +10,7 @@ const {
  * @param {string} id - user id
  * @param {Object} req - request object
  */
-const changePasswordInDB = (id, req) => {
+const changePasswordInDB = (id = '', req = {}) => {
   return new Promise((resolve, reject) => {
     User.findById(id, '+password', (err, user) => {
       itemNotFound(err, user, 'NOT_FOUND')

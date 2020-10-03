@@ -11,7 +11,7 @@ const {
  * @param {Object} req - request object
  * @param {Object} forgot - forgot object
  */
-const markResetPasswordAsUsed = (req, forgot) => {
+const markResetPasswordAsUsed = (req = {}, forgot = {}) => {
   return new Promise((resolve) => {
     forgot.used = true
     forgot.ipChanged = getIP(req)

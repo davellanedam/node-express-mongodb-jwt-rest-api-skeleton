@@ -6,11 +6,11 @@ const { itemNotFound, buildErrObject } = require('../../../middleware/utils')
  * @param {Object} data - data object
  * @param {*} next - next callback
  */
-const checkPermissions = (data, next) => {
+const checkPermissions = ({ id = '', roles = [] }, next) => {
   return new Promise((resolve, reject) => {
-    User.findById(data.id, (err, result) => {
+    User.findById(id, (err, result) => {
       itemNotFound(err, result, 'NOT_FOUND')
-      if (data.roles.indexOf(result.role) > -1) {
+      if (roles.indexOf(result.role) > -1) {
         return resolve(next())
       }
       return reject(buildErrObject(401, 'UNAUTHORIZED'))

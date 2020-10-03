@@ -3,9 +3,9 @@ const { itemNotFound } = require('../../../middleware/utils')
 
 /**
  * Finds user by id
- * @param {string} email - user id
+ * @param {string} id - user id
  */
-const findUser = (id) => {
+const findUser = (id = '') => {
   return new Promise((resolve) => {
     User.findById(id, 'password email', (err, user) => {
       itemNotFound(err, user, 'USER_DOES_NOT_EXIST')

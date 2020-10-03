@@ -6,7 +6,7 @@ const { itemNotFound } = require('../../../middleware/utils')
  * @param {Object} req - request object
  * @param {string} id - user id
  */
-const updateProfileInDB = (req, id) => {
+const updateProfileInDB = (req = {}, id = '') => {
   return new Promise((resolve) => {
     User.findByIdAndUpdate(
       id,

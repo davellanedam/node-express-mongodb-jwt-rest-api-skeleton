@@ -5,7 +5,7 @@ const { itemNotFound } = require('../../../middleware/utils')
  * Checks if verification id exists for user
  * @param {string} id - verification id
  */
-const verificationExists = (id) => {
+const verificationExists = (id = '') => {
   return new Promise((resolve) => {
     User.findOne(
       {

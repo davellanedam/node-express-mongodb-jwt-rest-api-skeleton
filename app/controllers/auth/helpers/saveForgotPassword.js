@@ -11,7 +11,7 @@ const {
  * Creates a new password forgot
  * @param {Object} req - request object
  */
-const saveForgotPassword = (req) => {
+const saveForgotPassword = (req = {}) => {
   return new Promise((resolve, reject) => {
     const forgot = new ForgotPassword({
       email: req.body.email,

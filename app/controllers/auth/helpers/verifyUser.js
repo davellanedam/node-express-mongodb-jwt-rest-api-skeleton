@@ -4,7 +4,7 @@ const { buildErrObject } = require('../../../middleware/utils')
  * Verifies an user
  * @param {Object} user - user object
  */
-const verifyUser = (user) => {
+const verifyUser = (user = {}) => {
   return new Promise((resolve, reject) => {
     user.verified = true
     user.save((err, item) => {

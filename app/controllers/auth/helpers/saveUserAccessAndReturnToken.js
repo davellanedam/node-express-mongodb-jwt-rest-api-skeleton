@@ -13,7 +13,7 @@ const {
  * @param {Object} req - request object
  * @param {Object} user - user object
  */
-const saveUserAccessAndReturnToken = (req, user) => {
+const saveUserAccessAndReturnToken = (req = {}, user = {}) => {
   return new Promise((resolve, reject) => {
     const userAccess = new UserAccess({
       email: user.email,

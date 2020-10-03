@@ -6,7 +6,7 @@ const { buildErrObject } = require('../../../middleware/utils')
  * Registers a new user in database
  * @param {Object} req - request object
  */
-const registerUser = (req) => {
+const registerUser = (req = {}) => {
   return new Promise((resolve, reject) => {
     const user = new User({
       name: req.name,

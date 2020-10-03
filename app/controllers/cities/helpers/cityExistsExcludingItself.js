@@ -6,7 +6,7 @@ const { buildErrObject } = require('../../../middleware/utils')
  * @param {string} id - id of item
  * @param {string} name - name of item
  */
-const cityExistsExcludingItself = (id, name) => {
+const cityExistsExcludingItself = (id = '', name = '') => {
   return new Promise((resolve, reject) => {
     City.findOne(
       {

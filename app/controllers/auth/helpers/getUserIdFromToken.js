@@ -6,7 +6,7 @@ const { decrypt } = require('../../../middleware/auth')
  * Gets user id from token
  * @param {string} token - Encrypted and encoded token
  */
-const getUserIdFromToken = (token) => {
+const getUserIdFromToken = (token = '') => {
   return new Promise((resolve, reject) => {
     // Decrypts, verifies and decode token
     jwt.verify(decrypt(token), process.env.JWT_SECRET, (err, decoded) => {

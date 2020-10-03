@@ -7,7 +7,7 @@ const { buildErrObject } = require('../../../middleware/utils')
  * Blocks a user by setting blockExpires to the specified date based on constant HOURS_TO_BLOCK
  * @param {Object} user - user object
  */
-const blockUser = (user) => {
+const blockUser = (user = {}) => {
   return new Promise((resolve, reject) => {
     user.blockExpires = addHours(new Date(), HOURS_TO_BLOCK)
     user.save((err, result) => {
