@@ -1,0 +1,42 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch nodemon in debug",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
+      "program": "${workspaceFolder}/server.js",
+      "restart": true,
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9230
+    },
+    {
+      "name": "Launch mocha test in debug",
+      "request": "launch",
+      "runtimeArgs": ["run", "mocha", "${relativeFile}"],
+      "runtimeExecutable": "npm",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "env": {
+        "PORT": "3111"
+      }
+    },
+    {
+      "name": "Launch jest in debug",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "node_modules/.bin/jest",
+        "--runInBand",
+        "--config=jest.config.js",
+        "${file}"
+      ],
+      "port": 9231
+    }
+  ]
+}
