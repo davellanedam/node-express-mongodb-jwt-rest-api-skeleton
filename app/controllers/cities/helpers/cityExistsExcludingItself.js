@@ -7,7 +7,7 @@ const utils = require('../../../middleware/utils')
  * @param {string} name - name of item
  */
 const cityExistsExcludingItself = (id, name) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     City.findOne(
       {
         name,
@@ -16,7 +16,7 @@ const cityExistsExcludingItself = (id, name) => {
         }
       },
       (err, item) => {
-        utils.itemAlreadyExists(err, item, reject, 'CITY_ALREADY_EXISTS')
+        utils.itemAlreadyExists(err, item, 'CITY_ALREADY_EXISTS')
         resolve(false)
       }
     )

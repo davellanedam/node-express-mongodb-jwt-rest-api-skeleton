@@ -7,7 +7,7 @@ const utils = require('../../../middleware/utils')
  * @param {string} id - user id
  */
 const updateProfileInDB = (req, id) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     User.findByIdAndUpdate(
       id,
       req,
@@ -17,7 +17,7 @@ const updateProfileInDB = (req, id) => {
         select: '-role -_id -updatedAt -createdAt'
       },
       (err, user) => {
-        utils.itemNotFound(err, user, reject, 'NOT_FOUND')
+        utils.itemNotFound(err, user, 'NOT_FOUND')
         resolve(user)
       }
     )

@@ -6,14 +6,14 @@ const utils = require('../../../middleware/utils')
  * @param {string} id - verification id
  */
 const verificationExists = (id) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     User.findOne(
       {
         verification: id,
         verified: false
       },
       (err, user) => {
-        utils.itemNotFound(err, user, reject, 'NOT_FOUND_OR_ALREADY_VERIFIED')
+        utils.itemNotFound(err, user, 'NOT_FOUND_OR_ALREADY_VERIFIED')
         resolve(user)
       }
     )

@@ -6,13 +6,13 @@ const utils = require('../../../middleware/utils')
  * @param {Object} forgot - forgot object
  */
 const markResetPasswordAsUsed = (req, forgot) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     forgot.used = true
     forgot.ipChanged = utils.getIP(req)
     forgot.browserChanged = utils.getBrowserInfo(req)
     forgot.countryChanged = utils.getCountry(req)
     forgot.save((err, item) => {
-      utils.itemNotFound(err, item, reject, 'NOT_FOUND')
+      utils.itemNotFound(err, item, 'NOT_FOUND')
       resolve(utils.buildSuccObject('PASSWORD_CHANGED'))
     })
   })

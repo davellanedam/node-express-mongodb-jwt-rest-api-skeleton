@@ -6,10 +6,10 @@ const utils = require('../../../middleware/utils')
  * @param {Object} user - user object
  */
 const updatePassword = (password, user) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     user.password = password
     user.save((err, item) => {
-      utils.itemNotFound(err, item, reject, 'NOT_FOUND')
+      utils.itemNotFound(err, item, 'NOT_FOUND')
       resolve(item)
     })
   })

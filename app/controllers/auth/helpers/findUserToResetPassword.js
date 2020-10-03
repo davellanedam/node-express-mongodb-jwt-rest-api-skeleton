@@ -6,13 +6,13 @@ const utils = require('../../../middleware/utils')
  * @param {string} email - user email
  */
 const findUserToResetPassword = (email) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     User.findOne(
       {
         email
       },
       (err, user) => {
-        utils.itemNotFound(err, user, reject, 'NOT_FOUND')
+        utils.itemNotFound(err, user, 'NOT_FOUND')
         resolve(user)
       }
     )

@@ -6,14 +6,14 @@ const utils = require('../../../middleware/utils')
  * @param {string} id - verification id
  */
 const findForgotPassword = (id) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     ForgotPassword.findOne(
       {
         verification: id,
         used: false
       },
       (err, item) => {
-        utils.itemNotFound(err, item, reject, 'NOT_FOUND_OR_ALREADY_USED')
+        utils.itemNotFound(err, item, 'NOT_FOUND_OR_ALREADY_USED')
         resolve(item)
       }
     )

@@ -6,9 +6,9 @@ const utils = require('../../../middleware/utils')
  * @param {string} email - user id
  */
 const findUser = (id) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     User.findById(id, 'password email', (err, user) => {
-      utils.itemNotFound(err, user, reject, 'USER_DOES_NOT_EXIST')
+      utils.itemNotFound(err, user, 'USER_DOES_NOT_EXIST')
       resolve(user)
     })
   })

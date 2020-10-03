@@ -6,9 +6,9 @@ const utils = require('../../../middleware/utils')
  * @param {string} id - user id
  */
 const getProfileFromDB = (id) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     User.findById(id, '-_id -updatedAt -createdAt', (err, user) => {
-      utils.itemNotFound(err, user, reject, 'NOT_FOUND')
+      utils.itemNotFound(err, user, 'NOT_FOUND')
       resolve(user)
     })
   })

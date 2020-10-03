@@ -9,7 +9,7 @@ const utils = require('../../../middleware/utils')
 const checkPermissions = (data, next) => {
   return new Promise((resolve, reject) => {
     User.findById(data.id, (err, result) => {
-      utils.itemNotFound(err, result, reject, 'NOT_FOUND')
+      utils.itemNotFound(err, result, 'NOT_FOUND')
       if (data.roles.indexOf(result.role) > -1) {
         return resolve(next())
       }

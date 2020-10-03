@@ -6,14 +6,14 @@ const utils = require('../../../middleware/utils')
  * @param {string} email - user´s email
  */
 const findUser = (email) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     User.findOne(
       {
         email
       },
       'password loginAttempts blockExpires name email role verified verification',
       (err, item) => {
-        utils.itemNotFound(err, item, reject, 'USER_DOES_NOT_EXIST')
+        utils.itemNotFound(err, item, 'USER_DOES_NOT_EXIST')
         resolve(item)
       }
     )

@@ -9,7 +9,7 @@ const utils = require('../../../middleware/utils')
 const changePasswordInDB = (id, req) => {
   return new Promise((resolve, reject) => {
     User.findById(id, '+password', (err, user) => {
-      utils.itemNotFound(err, user, reject, 'NOT_FOUND')
+      utils.itemNotFound(err, user, 'NOT_FOUND')
 
       // Assigns new password to user
       user.password = req.newPassword
