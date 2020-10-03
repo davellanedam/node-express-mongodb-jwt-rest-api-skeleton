@@ -10,18 +10,18 @@ const trimRequest = require('trim-request')
 const { roleAuthorization } = require('../controllers/auth')
 
 const {
-  getItems,
-  createItem,
-  getItem,
-  updateItem,
-  deleteItem
+  getUsers,
+  createUser,
+  getUser,
+  updateUser,
+  deleteUser
 } = require('../controllers/users')
 
 const {
-  validateCreateItem,
-  validateGetItem,
-  validateUpdateItem,
-  validateDeleteItem
+  validateCreateUser,
+  validateGetUser,
+  validateUpdateUser,
+  validateDeleteUser
 } = require('../controllers/users/validators')
 
 /*
@@ -36,7 +36,7 @@ router.get(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  getItems
+  getUsers
 )
 
 /*
@@ -47,8 +47,8 @@ router.post(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  validateCreateItem,
-  createItem
+  validateCreateUser,
+  createUser
 )
 
 /*
@@ -59,8 +59,8 @@ router.get(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  validateGetItem,
-  getItem
+  validateGetUser,
+  getUser
 )
 
 /*
@@ -71,8 +71,8 @@ router.patch(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  validateUpdateItem,
-  updateItem
+  validateUpdateUser,
+  updateUser
 )
 
 /*
@@ -83,8 +83,8 @@ router.delete(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  validateDeleteItem,
-  deleteItem
+  validateDeleteUser,
+  deleteUser
 )
 
 module.exports = router

@@ -1,11 +1,11 @@
-const { validateCreateItem } = require('./validateCreateItem')
-const { validateDeleteItem } = require('./validateDeleteItem')
-const { validateGetItem } = require('./validateGetItem')
-const { validateUpdateItem } = require('./validateUpdateItem')
+const { validateCreateUser } = require('./validateCreateUser')
+const { validateDeleteUser } = require('./validateDeleteUser')
+const { validateGetUser } = require('./validateGetUser')
+const { validateUpdateUser } = require('./validateUpdateUser')
 
 module.exports = {
-  validateCreateItem,
-  validateDeleteItem,
-  validateGetItem,
-  validateUpdateItem
+  validateCreateUser,
+  validateDeleteUser,
+  validateGetUser,
+  validateUpdateUser
 }

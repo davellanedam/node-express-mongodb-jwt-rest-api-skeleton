@@ -11,7 +11,7 @@ const { createItemInDb } = require('./helpers')
  * @param {Object} req - request object
  * @param {Object} res - response object
  */
-const createItem = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     // Gets locale from header 'Accept-Language'
     const locale = req.getLocale()
@@ -27,4 +27,4 @@ const createItem = async (req, res) => {
   }
 }
 
-module.exports = { createItem }
+module.exports = { createUser }

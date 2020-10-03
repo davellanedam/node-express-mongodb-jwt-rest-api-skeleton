@@ -3,9 +3,9 @@ const validator = require('validator')
 const { check } = require('express-validator')
 
 /**
- * Validates update item request
+ * Validates create new item request
  */
-const validateUpdateItem = [
+const validateCreateUser = [
   check('name')
     .exists()
     .withMessage('MISSING')
@@ -17,13 +17,27 @@ const validateUpdateItem = [
     .withMessage('MISSING')
     .not()
     .isEmpty()
-    .withMessage('IS_EMPTY'),
+    .withMessage('IS_EMPTY')
+    .isEmail()
+    .withMessage('EMAIL_IS_NOT_VALID'),
+  check('password')
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .isLength({
+      min: 5
+    })
+    .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   check('role')
     .exists()
     .withMessage('MISSING')
     .not()
     .isEmpty()
-    .withMessage('IS_EMPTY'),
+    .withMessage('IS_EMPTY')
+    .isIn(['user', 'admin'])
+    .withMessage('USER_NOT_IN_KNOWN_ROLE'),
   check('phone')
     .exists()
     .withMessage('MISSING')
@@ -53,15 +67,9 @@ const validateUpdateItem = [
     .optional()
     .custom((v) => (v === '' ? true : validator.isURL(v)))
     .withMessage('NOT_A_VALID_URL'),
-  check('id')
-    .exists()
-    .withMessage('MISSING')
-    .not()
-    .isEmpty()
-    .withMessage('IS_EMPTY'),
   (req, res, next) => {
     validateResult(req, res, next)
   }
 ]
 
-module.exports = { validateUpdateItem }
+module.exports = { validateCreateUser }

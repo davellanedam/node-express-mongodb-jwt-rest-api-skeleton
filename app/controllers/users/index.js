@@ -1,13 +1,13 @@
-const { createItem } = require('./createItem')
-const { deleteItem } = require('./deleteItem')
-const { getItem } = require('./getItem')
-const { getItems } = require('./getItems')
-const { updateItem } = require('./updateItem')
+const { createUser } = require('./createUser')
+const { deleteUser } = require('./deleteUser')
+const { getUser } = require('./getUser')
+const { getUsers } = require('./getUsers')
+const { updateUser } = require('./updateUser')
 
 module.exports = {
-  createItem,
-  deleteItem,
-  getItem,
-  getItems,
-  updateItem
+  createUser,
+  deleteUser,
+  getUser,
+  getUsers,
+  updateUser
 }

@@ -1,7 +1,7 @@
-const model = require('../../models/user')
+const User = require('../../models/user')
 const { matchedData } = require('express-validator')
 const { isIDGood, handleError } = require('../../middleware/utils')
-const db = require('../../middleware/db')
+const { updateItem } = require('../../middleware/db')
 const { emailExistsExcludingMyself } = require('../../middleware/emailer')
 
 /**
@@ -9,17 +9,17 @@ const { emailExistsExcludingMyself } = require('../../middleware/emailer')
  * @param {Object} req - request object
  * @param {Object} res - response object
  */
-const updateItem = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     req = matchedData(req)
     const id = await isIDGood(req.id)
     const doesEmailExists = await emailExistsExcludingMyself(id, req.email)
     if (!doesEmailExists) {
-      res.status(200).json(await db.updateItem(id, model, req))
+      res.status(200).json(await updateItem(id, User, req))
     }
   } catch (error) {
     handleError(res, error)
   }
 }
 
-module.exports = { updateItem }
+module.exports = { updateUser }
