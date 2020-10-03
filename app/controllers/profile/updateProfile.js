@@ -7,7 +7,7 @@ const { updateProfileInDB } = require('./helpers')
  * @param {Object} req - request object
  * @param {Object} res - response object
  */
-exports.updateProfile = async (req, res) => {
+const updateProfile = async (req, res) => {
   try {
     const id = await utils.isIDGood(req.user._id)
     req = matchedData(req)
@@ -16,3 +16,5 @@ exports.updateProfile = async (req, res) => {
     utils.handleError(res, error)
   }
 }
+
+module.exports = { updateProfile }

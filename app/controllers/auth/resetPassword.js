@@ -12,7 +12,7 @@ const utils = require('../../middleware/utils')
  * @param {Object} req - request object
  * @param {Object} res - response object
  */
-exports.resetPassword = async (req, res) => {
+const resetPassword = async (req, res) => {
   try {
     const data = matchedData(req)
     const forgotPassword = await findForgotPassword(data.id)
@@ -24,3 +24,5 @@ exports.resetPassword = async (req, res) => {
     utils.handleError(res, error)
   }
 }
+
+module.exports = { resetPassword }
