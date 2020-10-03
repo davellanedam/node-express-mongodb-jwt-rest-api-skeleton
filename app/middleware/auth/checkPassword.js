@@ -10,7 +10,7 @@ const checkPassword = (password, user) => {
   return new Promise((resolve, reject) => {
     user.comparePassword(password, (err, isMatch) => {
       if (err) {
-        reject(buildErrObject(422, err.message))
+        return reject(buildErrObject(422, err.message))
       }
       if (!isMatch) {
         resolve(false)
