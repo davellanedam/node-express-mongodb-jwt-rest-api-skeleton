@@ -12,16 +12,15 @@ const checkLoginAttemptsAndBlockExpires = (user) => {
       user.loginAttempts = 0
       user.save((err, result) => {
         if (err) {
-          reject(buildErrObject(422, err.message))
+          return reject(buildErrObject(422, err.message))
         }
         if (result) {
-          resolve(true)
+          return resolve(true)
         }
       })
-    } else {
-      // User is not blocked, check password (normal behaviour)
-      resolve(true)
     }
+    // User is not blocked, check password (normal behaviour)
+    resolve(true)
   })
 }
 

@@ -12,10 +12,10 @@ const blockUser = (user) => {
     user.blockExpires = addHours(new Date(), HOURS_TO_BLOCK)
     user.save((err, result) => {
       if (err) {
-        reject(buildErrObject(422, err.message))
+        return reject(buildErrObject(422, err.message))
       }
       if (result) {
-        resolve(buildErrObject(409, 'BLOCKED_USER'))
+        return resolve(buildErrObject(409, 'BLOCKED_USER'))
       }
     })
   })

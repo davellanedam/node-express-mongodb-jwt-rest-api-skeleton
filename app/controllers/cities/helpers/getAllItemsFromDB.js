@@ -16,7 +16,7 @@ const getAllItemsFromDB = () => {
       },
       (err, items) => {
         if (err) {
-          reject(buildErrObject(422, err.message))
+          return reject(buildErrObject(422, err.message))
         }
         resolve(items)
       }

@@ -12,7 +12,7 @@ const passwordsDoNotMatch = async (user) => {
   await saveLoginAttemptsToDB(user)
   return new Promise((resolve, reject) => {
     if (user.loginAttempts <= LOGIN_ATTEMPTS) {
-      resolve(buildErrObject(409, 'WRONG_PASSWORD'))
+      return resolve(buildErrObject(409, 'WRONG_PASSWORD'))
     } else {
       resolve(blockUser(user))
     }

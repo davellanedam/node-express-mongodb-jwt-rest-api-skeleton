@@ -8,7 +8,7 @@ const saveLoginAttemptsToDB = (user) => {
   return new Promise((resolve, reject) => {
     user.save((err, result) => {
       if (err) {
-        reject(buildErrObject(422, err.message))
+        return reject(buildErrObject(422, err.message))
       }
       if (result) {
         resolve(true)

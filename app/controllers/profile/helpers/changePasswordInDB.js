@@ -21,7 +21,7 @@ const changePasswordInDB = (id, req) => {
       // Saves in DB
       user.save((error) => {
         if (err) {
-          reject(buildErrObject(422, error.message))
+          return reject(buildErrObject(422, error.message))
         }
         resolve(buildSuccObject('PASSWORD_CHANGED'))
       })

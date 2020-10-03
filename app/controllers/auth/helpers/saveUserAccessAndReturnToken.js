@@ -23,7 +23,7 @@ const saveUserAccessAndReturnToken = (req, user) => {
     })
     userAccess.save((err) => {
       if (err) {
-        reject(buildErrObject(422, err.message))
+        return reject(buildErrObject(422, err.message))
       }
       const userInfo = setUserInfo(user)
       // Returns data with access token

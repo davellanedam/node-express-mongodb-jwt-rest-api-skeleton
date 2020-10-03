@@ -21,8 +21,8 @@ const register = async (req, res) => {
     const doesEmailExists = await emailExists(req.email)
     if (!doesEmailExists) {
       const item = await registerUser(req)
-      const userInfo = setUserInfo(item)
-      const response = returnRegisterToken(item, userInfo)
+      const userInfo = await setUserInfo(item)
+      const response = await returnRegisterToken(item, userInfo)
       sendRegistrationEmailMessage(locale, item)
       res.status(201).json(response)
     }

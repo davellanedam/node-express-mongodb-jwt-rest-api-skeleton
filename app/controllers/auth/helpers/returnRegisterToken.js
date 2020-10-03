@@ -6,14 +6,16 @@ const { generateToken } = require('./generateToken')
  * @param {Object} userInfo - user object
  */
 const returnRegisterToken = (item, userInfo) => {
-  if (process.env.NODE_ENV !== 'production') {
-    userInfo.verification = item.verification
-  }
-  const data = {
-    token: generateToken(item._id),
-    user: userInfo
-  }
-  return data
+  return new Promise((resolve) => {
+    if (process.env.NODE_ENV !== 'production') {
+      userInfo.verification = item.verification
+    }
+    const data = {
+      token: generateToken(item._id),
+      user: userInfo
+    }
+    resolve(data)
+  })
 }
 
 module.exports = { returnRegisterToken }

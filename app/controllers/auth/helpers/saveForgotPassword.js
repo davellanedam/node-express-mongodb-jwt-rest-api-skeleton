@@ -22,7 +22,7 @@ const saveForgotPassword = (req) => {
     })
     forgot.save((err, item) => {
       if (err) {
-        reject(buildErrObject(422, err.message))
+        return reject(buildErrObject(422, err.message))
       }
       resolve(item)
     })
