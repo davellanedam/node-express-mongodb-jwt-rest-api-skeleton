@@ -1,4 +1,4 @@
-const { validationResult } = require('../../../middleware/utils')
+const { validateResult } = require('../../../middleware/utils')
 const { check } = require('express-validator')
 
 /**
@@ -13,7 +13,7 @@ const validateCreateItem = [
     .withMessage('IS_EMPTY')
     .trim(),
   (req, res, next) => {
-    validationResult(req, res, next)
+    validateResult(req, res, next)
   }
 ]
 

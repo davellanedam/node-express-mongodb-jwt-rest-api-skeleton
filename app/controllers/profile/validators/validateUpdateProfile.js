@@ -1,4 +1,4 @@
-const { validationResult } = require('../../../middleware/utils')
+const { validateResult } = require('../../../middleware/utils')
 const validator = require('validator')
 const { check } = require('express-validator')
 
@@ -42,7 +42,7 @@ const validateUpdateProfile = [
     .custom((v) => (v === '' ? true : validator.isURL(v)))
     .withMessage('NOT_A_VALID_URL'),
   (req, res, next) => {
-    validationResult(req, res, next)
+    validateResult(req, res, next)
   }
 ]
 

@@ -1,4 +1,4 @@
-const { validationResult } = require('../../../middleware/utils')
+const { validateResult } = require('../../../middleware/utils')
 const { check } = require('express-validator')
 
 /**
@@ -24,7 +24,7 @@ const validateChangePassword = [
     })
     .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
   (req, res, next) => {
-    validationResult(req, res, next)
+    validateResult(req, res, next)
   }
 ]
 
