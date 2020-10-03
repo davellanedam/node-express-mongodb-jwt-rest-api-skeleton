@@ -1,3 +1,12 @@
+## v9.0.0 (October 3, 2020)
+
+-   Major breaking changes, now controllers and middleware is split in single files for more scalability and testability
+-   Added Jest setup
+-   Added first Jest test
+-   Added VS Code setup for debugging Jest and nodemon
+-   Added more reports for coverage, now there are three: 1 for Jest tests, 1 for mocha tests (end to end) and a 3rd that merges the previous 2.
+-   NPM updated
+
 ## v8.1.5 (July 30, 2020)
 
 -   NPM updated
