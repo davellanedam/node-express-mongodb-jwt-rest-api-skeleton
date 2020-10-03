@@ -1,13 +1,12 @@
 const ForgotPassword = require('../../../models/forgotPassword')
 const { itemNotFound } = require('../../../middleware/utils')
-const { reject } = require('bcrypt/promises')
 
 /**
  * Checks if a forgot password verification exists
  * @param {string} id - verification id
  */
 const findForgotPassword = (id = '') => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     ForgotPassword.findOne(
       {
         verification: id,

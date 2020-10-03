@@ -1,4 +1,3 @@
-const { reject } = require('bcrypt/promises')
 const { itemNotFound } = require('../../../middleware/utils')
 
 /**
@@ -7,7 +6,7 @@ const { itemNotFound } = require('../../../middleware/utils')
  * @param {Object} user - user object
  */
 const updatePassword = (password = '', user = {}) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     user.password = password
     user.save(async (err, item) => {
       try {

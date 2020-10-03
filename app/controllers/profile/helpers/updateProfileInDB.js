@@ -1,6 +1,5 @@
 const User = require('../../../models/user')
 const { itemNotFound } = require('../../../middleware/utils')
-const { reject } = require('bcrypt/promises')
 
 /**
  * Updates profile in database
@@ -8,7 +7,7 @@ const { reject } = require('bcrypt/promises')
  * @param {string} id - user id
  */
 const updateProfileInDB = (req = {}, id = '') => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     User.findByIdAndUpdate(
       id,
       req,

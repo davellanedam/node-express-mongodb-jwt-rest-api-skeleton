@@ -1,4 +1,3 @@
-const { reject } = require('bcrypt/promises')
 const {
   getIP,
   getBrowserInfo,
@@ -13,7 +12,7 @@ const {
  * @param {Object} forgot - forgot object
  */
 const markResetPasswordAsUsed = (req = {}, forgot = {}) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     forgot.used = true
     forgot.ipChanged = getIP(req)
     forgot.browserChanged = getBrowserInfo(req)

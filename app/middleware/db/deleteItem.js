@@ -1,4 +1,3 @@
-const { reject } = require('bcrypt/promises')
 const { buildSuccObject, itemNotFound } = require('../../middleware/utils')
 
 /**
@@ -6,7 +5,7 @@ const { buildSuccObject, itemNotFound } = require('../../middleware/utils')
  * @param {string} id - id of item
  */
 const deleteItem = (id = '', model = {}) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     model.findByIdAndRemove(id, async (err, item) => {
       try {
         await itemNotFound(err, item, 'NOT_FOUND')

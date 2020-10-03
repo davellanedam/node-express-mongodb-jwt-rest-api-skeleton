@@ -1,13 +1,12 @@
 const User = require('../../../models/user')
 const { itemNotFound } = require('../../../middleware/utils')
-const { reject } = require('bcrypt/promises')
 
 /**
  * Checks if verification id exists for user
  * @param {string} id - verification id
  */
 const verificationExists = (id = '') => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     User.findOne(
       {
         verification: id,
