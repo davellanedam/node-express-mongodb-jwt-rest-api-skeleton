@@ -1,6 +1,3 @@
-const controller = require('../controllers/users')
-const validate = require('../controllers/users.validate')
-const AuthController = require('../controllers/auth')
 const express = require('express')
 const router = express.Router()
 require('../../config/passport')
@@ -9,6 +6,23 @@ const requireAuth = passport.authenticate('jwt', {
   session: false
 })
 const trimRequest = require('trim-request')
+
+const { roleAuthorization } = require('../controllers/auth')
+
+const {
+  getItems,
+  createItem,
+  getItem,
+  updateItem,
+  deleteItem
+} = require('../controllers/users')
+
+const {
+  validateCreateItem,
+  validateGetItem,
+  validateUpdateItem,
+  validateDeleteItem
+} = require('../controllers/users/validators')
 
 /*
  * Users routes
@@ -20,9 +34,9 @@ const trimRequest = require('trim-request')
 router.get(
   '/',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  controller.getItems
+  getItems
 )
 
 /*
@@ -31,10 +45,10 @@ router.get(
 router.post(
   '/',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  validate.createItem,
-  controller.createItem
+  validateCreateItem,
+  createItem
 )
 
 /*
@@ -43,10 +57,10 @@ router.post(
 router.get(
   '/:id',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  validate.getItem,
-  controller.getItem
+  validateGetItem,
+  getItem
 )
 
 /*
@@ -55,10 +69,10 @@ router.get(
 router.patch(
   '/:id',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  validate.updateItem,
-  controller.updateItem
+  validateUpdateItem,
+  updateItem
 )
 
 /*
@@ -67,10 +81,10 @@ router.patch(
 router.delete(
   '/:id',
   requireAuth,
-  AuthController.roleAuthorization(['admin']),
+  roleAuthorization(['admin']),
   trimRequest.all,
-  validate.deleteItem,
-  controller.deleteItem
+  validateDeleteItem,
+  deleteItem
 )
 
 module.exports = router

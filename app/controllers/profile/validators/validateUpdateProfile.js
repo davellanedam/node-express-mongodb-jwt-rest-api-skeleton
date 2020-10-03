@@ -1,11 +1,11 @@
-const { validationResult } = require('../middleware/utils')
+const { validationResult } = require('../../../middleware/utils')
 const validator = require('validator')
 const { check } = require('express-validator')
 
 /**
  * Validates update profile request
  */
-exports.updateProfile = [
+const validateUpdateProfile = [
   check('name')
     .exists()
     .withMessage('MISSING')
@@ -46,29 +46,4 @@ exports.updateProfile = [
   }
 ]
 
-/**
- * Validates change password request
- */
-exports.changePassword = [
-  check('oldPassword')
-    .optional()
-    .not()
-    .isEmpty()
-    .withMessage('IS_EMPTY')
-    .isLength({
-      min: 5
-    })
-    .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
-  check('newPassword')
-    .optional()
-    .not()
-    .isEmpty()
-    .withMessage('IS_EMPTY')
-    .isLength({
-      min: 5
-    })
-    .withMessage('PASSWORD_TOO_SHORT_MIN_5'),
-  (req, res, next) => {
-    validationResult(req, res, next)
-  }
-]
+module.exports = { validateUpdateProfile }

@@ -1,0 +1,17 @@
+const User = require('../../../models/user')
+const utils = require('../../../middleware/utils')
+
+/**
+ * Finds user by id
+ * @param {string} email - user id
+ */
+const findUser = (id) => {
+  return new Promise((resolve, reject) => {
+    User.findById(id, 'password email', (err, user) => {
+      utils.itemNotFound(err, user, reject, 'USER_DOES_NOT_EXIST')
+      resolve(user)
+    })
+  })
+}
+
+module.exports = { findUser }
