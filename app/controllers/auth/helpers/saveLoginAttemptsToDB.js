@@ -1,4 +1,4 @@
-const utils = require('../../../middleware/utils')
+const { buildErrObject } = require('../../../middleware/utils')
 
 /**
  * Saves login attempts to dabatabse
@@ -8,7 +8,7 @@ const saveLoginAttemptsToDB = (user) => {
   return new Promise((resolve, reject) => {
     user.save((err, result) => {
       if (err) {
-        reject(utils.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       if (result) {
         resolve(true)

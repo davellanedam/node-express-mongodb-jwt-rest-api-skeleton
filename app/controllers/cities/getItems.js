@@ -1,6 +1,6 @@
 const City = require('../../models/city')
 const db = require('../../middleware/db')
-const utils = require('../../middleware/utils')
+const { handleError } = require('../../middleware/utils')
 
 /**
  * Get items function called by route
@@ -12,7 +12,7 @@ const getItems = async (req, res) => {
     const query = await db.checkQueryString(req.query)
     res.status(200).json(await db.getItems(req, City, query))
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

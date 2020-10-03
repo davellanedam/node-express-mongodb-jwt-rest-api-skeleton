@@ -1,4 +1,4 @@
-const utils = require('../../../middleware/utils')
+const { buildErrObject } = require('../../../middleware/utils')
 
 /**
  * Build passwords do not match object
@@ -6,7 +6,7 @@ const utils = require('../../../middleware/utils')
  */
 const passwordsDoNotMatch = () => {
   return new Promise((resolve) => {
-    resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'))
+    resolve(buildErrObject(409, 'WRONG_PASSWORD'))
   })
 }
 

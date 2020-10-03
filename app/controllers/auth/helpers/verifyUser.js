@@ -1,4 +1,4 @@
-const utils = require('../../../middleware/utils')
+const { buildErrObject } = require('../../../middleware/utils')
 
 /**
  * Verifies an user
@@ -9,7 +9,7 @@ const verifyUser = (user) => {
     user.verified = true
     user.save((err, item) => {
       if (err) {
-        reject(utils.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       resolve({
         email: item.email,

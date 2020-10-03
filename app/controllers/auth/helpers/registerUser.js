@@ -1,6 +1,6 @@
 const uuid = require('uuid')
 const User = require('../../../models/user')
-const utils = require('../../../middleware/utils')
+const { buildErrObject } = require('../../../middleware/utils')
 
 /**
  * Registers a new user in database
@@ -16,7 +16,7 @@ const registerUser = (req) => {
     })
     user.save((err, item) => {
       if (err) {
-        reject(utils.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       resolve(item)
     })

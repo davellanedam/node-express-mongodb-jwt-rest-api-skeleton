@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const auth = require('../../../middleware/auth')
+const { encrypt } = require('../../../middleware/auth')
 
 /**
  * Generates a token
@@ -11,7 +11,7 @@ const generateToken = (user) => {
     Math.floor(Date.now() / 1000) + 60 * process.env.JWT_EXPIRATION_IN_MINUTES
 
   // returns signed and encrypted token
-  return auth.encrypt(
+  return encrypt(
     jwt.sign(
       {
         data: {

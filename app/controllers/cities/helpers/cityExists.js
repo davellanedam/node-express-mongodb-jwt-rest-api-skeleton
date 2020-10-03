@@ -1,5 +1,5 @@
 const City = require('../../../models/city')
-const utils = require('../../../middleware/utils')
+const { itemAlreadyExists } = require('../../../middleware/utils')
 
 /**
  * Checks if a city already exists in database
@@ -12,7 +12,7 @@ const cityExists = (name) => {
         name
       },
       (err, item) => {
-        utils.itemAlreadyExists(err, item, 'CITY_ALREADY_EXISTS')
+        itemAlreadyExists(err, item, 'CITY_ALREADY_EXISTS')
         resolve(false)
       }
     )

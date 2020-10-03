@@ -1,6 +1,9 @@
 const { matchedData } = require('express-validator')
-const utils = require('../../middleware/utils')
-const emailer = require('../../middleware/emailer')
+const { handleError } = require('../../middleware/utils')
+const {
+  emailExists,
+  sendRegistrationEmailMessage
+} = require('../../middleware/emailer')
 const { createItemInDb } = require('./helpers')
 
 /**
@@ -13,14 +16,14 @@ const createItem = async (req, res) => {
     // Gets locale from header 'Accept-Language'
     const locale = req.getLocale()
     req = matchedData(req)
-    const doesEmailExists = await emailer.emailExists(req.email)
+    const doesEmailExists = await emailExists(req.email)
     if (!doesEmailExists) {
       const item = await createItemInDb(req)
-      emailer.sendRegistrationEmailMessage(locale, item)
+      sendRegistrationEmailMessage(locale, item)
       res.status(201).json(item)
     }
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

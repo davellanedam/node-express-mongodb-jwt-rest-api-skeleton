@@ -1,5 +1,5 @@
 const User = require('../../../models/user')
-const utils = require('../../../middleware/utils')
+const { itemNotFound } = require('../../../middleware/utils')
 
 /**
  * Finds user by email to reset password
@@ -12,7 +12,7 @@ const findUserToResetPassword = (email) => {
         email
       },
       (err, user) => {
-        utils.itemNotFound(err, user, 'NOT_FOUND')
+        itemNotFound(err, user, 'NOT_FOUND')
         resolve(user)
       }
     )

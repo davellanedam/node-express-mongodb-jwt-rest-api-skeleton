@@ -1,4 +1,4 @@
-const utils = require('../../../middleware/utils')
+const { itemNotFound } = require('../../../middleware/utils')
 
 /**
  * Updates a user password in database
@@ -9,7 +9,7 @@ const updatePassword = (password, user) => {
   return new Promise((resolve) => {
     user.password = password
     user.save((err, item) => {
-      utils.itemNotFound(err, item, 'NOT_FOUND')
+      itemNotFound(err, item, 'NOT_FOUND')
       resolve(item)
     })
   })

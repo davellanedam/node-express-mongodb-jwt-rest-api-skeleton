@@ -1,7 +1,12 @@
 const UserAccess = require('../../../models/userAccess')
 const { setUserInfo } = require('./setUserInfo')
 const { generateToken } = require('./generateToken')
-const utils = require('../../../middleware/utils')
+const {
+  getIP,
+  getBrowserInfo,
+  getCountry,
+  buildErrObject
+} = require('../../../middleware/utils')
 
 /**
  * Saves a new user access and then returns token
@@ -12,13 +17,13 @@ const saveUserAccessAndReturnToken = (req, user) => {
   return new Promise((resolve, reject) => {
     const userAccess = new UserAccess({
       email: user.email,
-      ip: utils.getIP(req),
-      browser: utils.getBrowserInfo(req),
-      country: utils.getCountry(req)
+      ip: getIP(req),
+      browser: getBrowserInfo(req),
+      country: getCountry(req)
     })
     userAccess.save((err) => {
       if (err) {
-        reject(utils.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       const userInfo = setUserInfo(user)
       // Returns data with access token

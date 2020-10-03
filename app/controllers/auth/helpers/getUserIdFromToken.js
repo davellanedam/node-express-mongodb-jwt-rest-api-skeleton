@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
-const utils = require('../../../middleware/utils')
-const auth = require('../../../middleware/auth')
+const { buildErrObject } = require('../../../middleware/utils')
+const { decrypt } = require('../../../middleware/auth')
 
 /**
  * Gets user id from token
@@ -9,9 +9,9 @@ const auth = require('../../../middleware/auth')
 const getUserIdFromToken = (token) => {
   return new Promise((resolve, reject) => {
     // Decrypts, verifies and decode token
-    jwt.verify(auth.decrypt(token), process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(decrypt(token), process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        reject(utils.buildErrObject(409, 'BAD_TOKEN'))
+        reject(buildErrObject(409, 'BAD_TOKEN'))
       }
       resolve(decoded.data._id)
     })

@@ -1,6 +1,6 @@
 const City = require('../../models/city')
 const db = require('../../middleware/db')
-const utils = require('../../middleware/utils')
+const { handleError } = require('../../middleware/utils')
 const { matchedData } = require('express-validator')
 const { cityExists } = require('./helpers')
 
@@ -17,7 +17,7 @@ const createItem = async (req, res) => {
       res.status(201).json(await db.createItem(req, City))
     }
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

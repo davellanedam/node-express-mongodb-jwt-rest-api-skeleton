@@ -1,4 +1,4 @@
-const utils = require('../../../middleware/utils')
+const { buildErrObject } = require('../../../middleware/utils')
 
 /**
  * Checks if blockExpires from user is greater than now
@@ -7,7 +7,7 @@ const utils = require('../../../middleware/utils')
 const userIsBlocked = (user) => {
   return new Promise((resolve, reject) => {
     if (user.blockExpires > new Date()) {
-      reject(utils.buildErrObject(409, 'BLOCKED_USER'))
+      reject(buildErrObject(409, 'BLOCKED_USER'))
     }
     resolve(true)
   })

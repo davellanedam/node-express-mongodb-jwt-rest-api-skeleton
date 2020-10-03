@@ -5,7 +5,7 @@ const {
   updatePassword,
   markResetPasswordAsUsed
 } = require('./helpers')
-const utils = require('../../middleware/utils')
+const { handleError } = require('../../middleware/utils')
 
 /**
  * Reset password function called by route
@@ -21,7 +21,7 @@ const resetPassword = async (req, res) => {
     const result = await markResetPasswordAsUsed(req, forgotPassword)
     res.status(200).json(result)
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

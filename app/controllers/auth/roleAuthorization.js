@@ -1,6 +1,6 @@
 const { checkPermissions } = require('./helpers')
 
-const utils = require('../../middleware/utils')
+const { handleError } = require('../../middleware/utils')
 
 /**
  * Roles authorization function called by route
@@ -14,7 +14,7 @@ const roleAuthorization = (roles) => async (req, res, next) => {
     }
     await checkPermissions(data, next)
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

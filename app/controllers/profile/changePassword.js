@@ -1,4 +1,4 @@
-const utils = require('../../middleware/utils')
+const { isIDGood, handleError } = require('../../middleware/utils')
 const { matchedData } = require('express-validator')
 const auth = require('../../middleware/auth')
 const {
@@ -14,18 +14,18 @@ const {
  */
 const changePassword = async (req, res) => {
   try {
-    const id = await utils.isIDGood(req.user._id)
+    const id = await isIDGood(req.user._id)
     const user = await findUser(id)
     req = matchedData(req)
     const isPasswordMatch = await auth.checkPassword(req.oldPassword, user)
     if (!isPasswordMatch) {
-      utils.handleError(res, await passwordsDoNotMatch())
+      handleError(res, await passwordsDoNotMatch())
     } else {
       // all ok, proceed to change password
       res.status(200).json(await changePasswordInDB(id, req))
     }
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

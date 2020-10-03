@@ -1,4 +1,4 @@
-const utils = require('../../middleware/utils')
+const { handleError } = require('../../middleware/utils')
 const { getAllItemsFromDB } = require('./helpers')
 
 /**
@@ -10,7 +10,7 @@ const getAllItems = async (req, res) => {
   try {
     res.status(200).json(await getAllItemsFromDB())
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

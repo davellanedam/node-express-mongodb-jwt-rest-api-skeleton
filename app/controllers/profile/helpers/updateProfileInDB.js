@@ -1,5 +1,5 @@
 const User = require('../../../models/user')
-const utils = require('../../../middleware/utils')
+const { itemNotFound } = require('../../../middleware/utils')
 
 /**
  * Updates profile in database
@@ -17,7 +17,7 @@ const updateProfileInDB = (req, id) => {
         select: '-role -_id -updatedAt -createdAt'
       },
       (err, user) => {
-        utils.itemNotFound(err, user, 'NOT_FOUND')
+        itemNotFound(err, user, 'NOT_FOUND')
         resolve(user)
       }
     )

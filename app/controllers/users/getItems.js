@@ -1,5 +1,5 @@
 const User = require('../../models/user')
-const utils = require('../../middleware/utils')
+const { handleError } = require('../../middleware/utils')
 const db = require('../../middleware/db')
 
 /**
@@ -12,7 +12,7 @@ const getItems = async (req, res) => {
     const query = await db.checkQueryString(req.query)
     res.status(200).json(await db.getItems(req, User, query))
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

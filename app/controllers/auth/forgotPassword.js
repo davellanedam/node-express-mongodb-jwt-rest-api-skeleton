@@ -4,8 +4,8 @@ const {
   forgotPasswordResponse,
   saveForgotPassword
 } = require('./helpers')
-const utils = require('../../middleware/utils')
-const emailer = require('../../middleware/emailer')
+const { handleError } = require('../../middleware/utils')
+const { sendResetPasswordEmailMessage } = require('../../middleware/emailer')
 
 /**
  * Forgot password function called by route
@@ -19,10 +19,10 @@ const forgotPassword = async (req, res) => {
     const data = matchedData(req)
     await findUser(data.email)
     const item = await saveForgotPassword(req)
-    emailer.sendResetPasswordEmailMessage(locale, item)
+    sendResetPasswordEmailMessage(locale, item)
     res.status(200).json(forgotPasswordResponse(item))
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

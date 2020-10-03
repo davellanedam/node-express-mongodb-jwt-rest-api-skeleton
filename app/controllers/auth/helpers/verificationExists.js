@@ -1,5 +1,5 @@
 const User = require('../../../models/user')
-const utils = require('../../../middleware/utils')
+const { itemNotFound } = require('../../../middleware/utils')
 
 /**
  * Checks if verification id exists for user
@@ -13,7 +13,7 @@ const verificationExists = (id) => {
         verified: false
       },
       (err, user) => {
-        utils.itemNotFound(err, user, 'NOT_FOUND_OR_ALREADY_VERIFIED')
+        itemNotFound(err, user, 'NOT_FOUND_OR_ALREADY_VERIFIED')
         resolve(user)
       }
     )

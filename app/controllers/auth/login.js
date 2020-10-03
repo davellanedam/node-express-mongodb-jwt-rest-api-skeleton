@@ -9,8 +9,8 @@ const {
   saveUserAccessAndReturnToken
 } = require('./helpers')
 
-const utils = require('../../middleware/utils')
-const auth = require('../../middleware/auth')
+const { handleError } = require('../../middleware/utils')
+const { checkPassword } = require('../../middleware/auth')
 
 /**
  * Login function called by route
@@ -23,9 +23,9 @@ const login = async (req, res) => {
     const user = await findUser(data.email)
     await userIsBlocked(user)
     await checkLoginAttemptsAndBlockExpires(user)
-    const isPasswordMatch = await auth.checkPassword(data.password, user)
+    const isPasswordMatch = await checkPassword(data.password, user)
     if (!isPasswordMatch) {
-      utils.handleError(res, await passwordsDoNotMatch(user))
+      handleError(res, await passwordsDoNotMatch(user))
     } else {
       // all ok, register access and return token
       user.loginAttempts = 0
@@ -33,7 +33,7 @@ const login = async (req, res) => {
       res.status(200).json(await saveUserAccessAndReturnToken(req, user))
     }
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

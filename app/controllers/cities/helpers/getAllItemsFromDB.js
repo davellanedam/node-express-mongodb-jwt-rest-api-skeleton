@@ -1,5 +1,5 @@
 const City = require('../../../models/city')
-const utils = require('../../../middleware/utils')
+const { buildErrObject } = require('../../../middleware/utils')
 
 /**
  * Gets all items from database
@@ -16,7 +16,7 @@ const getAllItemsFromDB = () => {
       },
       (err, items) => {
         if (err) {
-          reject(utils.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
         resolve(items)
       }

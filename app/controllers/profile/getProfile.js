@@ -1,5 +1,5 @@
 const { getProfileFromDB } = require('./helpers')
-const utils = require('../../middleware/utils')
+const { isIDGood, handleError } = require('../../middleware/utils')
 
 /**
  * Get profile function called by route
@@ -8,10 +8,10 @@ const utils = require('../../middleware/utils')
  */
 const getProfile = async (req, res) => {
   try {
-    const id = await utils.isIDGood(req.user._id)
+    const id = await isIDGood(req.user._id)
     res.status(200).json(await getProfileFromDB(id))
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

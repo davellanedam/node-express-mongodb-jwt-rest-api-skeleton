@@ -1,5 +1,9 @@
 const User = require('../../../models/user')
-const utils = require('../../../middleware/utils')
+const {
+  itemNotFound,
+  buildErrObject,
+  buildSuccObject
+} = require('../../../middleware/utils')
 
 /**
  * Changes password in database
@@ -9,7 +13,7 @@ const utils = require('../../../middleware/utils')
 const changePasswordInDB = (id, req) => {
   return new Promise((resolve, reject) => {
     User.findById(id, '+password', (err, user) => {
-      utils.itemNotFound(err, user, 'NOT_FOUND')
+      itemNotFound(err, user, 'NOT_FOUND')
 
       // Assigns new password to user
       user.password = req.newPassword
@@ -17,9 +21,9 @@ const changePasswordInDB = (id, req) => {
       // Saves in DB
       user.save((error) => {
         if (err) {
-          reject(utils.buildErrObject(422, error.message))
+          reject(buildErrObject(422, error.message))
         }
-        resolve(utils.buildSuccObject('PASSWORD_CHANGED'))
+        resolve(buildSuccObject('PASSWORD_CHANGED'))
       })
     })
   })

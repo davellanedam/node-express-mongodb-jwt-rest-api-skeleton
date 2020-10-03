@@ -3,7 +3,7 @@ const {
   findUserById,
   saveUserAccessAndReturnToken
 } = require('./helpers')
-const utils = require('../../middleware/utils')
+const { isIDGood, handleError } = require('../../middleware/utils')
 
 /**
  * Refresh token function called by route
@@ -16,14 +16,14 @@ const getRefreshToken = async (req, res) => {
       .replace('Bearer ', '')
       .trim()
     let userId = await getUserIdFromToken(tokenEncrypted)
-    userId = await utils.isIDGood(userId)
+    userId = await isIDGood(userId)
     const user = await findUserById(userId)
     const token = await saveUserAccessAndReturnToken(req, user)
     // Removes user info from response
     delete token.user
     res.status(200).json(token)
   } catch (error) {
-    utils.handleError(res, error)
+    handleError(res, error)
   }
 }
 

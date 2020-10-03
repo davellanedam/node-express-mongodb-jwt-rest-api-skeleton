@@ -1,5 +1,5 @@
 const User = require('../../../models/user')
-const utils = require('../../../middleware/utils')
+const { itemNotFound } = require('../../../middleware/utils')
 
 /**
  * Finds user by email
@@ -13,7 +13,7 @@ const findUser = (email) => {
       },
       'password loginAttempts blockExpires name email role verified verification',
       (err, item) => {
-        utils.itemNotFound(err, item, 'USER_DOES_NOT_EXIST')
+        itemNotFound(err, item, 'USER_DOES_NOT_EXIST')
         resolve(item)
       }
     )

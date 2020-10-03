@@ -1,5 +1,5 @@
 const User = require('../../../models/user')
-const utils = require('../../../middleware/utils')
+const { itemNotFound } = require('../../../middleware/utils')
 
 /**
  * Finds user by ID
@@ -8,7 +8,7 @@ const utils = require('../../../middleware/utils')
 const findUserById = (userId) => {
   return new Promise((resolve) => {
     User.findById(userId, (err, item) => {
-      utils.itemNotFound(err, item, 'USER_DOES_NOT_EXIST')
+      itemNotFound(err, item, 'USER_DOES_NOT_EXIST')
       resolve(item)
     })
   })

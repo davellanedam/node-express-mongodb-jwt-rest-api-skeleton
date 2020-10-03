@@ -1,5 +1,5 @@
 const ForgotPassword = require('../../../models/forgotPassword')
-const utils = require('../../../middleware/utils')
+const { itemNotFound } = require('../../../middleware/utils')
 
 /**
  * Checks if a forgot password verification exists
@@ -13,7 +13,7 @@ const findForgotPassword = (id) => {
         used: false
       },
       (err, item) => {
-        utils.itemNotFound(err, item, 'NOT_FOUND_OR_ALREADY_USED')
+        itemNotFound(err, item, 'NOT_FOUND_OR_ALREADY_USED')
         resolve(item)
       }
     )

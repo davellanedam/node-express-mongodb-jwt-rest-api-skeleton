@@ -1,5 +1,5 @@
 const { blockIsExpired } = require('./blockIsExpired')
-const utils = require('../../../middleware/utils')
+const { buildErrObject } = require('../../../middleware/utils')
 
 /**
  *
@@ -12,7 +12,7 @@ const checkLoginAttemptsAndBlockExpires = (user) => {
       user.loginAttempts = 0
       user.save((err, result) => {
         if (err) {
-          reject(utils.buildErrObject(422, err.message))
+          reject(buildErrObject(422, err.message))
         }
         if (result) {
           resolve(true)

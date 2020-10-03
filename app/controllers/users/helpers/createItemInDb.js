@@ -1,6 +1,6 @@
 const uuid = require('uuid')
 const User = require('../../../models/user')
-const utils = require('../../../middleware/utils')
+const { buildErrObject } = require('../../../middleware/utils')
 
 /**
  * Creates a new item in database
@@ -20,7 +20,7 @@ const createItemInDb = (req) => {
     })
     user.save((err, item) => {
       if (err) {
-        reject(utils.buildErrObject(422, err.message))
+        reject(buildErrObject(422, err.message))
       }
       // Removes properties with rest operator
       const removeProperties = ({
