@@ -5,7 +5,6 @@ const { getCountry } = require('./getCountry')
 const { getIP } = require('./getIP')
 const { handleError } = require('./handleError')
 const { isIDGood } = require('./isIDGood')
-const { itemAlreadyExists } = require('./itemAlreadyExists')
 const { itemNotFound } = require('./itemNotFound')
 const { removeExtensionFromFile } = require('./removeExtensionFromFile')
 const { validateResult } = require('./validateResult')
@@ -18,7 +17,6 @@ module.exports = {
   getIP,
   handleError,
   isIDGood,
-  itemAlreadyExists,
   itemNotFound,
   removeExtensionFromFile,
   validateResult

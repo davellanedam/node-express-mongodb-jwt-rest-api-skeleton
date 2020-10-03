@@ -1,5 +1,5 @@
 const User = require('../../models/user')
-const { itemAlreadyExists } = require('../../middleware/utils')
+const { buildErrObject } = require('../../middleware/utils')
 
 /**
  * Checks User model if user with an specific email exists but excluding user id
@@ -7,7 +7,7 @@ const { itemAlreadyExists } = require('../../middleware/utils')
  * @param {string} email - user email
  */
 const emailExistsExcludingMyself = (id, email) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     User.findOne(
       {
         email,
@@ -15,8 +15,15 @@ const emailExistsExcludingMyself = (id, email) => {
           $ne: id
         }
       },
-      (err, item) => {
-        itemAlreadyExists(err, item, 'EMAIL_ALREADY_EXISTS')
+      async (err, item) => {
+        if (err) {
+          return reject(buildErrObject(422, err.message))
+        }
+
+        if (item) {
+          return reject(buildErrObject(422, 'EMAIL_ALREADY_EXISTS'))
+        }
+
         resolve(false)
       }
     )

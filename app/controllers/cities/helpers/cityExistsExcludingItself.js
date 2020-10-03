@@ -1,5 +1,5 @@
 const City = require('../../../models/city')
-const { itemAlreadyExists } = require('../../../middleware/utils')
+const { buildErrObject } = require('../../../middleware/utils')
 
 /**
  * Checks if a city already exists excluding itself
@@ -7,7 +7,7 @@ const { itemAlreadyExists } = require('../../../middleware/utils')
  * @param {string} name - name of item
  */
 const cityExistsExcludingItself = (id, name) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     City.findOne(
       {
         name,
@@ -16,7 +16,14 @@ const cityExistsExcludingItself = (id, name) => {
         }
       },
       (err, item) => {
-        itemAlreadyExists(err, item, 'CITY_ALREADY_EXISTS')
+        if (err) {
+          return reject(buildErrObject(422, err.message))
+        }
+
+        if (item) {
+          return reject(buildErrObject(422, 'CITY_ALREADY_EXISTS'))
+        }
+
         resolve(false)
       }
     )
