@@ -224,7 +224,7 @@ If you need to add more routes to the project just create a new file in `/app/ro
 
 ### Creating new controllers
 
-When you create a new controller file, try to also create another file with validations. Ex. `countries.js` and `countries.validate.js`. An example of this is included in the repository.
+When you create a new controller, try to also create another folder with validations and helpers. Ex. `/countries`, `/countries/validators` and `/countries/helpers`. An example of this is included in the repository.
 
 ## Bugs or improvements
 
