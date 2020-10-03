@@ -1,3 +1,4 @@
+const { reject } = require('bcrypt/promises')
 const { itemNotFound } = require('../../../middleware/utils')
 
 /**
@@ -8,9 +9,13 @@ const { itemNotFound } = require('../../../middleware/utils')
 const updatePassword = (password = '', user = {}) => {
   return new Promise((resolve) => {
     user.password = password
-    user.save((err, item) => {
-      itemNotFound(err, item, 'NOT_FOUND')
-      resolve(item)
+    user.save(async (err, item) => {
+      try {
+        await itemNotFound(err, item, 'NOT_FOUND')
+        resolve(item)
+      } catch (error) {
+        reject(error)
+      }
     })
   })
 }

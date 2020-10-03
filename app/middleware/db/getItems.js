@@ -8,7 +8,7 @@ const { cleanPaginationID } = require('./cleanPaginationID')
  * @param {Object} req - request object
  * @param {Object} query - query object
  */
-const getItems = async (req, model, query) => {
+const getItems = async (req = {}, model = {}, query = {}) => {
   const options = await listInitOptions(req)
   return new Promise((resolve, reject) => {
     model.paginate(query, options, (err, items) => {

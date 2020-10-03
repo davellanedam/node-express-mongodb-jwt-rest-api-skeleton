@@ -1,3 +1,4 @@
+const { reject } = require('bcrypt/promises')
 const {
   getIP,
   getBrowserInfo,
@@ -17,9 +18,13 @@ const markResetPasswordAsUsed = (req = {}, forgot = {}) => {
     forgot.ipChanged = getIP(req)
     forgot.browserChanged = getBrowserInfo(req)
     forgot.countryChanged = getCountry(req)
-    forgot.save((err, item) => {
-      itemNotFound(err, item, 'NOT_FOUND')
-      resolve(buildSuccObject('PASSWORD_CHANGED'))
+    forgot.save(async (err, item) => {
+      try {
+        await itemNotFound(err, item, 'NOT_FOUND')
+        resolve(buildSuccObject('PASSWORD_CHANGED'))
+      } catch (error) {
+        reject(error)
+      }
     })
   })
 }

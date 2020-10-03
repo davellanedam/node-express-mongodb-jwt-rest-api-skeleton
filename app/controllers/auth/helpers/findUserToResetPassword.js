@@ -1,5 +1,6 @@
 const User = require('../../../models/user')
 const { itemNotFound } = require('../../../middleware/utils')
+const { reject } = require('bcrypt/promises')
 
 /**
  * Finds user by email to reset password
@@ -11,9 +12,13 @@ const findUserToResetPassword = (email = '') => {
       {
         email
       },
-      (err, user) => {
-        itemNotFound(err, user, 'NOT_FOUND')
-        resolve(user)
+      async (err, user) => {
+        try {
+          await itemNotFound(err, user, 'NOT_FOUND')
+          resolve(user)
+        } catch (error) {
+          reject(error)
+        }
       }
     )
   })

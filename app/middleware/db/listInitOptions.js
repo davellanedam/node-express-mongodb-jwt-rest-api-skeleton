@@ -5,7 +5,7 @@ const { buildSort } = require('./buildSort')
  * Builds initial options for query
  * @param {Object} query - query object
  */
-const listInitOptions = (req) => {
+const listInitOptions = (req = {}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const order = req.query.order || -1

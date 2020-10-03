@@ -6,7 +6,7 @@ const mg = require('nodemailer-mailgun-transport')
  * @param {Object} data - data
  * @param {boolean} callback - callback
  */
-const sendEmail = async (data, callback) => {
+const sendEmail = async (data = {}, callback) => {
   const auth = {
     auth: {
       // eslint-disable-next-line camelcase

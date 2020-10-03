@@ -12,19 +12,23 @@ const {
  */
 const changePasswordInDB = (id = '', req = {}) => {
   return new Promise((resolve, reject) => {
-    User.findById(id, '+password', (err, user) => {
-      itemNotFound(err, user, 'NOT_FOUND')
+    User.findById(id, '+password', async (err, user) => {
+      try {
+        await itemNotFound(err, user, 'NOT_FOUND')
 
-      // Assigns new password to user
-      user.password = req.newPassword
+        // Assigns new password to user
+        user.password = req.newPassword
 
-      // Saves in DB
-      user.save((error) => {
-        if (err) {
-          return reject(buildErrObject(422, error.message))
-        }
-        resolve(buildSuccObject('PASSWORD_CHANGED'))
-      })
+        // Saves in DB
+        user.save((error) => {
+          if (err) {
+            return reject(buildErrObject(422, error.message))
+          }
+          resolve(buildSuccObject('PASSWORD_CHANGED'))
+        })
+      } catch (error) {
+        reject(error)
+      }
     })
   })
 }

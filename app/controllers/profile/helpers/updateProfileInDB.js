@@ -1,5 +1,6 @@
 const User = require('../../../models/user')
 const { itemNotFound } = require('../../../middleware/utils')
+const { reject } = require('bcrypt/promises')
 
 /**
  * Updates profile in database
@@ -16,9 +17,13 @@ const updateProfileInDB = (req = {}, id = '') => {
         runValidators: true,
         select: '-role -_id -updatedAt -createdAt'
       },
-      (err, user) => {
-        itemNotFound(err, user, 'NOT_FOUND')
-        resolve(user)
+      async (err, user) => {
+        try {
+          await itemNotFound(err, user, 'NOT_FOUND')
+          resolve(user)
+        } catch (error) {
+          reject(error)
+        }
       }
     )
   })

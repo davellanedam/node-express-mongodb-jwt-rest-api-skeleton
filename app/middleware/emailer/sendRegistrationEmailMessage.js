@@ -6,7 +6,7 @@ const { prepareToSendEmail } = require('./prepareToSendEmail')
  * @param {string} locale - locale
  * @param {Object} user - user object
  */
-const sendRegistrationEmailMessage = (locale, user) => {
+const sendRegistrationEmailMessage = (locale = '', user = {}) => {
   i18n.setLocale(locale)
   const subject = i18n.__('registration.SUBJECT')
   const htmlMessage = i18n.__(

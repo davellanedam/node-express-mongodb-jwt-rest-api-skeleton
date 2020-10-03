@@ -3,7 +3,7 @@
  * @param {Object} res - response object
  * @param {Object} err - error object
  */
-const handleError = (res, err) => {
+const handleError = (res = {}, err = {}) => {
   // Prints error in console
   if (process.env.NODE_ENV === 'development') {
     console.log(err)

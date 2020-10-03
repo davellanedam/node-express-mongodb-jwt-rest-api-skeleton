@@ -6,7 +6,7 @@ const { buildErrObject } = require('../../middleware/utils')
  * query.fields should be the fields to search into (array)
  * @param {Object} query - query object
  */
-const checkQueryString = (query) => {
+const checkQueryString = (query = {}) => {
   return new Promise((resolve, reject) => {
     try {
       if (

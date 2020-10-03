@@ -2,7 +2,7 @@
  * Builds success object
  * @param {string} message - success text
  */
-const buildSuccObject = (message) => {
+const buildSuccObject = (message = '') => {
   return {
     msg: message
   }

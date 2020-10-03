@@ -6,7 +6,7 @@ const { sendEmail } = require('./sendEmail')
  * @param {string} subject - subject
  * @param {string} htmlMessage - html message
  */
-const prepareToSendEmail = (user, subject, htmlMessage) => {
+const prepareToSendEmail = (user = {}, subject = '', htmlMessage = '') => {
   user = {
     name: user.name,
     email: user.email,

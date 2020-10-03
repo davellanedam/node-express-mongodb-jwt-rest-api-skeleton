@@ -6,7 +6,7 @@ const { buildErrObject } = require('../../middleware/utils')
  * @param {string} id - user id
  * @param {string} email - user email
  */
-const emailExistsExcludingMyself = (id, email) => {
+const emailExistsExcludingMyself = (id = '', email = '') => {
   return new Promise((resolve, reject) => {
     User.findOne(
       {

@@ -6,7 +6,7 @@ const { prepareToSendEmail } = require('./prepareToSendEmail')
  * @param {string} locale - locale
  * @param {Object} user - user object
  */
-const sendResetPasswordEmailMessage = (locale, user) => {
+const sendResetPasswordEmailMessage = (locale = '', user = {}) => {
   i18n.setLocale(locale)
   const subject = i18n.__('forgotPassword.SUBJECT')
   const htmlMessage = i18n.__(

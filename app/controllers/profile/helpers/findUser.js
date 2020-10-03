@@ -1,5 +1,6 @@
 const User = require('../../../models/user')
 const { itemNotFound } = require('../../../middleware/utils')
+const { reject } = require('bcrypt/promises')
 
 /**
  * Finds user by id
@@ -7,9 +8,13 @@ const { itemNotFound } = require('../../../middleware/utils')
  */
 const findUser = (id = '') => {
   return new Promise((resolve) => {
-    User.findById(id, 'password email', (err, user) => {
-      itemNotFound(err, user, 'USER_DOES_NOT_EXIST')
-      resolve(user)
+    User.findById(id, 'password email', async (err, user) => {
+      try {
+        await itemNotFound(err, user, 'USER_DOES_NOT_EXIST')
+        resolve(user)
+      } catch (error) {
+        reject(error)
+      }
     })
   })
 }

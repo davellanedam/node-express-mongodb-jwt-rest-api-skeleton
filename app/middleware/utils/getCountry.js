@@ -2,7 +2,7 @@
  * Gets country from user using CloudFlare header 'cf-ipcountry'
  * @param {*} req - request object
  */
-const getCountry = (req) =>
-  req.headers['cf-ipcountry'] ? req.headers['cf-ipcountry'] : 'XX'
+const getCountry = ({ headers }) =>
+  headers['cf-ipcountry'] ? headers['cf-ipcountry'] : 'XX'
 
 module.exports = { getCountry }

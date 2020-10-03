@@ -1,5 +1,6 @@
 const User = require('../../../models/user')
 const { itemNotFound } = require('../../../middleware/utils')
+const { reject } = require('bcrypt/promises')
 
 /**
  * Checks if verification id exists for user
@@ -12,9 +13,13 @@ const verificationExists = (id = '') => {
         verification: id,
         verified: false
       },
-      (err, user) => {
-        itemNotFound(err, user, 'NOT_FOUND_OR_ALREADY_VERIFIED')
-        resolve(user)
+      async (err, user) => {
+        try {
+          await itemNotFound(err, user, 'NOT_FOUND_OR_ALREADY_VERIFIED')
+          resolve(user)
+        } catch (error) {
+          reject(error)
+        }
       }
     )
   })

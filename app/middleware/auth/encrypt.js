@@ -11,7 +11,7 @@ const iv = Buffer.alloc(16, 0) // Initialization crypto vector
  * Encrypts text
  * @param {string} text - text to encrypt
  */
-const encrypt = (text) => {
+const encrypt = (text = '') => {
   const cipher = crypto.createCipheriv(algorithm, key, iv)
 
   let encrypted = cipher.update(text, 'utf8', 'hex')
