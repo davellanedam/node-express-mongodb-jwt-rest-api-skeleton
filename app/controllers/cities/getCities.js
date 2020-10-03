@@ -1,5 +1,5 @@
 const City = require('../../models/city')
-const db = require('../../middleware/db')
+const { checkQueryString, getItems } = require('../../middleware/db')
 const { handleError } = require('../../middleware/utils')
 
 /**
@@ -7,13 +7,13 @@ const { handleError } = require('../../middleware/utils')
  * @param {Object} req - request object
  * @param {Object} res - response object
  */
-const getItems = async (req, res) => {
+const getCities = async (req, res) => {
   try {
-    const query = await db.checkQueryString(req.query)
-    res.status(200).json(await db.getItems(req, City, query))
+    const query = await checkQueryString(req.query)
+    res.status(200).json(await getItems(req, City, query))
   } catch (error) {
     handleError(res, error)
   }
 }
 
-module.exports = { getItems }
+module.exports = { getCities }

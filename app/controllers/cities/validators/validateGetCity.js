@@ -4,7 +4,7 @@ const { check } = require('express-validator')
 /**
  * Validates get item request
  */
-const validateGetItem = [
+const validateGetCity = [
   check('id')
     .exists()
     .withMessage('MISSING')
@@ -16,4 +16,4 @@ const validateGetItem = [
   }
 ]
 
-module.exports = { validateGetItem }
+module.exports = { validateGetCity }

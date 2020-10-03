@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator')
-const { handleError, buildErrObject } = require('../../middleware/utils')
+const { handleError } = require('./handleError')
+const { buildErrObject } = require('./buildErrObject')
 
 /**
  * Builds error for validation files

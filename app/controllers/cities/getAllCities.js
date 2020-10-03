@@ -6,7 +6,7 @@ const { getAllItemsFromDB } = require('./helpers')
  * @param {Object} req - request object
  * @param {Object} res - response object
  */
-const getAllItems = async (req, res) => {
+const getAllCities = async (req, res) => {
   try {
     res.status(200).json(await getAllItemsFromDB())
   } catch (error) {
@@ -14,4 +14,4 @@ const getAllItems = async (req, res) => {
   }
 }
 
-module.exports = { getAllItems }
+module.exports = { getAllCities }

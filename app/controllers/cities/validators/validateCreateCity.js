@@ -2,18 +2,19 @@ const { validateResult } = require('../../../middleware/utils')
 const { check } = require('express-validator')
 
 /**
- * Validates delete item request
+ * Validates create new item request
  */
-const validateDeleteItem = [
-  check('id')
+const validateCreateCity = [
+  check('name')
     .exists()
     .withMessage('MISSING')
     .not()
     .isEmpty()
-    .withMessage('IS_EMPTY'),
+    .withMessage('IS_EMPTY')
+    .trim(),
   (req, res, next) => {
     validateResult(req, res, next)
   }
 ]
 
-module.exports = { validateDeleteItem }
+module.exports = { validateCreateCity }

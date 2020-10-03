@@ -10,19 +10,19 @@ const trimRequest = require('trim-request')
 const { roleAuthorization } = require('../controllers/auth')
 
 const {
-  getAllItems,
-  getItems,
-  createItem,
-  getItem,
-  updateItem,
-  deleteItem
+  getAllCities,
+  getCities,
+  createCity,
+  getCity,
+  updateCity,
+  deleteCity
 } = require('../controllers/cities')
 
 const {
-  validateCreateItem,
-  validateGetItem,
-  validateUpdateItem,
-  validateDeleteItem
+  validateCreateCity,
+  validateGetCity,
+  validateUpdateCity,
+  validateDeleteCity
 } = require('../controllers/cities/validators')
 
 /*
@@ -32,7 +32,7 @@ const {
 /*
  * Get all items route
  */
-router.get('/all', getAllItems)
+router.get('/all', getAllCities)
 
 /*
  * Get items route
@@ -42,7 +42,7 @@ router.get(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  getItems
+  getCities
 )
 
 /*
@@ -53,8 +53,8 @@ router.post(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  validateCreateItem,
-  createItem
+  validateCreateCity,
+  createCity
 )
 
 /*
@@ -65,8 +65,8 @@ router.get(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  validateGetItem,
-  getItem
+  validateGetCity,
+  getCity
 )
 
 /*
@@ -77,8 +77,8 @@ router.patch(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  validateUpdateItem,
-  updateItem
+  validateUpdateCity,
+  updateCity
 )
 
 /*
@@ -89,8 +89,8 @@ router.delete(
   requireAuth,
   roleAuthorization(['admin']),
   trimRequest.all,
-  validateDeleteItem,
-  deleteItem
+  validateDeleteCity,
+  deleteCity
 )
 
 module.exports = router

@@ -1,8 +1,7 @@
-const {
-  listInitOptions,
-  buildErrObject,
-  cleanPaginationID
-} = require('../../middleware/utils')
+const { buildErrObject } = require('../../middleware/utils')
+
+const { listInitOptions } = require('./listInitOptions')
+const { cleanPaginationID } = require('./cleanPaginationID')
 
 /**
  * Gets items from database
@@ -14,7 +13,7 @@ const getItems = async (req, model, query) => {
   return new Promise((resolve, reject) => {
     model.paginate(query, options, (err, items) => {
       if (err) {
-        reject(buildErrObject(422, err.message))
+        return reject(buildErrObject(422, err.message))
       }
       resolve(cleanPaginationID(items))
     })

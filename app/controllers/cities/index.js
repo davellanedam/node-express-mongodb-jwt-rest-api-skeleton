@@ -1,15 +1,15 @@
-const { createItem } = require('./createItem')
-const { deleteItem } = require('./deleteItem')
-const { getAllItems } = require('./getAllItems')
-const { getItem } = require('./getItem')
-const { getItems } = require('./getItems')
-const { updateItem } = require('./updateItem')
+const { createCity } = require('./createCity')
+const { deleteCity } = require('./deleteCity')
+const { getAllCities } = require('./getAllCities')
+const { getCity } = require('./getCity')
+const { getCities } = require('./getCities')
+const { updateCity } = require('./updateCity')
 
 module.exports = {
-  createItem,
-  deleteItem,
-  getAllItems,
-  getItem,
-  getItems,
-  updateItem
+  createCity,
+  deleteCity,
+  getAllCities,
+  getCity,
+  getCities,
+  updateCity
 }
