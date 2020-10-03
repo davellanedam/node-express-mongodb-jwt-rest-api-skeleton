@@ -21,16 +21,20 @@ const saveUserAccessAndReturnToken = (req = {}, user = {}) => {
       browser: getBrowserInfo(req),
       country: getCountry(req)
     })
-    userAccess.save((err) => {
-      if (err) {
-        return reject(buildErrObject(422, err.message))
+    userAccess.save(async (err) => {
+      try {
+        if (err) {
+          return reject(buildErrObject(422, err.message))
+        }
+        const userInfo = await setUserInfo(user)
+        // Returns data with access token
+        resolve({
+          token: generateToken(user._id),
+          user: userInfo
+        })
+      } catch (error) {
+        reject(error)
       }
-      const userInfo = setUserInfo(user)
-      // Returns data with access token
-      resolve({
-        token: generateToken(user._id),
-        user: userInfo
-      })
     })
   })
 }
