@@ -1,3 +1,7 @@
+## v9.0.1 (October 12, 2020)
+
+-   NPM updated
+
 ## v9.0.0 (October 3, 2020)
 
 -   Major breaking changes, now controllers and middleware is split in single files for more scalability and testability
