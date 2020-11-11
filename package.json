@@ -12,7 +12,7 @@
     "mocha": "nyc mocha --timeout=5000 --exit",
     "test": "npm run coverage:clean && npm run test:unit && npm run test:e2e && npm run coverage",
     "test:unit": "NODE_ENV=test jest --coverage",
-    "test:e2e": "NODE_ENV=test npm run fresh && npm run mocha",
+    "test:e2e": "cross-env NODE_ENV=test npm run fresh && npm run mocha",
     "dev": "cross-env NODE_ENV=development nodemon --inspect=9230 server.js",
     "fresh": "npm run clean && npm run seed",
     "clean": "node clean.js",
