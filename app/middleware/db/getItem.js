@@ -8,7 +8,7 @@ const getItem = (id = '', model = {}) => {
   return new Promise((resolve, reject) => {
     model.findById(id, async (err, item) => {
       try {
-        await itemNotFound(err, item, reject, 'NOT_FOUND')
+        await itemNotFound(err, item, 'NOT_FOUND')
         resolve(item)
       } catch (error) {
         reject(error)
