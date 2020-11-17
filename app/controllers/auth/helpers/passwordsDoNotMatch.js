@@ -1,6 +1,8 @@
 const { saveLoginAttemptsToDB } = require('./saveLoginAttemptsToDB')
 const { blockUser } = require('./blockUser')
 const { buildErrObject } = require('../../../middleware/utils')
+const { generatePasswordErrorMsg } = require('./generatePasswordErrorMsg')
+
 const LOGIN_ATTEMPTS = 5
 
 /**
@@ -13,7 +15,9 @@ const passwordsDoNotMatch = async (user = {}) => {
       user.loginAttempts += 1
       await saveLoginAttemptsToDB(user)
       if (user.loginAttempts <= LOGIN_ATTEMPTS) {
-        return reject(buildErrObject(409, 'WRONG_PASSWORD'))
+        return reject(
+          buildErrObject(409, generatePasswordErrorMsg(user.loginAttempts))
+        )
       }
 
       resolve(await blockUser(user))

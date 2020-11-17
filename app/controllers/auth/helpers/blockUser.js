@@ -1,6 +1,7 @@
 const { addHours } = require('date-fns')
 const HOURS_TO_BLOCK = 2
 
+const { formatDuetime } = require('./formatDuetime')
 const { buildErrObject } = require('../../../middleware/utils')
 
 /**
@@ -15,7 +16,12 @@ const blockUser = (user = {}) => {
         return reject(buildErrObject(422, err.message))
       }
       if (result) {
-        return resolve(buildErrObject(409, 'BLOCKED_USER'))
+        return resolve(
+          buildErrObject(
+            409,
+            `BLOCKED_USER_UNTIL_${formatDuetime(user.blockExpires)}`
+          )
+        )
       }
     })
   })
