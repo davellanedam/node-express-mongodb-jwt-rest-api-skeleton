@@ -1,3 +1,4 @@
+const { formatDuetime } = require('./formatDuetime')
 const { buildErrObject } = require('../../../middleware/utils')
 
 /**
@@ -7,7 +8,12 @@ const { buildErrObject } = require('../../../middleware/utils')
 const userIsBlocked = (user = {}) => {
   return new Promise((resolve, reject) => {
     if (user.blockExpires > new Date()) {
-      return reject(buildErrObject(409, 'BLOCKED_USER'))
+      return reject(
+        buildErrObject(
+          409,
+          `USER_BLOCK_UNTIL_${formatDuetime(user.blockExpires)}`
+        )
+      )
     }
     resolve(true)
   })

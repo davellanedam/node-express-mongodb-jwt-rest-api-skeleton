@@ -25,6 +25,8 @@ const { updatePassword } = require('./updatePassword')
 const { userIsBlocked } = require('./userIsBlocked')
 const { verificationExists } = require('./verificationExists')
 const { verifyUser } = require('./verifyUser')
+const { formatDuetime } = require('./formatDuetime')
+const { generatePasswordErrorMsg } = require('./generatePasswordErrorMsg')
 
 module.exports = {
   blockIsExpired,
@@ -49,5 +51,7 @@ module.exports = {
   updatePassword,
   userIsBlocked,
   verificationExists,
-  verifyUser
+  verifyUser,
+  formatDuetime,
+  generatePasswordErrorMsg
 }
