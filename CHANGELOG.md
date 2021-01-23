@@ -1,3 +1,10 @@
+## v9.0.3 (January 23, 2020)
+
+*   NPM updated
+*   Fixed test failing in Windows 10 ([#221](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/221))
+*   Fixed mailgun in european regions ([#222](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/222))
+*   Fixed i18n and helmet in normal dependencies ([#224](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/issues/224))
+
 ## v9.0.2 (November 16, 2020)
 
 *   NPM updated
