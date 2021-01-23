@@ -1,3 +1,7 @@
+## v9.0.4 (January 23, 2020)
+
+*   Added extras tests ([#218](https://github.com/davellanedam/node-express-mongodb-jwt-rest-api-skeleton/pull/218))
+
 ## v9.0.3 (January 23, 2020)
 
 *   NPM updated
