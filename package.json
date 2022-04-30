@@ -21,7 +21,7 @@
     "lint": "eslint --fix --config .eslintrc.json \"**/*.js\"",
     "remark": "remark . -o",
     "coverage": "npm run coverage:merge && npm run coverage:merge-report",
-    "coverage:clean": "rm -rf .nyc_output && rm -rf coverage",
+    "coverage:clean": "rd /s /q .nyc_output && rd /s /q coverage",
     "coverage:merge": "istanbul-merge --out coverage/merged/coverage-final.json ./coverage/unit/coverage-final.json ./coverage/e2e/coverage-final.json",
     "coverage:merge-report": "nyc report --reporter=lcov --reporter=text --reporter=json --temp-dir=./coverage/merged --report-dir=./coverage/merged"
   },
