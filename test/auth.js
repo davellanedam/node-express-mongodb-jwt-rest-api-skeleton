@@ -18,6 +18,16 @@ const createdID = []
 let verification = ''
 let verificationForgot = ''
 const email = faker.internet.email()
+const failedLoginAttempts = 5
+const badUser = {
+  name: 'Bad user',
+  email: 'bad@user.com',
+  password: '54321'
+}
+const badLoginDetails = {
+  email: 'bad@user.com',
+  password: '12345'
+}
 
 chai.use(chaiHttp)
 
@@ -180,6 +190,70 @@ describe('*********** AUTH ***********', () => {
     })
   })
 
+  describe('/POST register', () => {
+    it('it should POST register', (done) => {
+      chai
+        .request(server)
+        .post('/register')
+        .send(badUser)
+        .end((err, res) => {
+          res.should.have.status(201)
+          res.body.should.be.an('object')
+          res.body.should.include.keys('token', 'user')
+          createdID.push(res.body.user._id)
+          done()
+        })
+    })
+  })
+
+  describe('/POST login', () => {
+    for (let x = 1; x < failedLoginAttempts + 1; x++) {
+      it(`it should NOT POST login after password fail #${x}`, (done) => {
+        chai
+          .request(server)
+          .post('/login')
+          .send(badLoginDetails)
+          .end((err, res) => {
+            res.should.have.status(409)
+            res.body.should.be.a('object')
+            res.body.should.have.property('errors').that.has.property('msg')
+            res.body.errors.should.have.property('msg').eql('WRONG_PASSWORD')
+            done()
+          })
+      })
+    }
+
+    it('it should NOT POST login after password fail #6 and be blocked', (done) => {
+      chai
+        .request(server)
+        .post('/login')
+        .send(badLoginDetails)
+        .end((err, res) => {
+          res.should.have.status(409)
+          res.body.should.be.a('object')
+          res.body.should.have.property('errors').that.has.property('msg')
+          res.body.errors.should.have.property('msg').eql('BLOCKED_USER')
+          done()
+        })
+    })
+
+    it('it should NOT POST login after being blocked sending post with correct password', (done) => {
+      chai
+        .request(server)
+        .post('/login')
+        .send({
+          email: badUser.email,
+          password: badUser.password
+        })
+        .end((err, res) => {
+          res.should.have.status(409)
+          res.body.should.be.a('object')
+          res.body.should.have.property('errors').that.has.property('msg')
+          res.body.errors.should.have.property('msg').eql('BLOCKED_USER')
+          done()
+        })
+    })
+  })
   after(() => {
     createdID.forEach((id) => {
       User.findByIdAndRemove(id, (err) => {
