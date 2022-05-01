@@ -51,7 +51,7 @@ app.use(
 
 // i18n
 i18n.configure({
-  locales: ['en', 'es'],
+  locales: ['en', 'es', 'tr'],
   directory: `${__dirname}/locales`,
   defaultLocale: 'en',
   objectNotation: true

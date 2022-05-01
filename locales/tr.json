@@ -1,0 +1,10 @@
+{
+  "registration": {
+    "SUBJECT": "myProject için e-posta adresinizi doğrulayın",
+    "MESSAGE": "<p>Merhaba %s.</p> <p>Hoşgeldiniz! e-mail adresinizi doğrulamak için, lütfen linki tıklayın:</p> <p>%s/verify/%s</p> <p>Teşekkürler.</p>"
+  },
+  "forgotPassword": {
+    "SUBJECT": "myProject için şifrenizi kurtarma işlemi",
+    "MESSAGE": "<p>%s için şifre kurtarması yapmak için</p> <p>lütfen bu linke tıklayın:</p> <p>%s/reset/%s</p> <p>Eğer bu işleme gerek duymuyorsanız, bu mesajı yok sayabilirsiniz.</p> <p>Teşekkürler.</p>"
+  }
+}
