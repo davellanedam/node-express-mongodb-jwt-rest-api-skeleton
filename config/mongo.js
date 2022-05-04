@@ -26,6 +26,9 @@ module.exports = () => {
           console.log(`*    Port: ${process.env.PORT || 3000}`)
           console.log(`*    NODE_ENV: ${process.env.NODE_ENV}`)
           console.log(`*    Database: MongoDB`)
+          if (process.env.USE_REDIS === 'true') {
+            console.log(`*    Don't forget to run Redis`)
+          }
           console.log(dbStatus)
         }
       }
