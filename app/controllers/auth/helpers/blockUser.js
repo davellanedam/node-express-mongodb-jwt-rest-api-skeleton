@@ -1,7 +1,7 @@
 const { addHours } = require('date-fns')
-const HOURS_TO_BLOCK = 2
-
 const { buildErrObject } = require('../../../middleware/utils')
+
+const HOURS_TO_BLOCK = 2
 
 /**
  * Blocks a user by setting blockExpires to the specified date based on constant HOURS_TO_BLOCK
